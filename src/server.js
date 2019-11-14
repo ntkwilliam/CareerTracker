@@ -86,7 +86,7 @@ app.get("/exports/:reportID", (req, res) => {
 var dbConnection = mysql.createConnection({
      host: 'localhost',
      port: 3306,
-     user: 'sadapp',
+     user: 'careertracker',
      password: '3ig7turh?',
      database: 'careertracker'
  });
