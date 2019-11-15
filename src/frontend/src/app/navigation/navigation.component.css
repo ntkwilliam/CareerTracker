@@ -1,0 +1,41 @@
+
+
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+
+
+
+.main-navbar {
+  background-color: rgb(154,0,0);
+  color: white !important;
+  margin-bottom: 30px;
+  font-family: 'Roboto', sans-serif;
+}
+
+.main-navbar .application-name {
+  font-weight: bold;
+  display: inline-block;
+  font-size: 1.27rem;
+  margin-right: 50px;
+}
+
+.main-navbar ul {
+  letter-spacing: 0.7px;
+}
+
+.main-navbar ul li {
+    margin-right: 8px;
+
+}
+
+
+a {
+  text-decoration: none;
+  color: white;
+}
+
+.active-nav {
+  font-weight: bold;
+
+}
+
+
