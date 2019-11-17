@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-
+import { NgModule, Component } from '@angular/core';
+import { RouterModule} from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AlumniComponent } from './records/alumni/alumni.component';
@@ -25,7 +25,18 @@ import { AuthenticationComponent } from './authentication/authentication.compone
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    RouterModule.forRoot([
+       { path: '', component: AlumniComponent },
+       { path: 'records/employers', component: EmployersComponent},
+       { path: 'records/graduate-schools', component: GraduateSchoolsComponent},
+       { path: 'records/alumni', component: AlumniComponent},
+       { path: 'imports', component: ImportsComponent},
+       { path: 'exports-reports', component: ExportsReportsComponent}
+  
+  
+  
+  ])
   ],
   providers: [],
   bootstrap: [AppComponent]
