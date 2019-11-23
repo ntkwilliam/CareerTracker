@@ -7,18 +7,60 @@ const mysql = require('mysql');
 app.use(cors());
 app.use(bodyParser.json());
 
+const PAGE_SIZE = 10;
 
 
 
+app.get('/data/alumni/search', (req, res) => {
+        let baseQuery = 'SELECT students.student_id, last_name, first_name, middle_name, GROUP_CONCAT(DISTINCT graduation_term_code SEPARATOR \', \')' + 
+        ' graduation_term_codes, GROUP_CONCAT(DISTINCT employer_name SEPARATOR \', \') employers' +
+        ' FROM students LEFT JOIN student_employments on student_employments.student_id = students.student_id AND student_employments.active = 1' +
+        ' LEFT JOIN employers ON student_employments.employer_id = employers.employer_id AND employers.deleted = 0 LEFT JOIN student_degrees' +
+        ' ON student_degrees.student_id = students.student_id AND student_degrees.deleted = 0 WHERE students.deleted = 0'
+        let criteria = '';
+        let propValues = [];
+        for (let propName in req.query) {
+            if (req.query.hasOwnProperty(propName) && propName != 'page') {
+    
+                  criteria += ' AND ' + propName + ' = ?';
+                  propValues.push(req.query[propName]);
+            }
 
-app.get("/data/alumni/search", (req, res) => {
-    // Implement alumni search results HTTP endpoint
+
+        }
+
+        criteria+= ' LIMIT ' + (req.query.page == undefined ? 0 : req.query.page - 1) * PAGE_SIZE + ',' + PAGE_SIZE;
+
+       dbConnection.query(baseQuery + criteria, propValues, (error, results, fields) => {
+           if (!error) {
+               res.send(results);
+           }
+           else
+           {
+               res.send('Unable to process request.  Reason: ' + error.message);
+           }
+       } );
+
     });
 
 
 
-app.get("/data/alumni/byid/:id",  (req, res) => {
-// Implement alumni detail record HTTP endpoint
+app.get('/data/alumni/byid/:id',  (req, res) => {
+
+    
+    let query = 'SELECT * FROM students WHERE student_id = ?';
+
+    dbConnection.query(query, req.params['id'], (error, results, fields) => {
+        if (!error) {
+            res.send(results);
+        }
+        else 
+        {
+            res.send('Unable to process request.  Reason: ' + error.message);
+        }
+    });
+    
+
 });
 
 
