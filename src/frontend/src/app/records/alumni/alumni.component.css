@@ -1,0 +1,271 @@
+
+
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+
+.records-list {
+    margin-left: 20px;
+    margin-right: 20px;
+
+}
+
+.records-list .right-align {
+  text-align: right;
+  width: 170px;
+  padding-right: 70px;
+}
+
+
+.no-select {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+}
+
+
+.records-list tr:hover  {
+  background-color: rgba(211,211,211,0.8);
+
+}
+.university_id {
+  cursor: pointer;
+
+
+}
+
+
+
+
+.detail-form-back {
+  position: absolute;
+  top: 0%;
+  left: 0%;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0,0,0, 0.7);
+  z-index: 3;
+  align-items: center;
+  justify-content: center;
+}
+
+
+
+.detail-form {
+  border-radius: 30px;
+  position: absolute;
+  top: 20%;
+  left: 30%;
+  background-color: white;
+  padding-bottom: 20px;
+  width: 40%;
+
+
+}
+
+.detail-form table{
+  width: 100%;
+
+}
+
+
+
+
+.detail-form th, td {
+
+  padding-right: 15px;
+
+}
+
+.detail-form .header {
+  color: white;
+  background-color: rgb(154,0,0);
+  width: 100%;
+  border-top-left-radius: 25px;
+  border-top-right-radius: 25px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border: solid rgb(154, 0, 0);
+  padding-left: 20px;
+}
+
+.detail-form .header button {
+    margin-left: 10px;
+}
+
+
+
+.detail-form .address {
+  padding-left: 20px;
+  width: 100%;
+  padding-top: 10px;
+
+}
+
+.detail-form .section-name {
+  margin-top: 20px;
+  background-color: rgba(196,196,196,0.15);
+  font-weight: bold;
+  width: 100%;
+  padding-left: 20px;
+}
+
+
+.detail-form .employers {
+  padding-left: 20px;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.detail-form .graduate-schools {
+  padding-left: 20px;
+  width: 100%;
+  margin-top: 10px;
+}
+
+
+.align-right {
+  text-align: right;
+
+}
+
+.app-page-item-selected {
+  background-color: rgb(154,0,0) !important;
+  border-color: rgb(154,0,0) !important;
+}
+
+.app-page-item {
+  color: rgb(154,0,0);
+}
+
+
+
+.paging-links {
+  margin-right: 30px;
+  outline: none !important;
+  border-color: rgb(154,0,0) !important;
+
+}
+
+.paging-links li {
+  outline: none !important;
+  border-color: rgb(154,0,0) !important;
+
+}
+
+.paging-links li a {
+  color: black;
+  outline: none !important;
+  box-shadow: none;
+}
+
+.paging-links-active {
+  color: white !important;
+  background-color: rgb(154,0,0) !important;
+  border-color: rgb(154,0,0) !important;
+
+}
+
+#search-box {
+  margin-left: 20px;
+  background-color: #dee2e6;
+
+}
+
+#search-box #header {
+  padding-left: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  background-color: #343a40;
+  color: white;
+  font-weight: bold;
+
+
+}
+
+#search-box #body {
+  padding-left: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-right: 10px;
+  border: none;
+  background-color: rgba(255,255,255,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#search-box #body select {
+  border: none;
+  margin-top: 0;
+  margin-bottom: 0;
+  height: 80%;
+  width: 40%;
+  border: none;
+  padding-top: 0;
+  padding-bottom: 0;
+
+}
+
+#search-box #body input {
+  margin-left: 10px;
+  height: 80%;
+  border: none;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  width: 40%;
+}
+
+
+
+.pages-search {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+
+#search-box .search-button {
+  background-color: white;
+  color: black;
+  display: flex;
+  border-style: solid;
+  outline: none;
+  padding: 0 0;
+  font-size: 14px;
+  margin-left: 10px;
+}
+
+#search-box .search-button .icon {
+  padding: 4px 4px;
+  width: 35%;
+  color: red;
+  margin-right: 2px;
+  background-color: lightgray;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#search-box .search-button .icon fa-icon {
+  color: black;
+  margin-left: 0px !important;
+  height: 100%;
+}
+
+#search-box .search-button .textarea {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  padding: 4px 4px;
+}
+
+#search-box .search-button .text {
+  font-weight: bold;
+
+}
