@@ -33,10 +33,23 @@
     
     
    
-    <div class="pages-search">
+    <div id="pages-search">
       <div id="search-box">
         <div id="header">Search</div>
         <div id="body">
+            
+            
+              <table>
+                  <tr><td>Database ID:</td><td><input style="width: 30px;" type="text" name="student_id" [(ngModel)]="searchValues.student_id"></td></tr>
+                  <tr><td>Last Name:</td><td><input type="text" name="last_name" [(ngModel)]="searchValues.last_name"></td><td>First Name:</td><td><input type="text" name="first_name" [(ngModel)]="searchValues.first_name"></td></tr>
+                    <tr><td>City:</td><td><input type="text" [(ngModel)]="searchValues.mailing_address_city"></td><td>State:</td><td><input style="width: 30px;" type="text" [(ngModel)]="searchValues.mailing_address_state"></td></tr>
+                <tr><td>Employer:</td><td colspan="3"><select></select></td></tr>
+                </table>
+                
+                <button class="btn-dark" (click)="getSearchResults()">Search</button>
+                    
+            
+            
        </div>
        </div>
     <nav aria-label="Record pages">

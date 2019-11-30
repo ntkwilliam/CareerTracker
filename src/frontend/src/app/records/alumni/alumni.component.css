@@ -54,16 +54,16 @@
 
 
 .detail-form {
-  border-radius: 30px;
-  position: absolute;
-  top: 20%;
-  left: 30%;
-  background-color: white;
-  padding-bottom: 20px;
-  width: 40%;
-
-
-}
+    border-radius: 30px;
+    position: absolute;
+    top: 20%;
+    left: 30%;
+    background-color: white;
+    padding-bottom: 20px;
+    width: 40%;
+  
+  
+  }
 
 .detail-form table{
   width: 100%;
@@ -171,8 +171,12 @@
 #search-box {
   margin-left: 20px;
   background-color: #dee2e6;
+  margin-top: 30px;
+  width: 35%;
 
 }
+
+
 
 #search-box #header {
   padding-left: 10px;
@@ -192,80 +196,28 @@
   padding-right: 10px;
   border: none;
   background-color: rgba(255,255,255,0.5);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
 
-#search-box #body select {
-  border: none;
-  margin-top: 0;
-  margin-bottom: 0;
-  height: 80%;
-  width: 40%;
-  border: none;
-  padding-top: 0;
-  padding-bottom: 0;
 
 }
 
-#search-box #body input {
-  margin-left: 10px;
-  height: 80%;
-  border: none;
-  margin-top: 0;
-  margin-bottom: 0;
-  padding-top: 0;
-  padding-bottom: 0;
-  width: 40%;
+#search-box #body table {
+    table-layout: fixed;
+    width: 100%;
+}
+
+#search-box #body table input {
+    width: 100%;
 }
 
 
-
-.pages-search {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+#pages-search {
+    display: flex;
+    justify-content: space-between;
+    align-items: top;
 }
 
 
-
-#search-box .search-button {
-  background-color: white;
-  color: black;
-  display: flex;
-  border-style: solid;
-  outline: none;
-  padding: 0 0;
-  font-size: 14px;
-  margin-left: 10px;
-}
-
-#search-box .search-button .icon {
-  padding: 4px 4px;
-  width: 35%;
-  color: red;
-  margin-right: 2px;
-  background-color: lightgray;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-#search-box .search-button .icon fa-icon {
-  color: black;
-  margin-left: 0px !important;
-  height: 100%;
-}
-
-#search-box .search-button .textarea {
-  display: flex;
-  flex: 1;
-  align-items: center;
-  padding: 4px 4px;
-}
-
-#search-box .search-button .text {
-  font-weight: bold;
-
+#search-box button {
+    margin-top: 10px;
+  outline: none !important;
 }

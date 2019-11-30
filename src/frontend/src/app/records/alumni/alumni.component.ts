@@ -21,6 +21,18 @@ export class AlumniComponent implements OnInit {
     student_id: 0;
   };
   public currentResultsQuery;
+  public searchValues = {
+    student_id: null,
+    lastName: null,
+    firstName: null,
+    city: null,
+    state: null,
+    employer: null,
+    graduateSchool: null
+  };
+
+
+
   constructor(private httpClient: HttpClient) { }
 
   ngOnInit() {
@@ -32,19 +44,26 @@ export class AlumniComponent implements OnInit {
 
   getSearchResults() {
       this.currentPage = 1;
+      let searchCriterions = {};
+      Object.keys(this.searchValues).forEach(a => 
+       {
+          if (this.searchValues[a] != null && this.searchValues[a] != '')
+          {
+             searchCriterions[a] = this.searchValues[a];
+          }
+        }
+          );
+      searchCriterions['itemsPerPage'] = this.itemsPerPage.toString();
+        console.log(searchCriterions);
 
       this.httpClient.get("http://localhost:8080/data/alumni/search", 
       {
-        params: {
-          itemsPerPage: this.itemsPerPage.toString()
-        }
+        params: searchCriterions
       }).subscribe(data => this.studentsList = data, error => this.displayRetrievalError(error));
 
       this.httpClient.get("http://localhost:8080/data/alumni/search/pageCount", 
       {
-        params: {
-          itemsPerPage: this.itemsPerPage.toString()
-        }
+        params: searchCriterions
       }).subscribe(data => {
 
         this.pages = Array(Math.ceil(data['pageCount'] / this.itemsPerPage));

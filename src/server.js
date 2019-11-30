@@ -22,16 +22,34 @@ app.get('/data/alumni/search', (req, res) => {
         ' AND graduate_schools.deleted = 0 WHERE students.deleted = 0'
         let criteria = '';
         let propValues = [];
+        let parseError = false;
         for (let propName in req.query) {
             if (req.query.hasOwnProperty(propName) && propName != 'page' && propName != 'itemsPerPage') {
-    
-                  criteria += ' AND ' + propName + ' = ?';
-                  propValues.push(req.query[propName]);
-            }
-
-
+                if(propName == 'student_id')
+                {
+                    let studentID = parseInt(req.query['student_id']);
+                     if (studentID == NaN) {
+                         parseError = true;
+                         console.log('bad');
+                         res.status(400).send('Unable to process request.  Reason: invalid argument: student_id');
+                         break;
+                     }
+                     else 
+                     {
+                         propValues.push(studentID);
+                         criteria += ' AND students.student_id = ?';
+                     }
+                } 
+                else 
+                {
+                 propValues.push(req.query[propName]);
+                 criteria += ' AND ' + propName + ' = ?';
+                }
+               
+            
         }
-
+    }
+        if (!parseError) {
         criteria += ' ORDER BY last_name, first_name, middle_name';
         criteria += ' LIMIT ' + (req.query.page == undefined ? 0 : req.query.page - 1) * (req.query.itemsPerPage == undefined ? DEFAULT_PAGE_SIZE : req.query.itemsPerPage) + ',' + (req.query.itemsPerPage == undefined ? DEFAULT_PAGE_SIZE : req.query.itemsPerPage);
        dbConnection.query(baseQuery + criteria, propValues, (error, results, fields) => {
@@ -43,7 +61,7 @@ app.get('/data/alumni/search', (req, res) => {
                res.status(400).send('Unable to process request.  Reason: ' + error.message);
            }
        } );
-
+    }
     });
 
     app.get('/data/alumni/search/pageCount', (req, res) => {
@@ -54,16 +72,35 @@ app.get('/data/alumni/search', (req, res) => {
         ' AND graduate_schools.deleted = 0 WHERE students.deleted = 0'
         let criteria = '';
         let propValues = [];
+        let parseError = false;
         for (let propName in req.query) {
             if (req.query.hasOwnProperty(propName) && propName != 'page' && propName != 'itemsPerPage') {
-    
-                  criteria += ' AND ' + propName + ' = ?';
-                  propValues.push(req.query[propName]);
+                   if(propName == 'student_id')
+                   {
+                       let studentID = parseInt(req.query['student_id']);
+                        if (studentID == NaN) {
+                            parseError = true;
+                            res.status(400).send('Unable to process request.  Reason: invalid argument: student_id');
+                            break;
+                        }
+                        else 
+                        {
+                            propValues.push(studentID);
+                            criteria += ' AND students.student_id = ?';
+
+                        }
+                   } 
+                   else 
+                   {
+                    propValues.push(req.query[propName]);
+                    criteria += ' AND ' + propName + ' = ?';
+                   }
+                  
             }
 
 
         }
-
+        if (!parseError) {
              dbConnection.query(baseQuery + criteria, propValues, (error, results, fields) => {
            if (!error) {
             res.send({ pageCount : Math.ceil(results[0].ItemCount / (req.query.itemsPerPage == undefined ? DEFAULT_PAGE_SIZE : req.query.itemsPerPage))});
@@ -73,7 +110,7 @@ app.get('/data/alumni/search', (req, res) => {
                 res.status(400).send('Unable to process request.  Reason: ' + error.message);
            }
        } );
-
+    }
     });
 
 
@@ -160,6 +197,9 @@ app.post("/imports", (req, res) => {
 app.get("/exports/:reportID", (req, res) => {
 // Implement exports/report functionality 
 });
+
+
+
 
 var dbConnection = mysql.createConnection({
      host: 'localhost',
