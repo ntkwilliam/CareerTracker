@@ -218,6 +218,15 @@
 
 
 #search-box button {
-    margin-top: 10px;
   outline: none !important;
+  font-weight: bold;
+
+
+}
+
+
+
+#search-box #search-button {
+    text-align: right;
+    margin-top: 10px;
 }
