@@ -224,8 +224,11 @@
 
 }
 
-
+#search-box select {
+    width: 100%;
+}
 
 #search-box #search-button {
-    text-align: right;
+    margin-top: 10px;
+    text-align: center;
 }
