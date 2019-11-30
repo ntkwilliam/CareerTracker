@@ -20,7 +20,7 @@ app.get('/data/alumni/search', (req, res) => {
         ' ON student_degrees.student_id = students.student_id AND student_degrees.deleted = 0 LEFT JOIN student_graduate_schools ON student_graduate_schools.student_id' +
         ' = students.student_id AND student_graduate_schools.deleted = 0 LEFT JOIN graduate_schools ON student_graduate_schools.graduate_school_id = graduate_schools.graduate_school_id' +
         ' AND graduate_schools.deleted = 0 WHERE students.deleted = 0'
-        let [criteria, propValues] = getQueryValues(req.query);
+        let [criteria, propValues] = getQueryValues(req.query,'students');
 
         
         criteria += ' ORDER BY last_name, first_name, middle_name';
@@ -44,7 +44,7 @@ app.get('/data/alumni/search', (req, res) => {
         ' = students.student_id AND student_graduate_schools.deleted = 0 LEFT JOIN graduate_schools ON student_graduate_schools.graduate_school_id = graduate_schools.graduate_school_id' +
         ' AND graduate_schools.deleted = 0 WHERE students.deleted = 0'
 
-        let [criteria, propValues] = getQueryValues(req.query);
+        let [criteria, propValues] = getQueryValues(req.query, 'students');
 
         
              dbConnection.query(baseQuery + criteria, propValues, (error, results, fields) => {
@@ -176,7 +176,7 @@ app.get("/exports/:reportID", (req, res) => {
 // Implement exports/report functionality 
 });
 
-getQueryValues = (queryValues) => {
+getQueryValues = (queryValues, entityName) => {
         let criteria = '';
         let propValues = [];
         for (let propName in queryValues) {
@@ -201,13 +201,28 @@ getQueryValues = (queryValues) => {
                     propValues.push(queryValues[propName]);
                     
                    }
-                   
-                   criteria += ' AND ' + propName + ' = ?';
+                
+                   if (specialQueryStrings[entityName][propName] == undefined) {
+                       criteria += ' AND ' + propName + ' = ?';
+                   }
+                   else {
+                    criteria += ' AND ' + specialQueryStrings[entityName][propName];
+                   }
             }
         }
             return [criteria, propValues];
         
 };
+
+const specialQueryStrings = {
+
+    students: {
+        employer: "students.student_id IN (SELECT student_id from student_employments WHERE employer_id = ? AND active = 1 and deleted = 0)",
+        graduateSchool: "students.student_id IN (SELECT student_id from student_graduate_schools WHERE graduate_school_id = ? and deleted = 0)" 
+    }
+
+
+}
 
 
 var dbConnection = mysql.createConnection({

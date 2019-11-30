@@ -44,10 +44,12 @@
                   <tr><td>Last Name:</td><td><input type="text" name="last_name" [(ngModel)]="searchValues.last_name"></td><td>First Name:</td><td><input type="text" name="first_name" [(ngModel)]="searchValues.first_name"></td></tr>
                     <tr><td>City:</td><td><input type="text" [(ngModel)]="searchValues.mailing_address_city"></td><td>State:</td><td><input style="width: 30px;" type="text" [(ngModel)]="searchValues.mailing_address_state"></td></tr>
                 <tr><td>Employer:</td><td colspan="3"><select [(ngModel)]="searchValues.employer">
+                    <option value=""></option>
                   <option *ngFor="let optionValue of employerList" value={{optionValue.value}}>{{optionValue.text}}</option>
                 </select></td></tr>
                 <tr><td>Graduate School:</td><td colspan="3"><select [(ngModel)]="searchValues.graduateSchool">
-                    <option *ngFor="let optionValue of graduateSchoolList" value={{optionValue.value}}>{{optionValue.text}}</option>
+                  <option value=""></option>  
+                  <option *ngFor="let optionValue of graduateSchoolList" value={{optionValue.value}}>{{optionValue.text}}</option>
                   </select></td></tr>
                 </table>
                 <div id="search-button">
