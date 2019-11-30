@@ -30,13 +30,15 @@ export class AlumniComponent implements OnInit {
     employer: null,
     graduateSchool: null
   };
-
-
+  public employerList;
+  public graduateSchoolList;
 
   constructor(private httpClient: HttpClient) { }
 
   ngOnInit() {
     this.getSearchResults();
+    this.fillEmployerList();
+    this.fillGraduateSchoolList();
   }
 
 
@@ -73,11 +75,21 @@ export class AlumniComponent implements OnInit {
 
       }, error => this.displayRetrievalError(error));
 
-
-
-
-
    }
+
+   fillEmployerList() {
+
+      this.httpClient.get("http://localhost:8080/data/employers/selectionList").subscribe(data => 
+      this.employerList = data, error =>  this.displayRetrievalError(error));
+      
+   }
+
+   fillGraduateSchoolList() {
+
+    this.httpClient.get("http://localhost:8080/data/graduate-schools/selectionList").subscribe(data => 
+    this.graduateSchoolList = data, error =>  this.displayRetrievalError(error));
+    
+ }
 
    displayRetrievalError(error)  {
 

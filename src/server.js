@@ -94,6 +94,23 @@ app.put("/data/alumni", (req, res) => {
 // Implement alumni update functionality 
 });
 
+app.get("/data/employers/selectionList", (req, res) => {
+    let query = "SELECT employer_id value, employer_name text from employers WHERE deleted = 0 ORDER BY employer_name";
+
+    dbConnection.query(query, (error, results, fields) => {
+        if (!error) {
+            res.send(results);
+        }
+        else 
+        {
+            res.status(400).send('Unable to process request.  Reason: ' + error.message);
+        }
+    });
+   
+
+
+});
+
 
 app.get("/data/employers/search", (req, res) => {
     // Implement employer search results HTTP endpoint
@@ -113,6 +130,19 @@ app.put("/data/employers", (req, res) => {
 // Implement employer update functionality 
 });
 
+app.get("/data/graduate-schools/selectionList", (req, res) => {
+    let query = "SELECT graduate_school_id value, school_name text from graduate_schools WHERE deleted = 0 ORDER BY school_name";
+
+    dbConnection.query(query, (error, results, fields) => {
+        if (!error) {
+            res.send(results);
+        }
+        else 
+        {
+            res.status(400).send('Unable to process request.  Reason: ' + error.message);
+        }
+    });
+});
 
 app.get("/data/graduate-schools/search", (req, res) => {
     // Implement graduate school search results HTTP endpoint
@@ -153,7 +183,7 @@ getQueryValues = (queryValues) => {
             if (queryValues.hasOwnProperty(propName) && propName != 'page' && propName != 'itemsPerPage') {
                    if(propName.endsWith("_id"))
                    {
-                       
+
                        let intID = parseInt(queryValues[propName]);
                         if (intID == NaN) {
                             propValues.push(queryValues[propName]);
