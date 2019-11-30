@@ -61,7 +61,7 @@ export class AlumniComponent implements OnInit {
       this.httpClient.get("http://localhost:8080/data/alumni/search", 
       {
         params: searchCriterions
-      }).subscribe(data => this.studentsList = data, error => this.displayRetrievalError(error));
+      }).subscribe(data => { this.studentsList = data; console.log(this.studentsList); }, error => this.displayRetrievalError(error));
 
       this.httpClient.get("http://localhost:8080/data/alumni/search/pageCount", 
       {
@@ -70,11 +70,11 @@ export class AlumniComponent implements OnInit {
 
         this.pages = Array(Math.ceil(data['pageCount'] / this.itemsPerPage));
         this.totalPages = this.pages.length;
-    
+        
 
 
       }, error => this.displayRetrievalError(error));
-
+      
    }
 
    fillEmployerList() {

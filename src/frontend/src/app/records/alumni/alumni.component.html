@@ -59,7 +59,7 @@
             
        </div>
        </div>
-    <nav aria-label="Record pages">
+    <nav aria-label="Record pages" *ngIf="studentsList != undefined && studentsList.length > 0">
       <ul class="pagination justify-content-end paging-links no-select">
         <li class="page-item disabled" [class.disabled]="currentPage == 1">
           <a class="page-link" href="#" tabindex="-1" aria-disabled="true" (click)="gotoPage(this.currentPage - 1 )">Previous</a>

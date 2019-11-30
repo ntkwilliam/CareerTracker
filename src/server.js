@@ -22,10 +22,10 @@ app.get('/data/alumni/search', (req, res) => {
         ' AND graduate_schools.deleted = 0 WHERE students.deleted = 0'
         let [criteria, propValues] = getQueryValues(req.query,'students');
 
-        
+        criteria += ' GROUP BY students.student_id, last_name, first_name, middle_name, mailing_address_city, mailing_address_state'
         criteria += ' ORDER BY last_name, first_name, middle_name';
         criteria += ' LIMIT ' + (req.query.page == undefined ? 0 : req.query.page - 1) * (req.query.itemsPerPage == undefined ? DEFAULT_PAGE_SIZE : req.query.itemsPerPage) + ',' + (req.query.itemsPerPage == undefined ? DEFAULT_PAGE_SIZE : req.query.itemsPerPage);
-       dbConnection.query(baseQuery + criteria, propValues, (error, results, fields) => {
+        dbConnection.query(baseQuery + criteria, propValues, (error, results, fields) => {
            if (!error) {
                res.send(results);
            }
