@@ -4,3 +4,72 @@
 <!--Build out alumni search HTML elements-->
 
 <!--Build out detail view/edit form HTML elements-->
+<div class="records-list no-select">
+    <table class="table table-striped">
+      <thead class="thead-dark">
+      <th scope="col" class="right-align">Database ID</th>
+      <th scope="col">Last Name</th>
+      <th scope="col">First Name</th>
+      <th scope="col">City</th>
+      <th scope="col">State</th>
+      <th scope="col" class="right-align">Graduation Term Code</th>
+      <th scope="col">Current Employer(s)</th>
+      <th scope="col">Graduate School(s)</th>
+      </thead>
+      <tbody>
+      <tr *ngFor="let student of studentsList" (dblclick)="viewDetail(student)">
+        <td class="right-align">{{student["student_id"]}}</td>
+        <td>{{student["last_name"]}}</td>
+        <td>{{student["first_name"]}}</td>
+        <td>{{student["mailing_address_city"]}}</td>
+        <td>{{student["mailing_address_state"]}}</td>
+        <td class="right-align">{{student["graduation_term_code"]}}</td>
+        <td>{{student["employers"]}}</td>
+        <td>{{student["graduate_schools"]}}</td>
+      </tr>
+      </tbody>
+    </table>
+    </div>
+    
+    
+   
+    <div id="pages-search">
+      <div id="search-box">
+        <div id="header">Search</div>
+        <div id="body">
+            
+            
+              <table>
+                  <tr><td>Database ID:</td><td><input style="width: 30px;" type="text" name="student_id" [(ngModel)]="searchValues['students.student_id']"></td></tr>
+                  <tr><td>Last Name:</td><td><input type="text" name="last_name" [(ngModel)]="searchValues.last_name"></td><td>First Name:</td><td><input type="text" name="first_name" [(ngModel)]="searchValues.first_name"></td></tr>
+                    <tr><td>City:</td><td><input type="text" [(ngModel)]="searchValues.mailing_address_city"></td><td>State:</td><td><input style="width: 30px;" type="text" [(ngModel)]="searchValues.mailing_address_state"></td></tr>
+                <tr><td>Employer:</td><td colspan="3"><select [(ngModel)]="searchValues.employer">
+                    <option value=""></option>
+                  <option *ngFor="let optionValue of employerList" value={{optionValue.value}}>{{optionValue.text}}</option>
+                </select></td></tr>
+                <tr><td>Graduate School:</td><td colspan="3"><select [(ngModel)]="searchValues.graduateSchool">
+                  <option value=""></option>  
+                  <option *ngFor="let optionValue of graduateSchoolList" value={{optionValue.value}}>{{optionValue.text}}</option>
+                  </select></td></tr>
+                </table>
+                <div id="search-button">
+                <button class="btn-dark" (click)="getSearchResults()">Search</button>
+              </div>
+            
+            
+       </div>
+       </div>
+    <nav aria-label="Record pages" *ngIf="studentsList != undefined && studentsList.length > 0">
+      <ul class="pagination justify-content-end paging-links no-select">
+        <li class="page-item disabled" [class.disabled]="currentPage == 1">
+          <a class="page-link" href="#" tabindex="-1" aria-disabled="true" (click)="gotoPage(this.currentPage - 1 )">Previous</a>
+        </li>
+        <li *ngFor="let item of pages; let i = index"  class="page-item" [class.paging-links-active]="currentPage == i + 1" (click)="gotoPage(i)"><a href="#" class="page-link" [class.paging-links-active]="currentPage == (i+1)">{{i + 1}}</a></li>
+        <li class="page-item" [class.disabled]="currentPage >= (totalPages - 1)">
+          <a class="page-link" href="#" (click)="gotoPage(this.currentPage + 1 )">Next</a>
+        </li>
+      </ul>
+    </nav>
+    
+    </div>
+    

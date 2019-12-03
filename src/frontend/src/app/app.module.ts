@@ -10,7 +10,8 @@ import { ImportsComponent } from './imports/imports.component';
 import { ExportsReportsComponent } from './exports-reports/exports-reports.component';
 import { NavigationComponent } from './navigation/navigation.component';
 import { AuthenticationComponent } from './authentication/authentication.component';
-
+import { HttpClientModule} from '@angular/common/http';
+import { FormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,8 @@ import { AuthenticationComponent } from './authentication/authentication.compone
   
   
   ])
+  ,HttpClientModule,
+  FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
