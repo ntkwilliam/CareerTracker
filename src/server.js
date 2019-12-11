@@ -66,21 +66,111 @@ app.get('/data/alumni/search', (req, res) => {
 
 app.get('/data/alumni/byid/:id',  (req, res) => {
 
-    
+    let result = {
+        alumni: null,
+        employments: null,
+        graduateSchools: null,
+        degrees: null,
+        comments: null,
+        errorResult: null
+
+    };
     let query = 'SELECT * FROM students WHERE student_id = ?';
 
     dbConnection.query(query, req.params['id'], (error, results, fields) => {
         if (!error) {
-            res.send(results);
+            result.alumni = results[0];
+
+
+            query = 'SELECT employment_id, employers.employer_id, employer_name, city, state, job_title, active,  student_employments.added_by, student_employments.added_datetime,' +
+            ' student_employments.updated_by, student_employments.updated_datetime FROM student_employments INNER JOIN employers ON student_employments.employer_id' + 
+            ' = employers.employer_id WHERE student_id = ? AND student_employments.deleted = 0';
+            dbConnection.query(query, req.params['id'], (error, results, fields) => {
+                if (!error) {
+                    result.employments = results;
+
+                    query = 'SELECT degree_id, diploma_description, graduation_term_code, added_by, added_datetime, updated_by, updated_datetime' +
+            ' FROM student_degrees WHERE student_id = ? AND deleted = 0';
+            dbConnection.query(query, req.params['id'], (error, results, fields) => {
+                if (!error) {
+                    result.degrees = results;
+                    
+                    query = 'SELECT graduate_schools.graduate_school_id, school_name, city, state, student_graduate_schools.added_by, student_graduate_schools.added_datetime,' +
+            ' student_graduate_schools.updated_by, student_graduate_schools.updated_datetime FROM student_graduate_schools INNER JOIN graduate_schools ON graduate_schools.graduate_school_id' + 
+            ' = student_graduate_schools.graduate_school_id WHERE student_id = ? AND student_graduate_schools.deleted = 0';
+            dbConnection.query(query, req.params['id'], (error, results, fields) => {
+                if (!error) {
+                    result.graduateSchools = results;
+
+
+                    query = 'SELECT comment_id, comment, added_by, added_datetime FROM comments WHERE entity_type = \'S\' AND entity_id = ? AND deleted = 0'; 
+                    dbConnection.query(query, req.params['id'], (error, results, fields) => {
+                        if (!error) {
+                            result.comments = results;
+                            res.send(result);
+                }
+                else
+                {
+                    result.errorResult = error;
+                    res.send(result);
+                }
+
+            });
+
+                }
+                else 
+                {
+                    result.errorResult = error;
+                    res.send(result);
+                }
+
+
+            });
+
+                    
+                }
+                else
+                {
+                    result.errorResult = error;
+                    res.send(result);
+                }
+            });
+
         }
-        else 
-        {
-            res.status(400).send('Unable to process request.  Reason: ' + error.message);
+            else
+            {
+                result.errorResult = error;
+                res.send(result);
+            }
+        });
+
+
+            
         }
-    });
+        
+            else
+            {
+                result.errorResult = error;
+                res.send(result);
+            }
+            
+        });
+            
+        
+            
+
+		
     
 
-});
+
+    });
+    
+	
+
+
+
+
+
 
 
 

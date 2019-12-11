@@ -5,8 +5,8 @@
 
 <!--Build out detail view/edit form HTML elements-->
 <div class="records-list no-select">
-    <table class="table table-striped">
-      <thead class="thead-dark">
+  <table class="table table-striped">
+    <thead class="thead-dark">
       <th scope="col" class="right-align">Database ID</th>
       <th scope="col">Last Name</th>
       <th scope="col">First Name</th>
@@ -15,9 +15,10 @@
       <th scope="col" class="right-align">Graduation Term Code</th>
       <th scope="col">Current Employer(s)</th>
       <th scope="col">Graduate School(s)</th>
-      </thead>
-      <tbody>
-      <tr *ngFor="let student of studentsList" (dblclick)="viewDetail(student)">
+      <th scope="col"></th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let student of studentsList">
         <td class="right-align">{{student["student_id"]}}</td>
         <td>{{student["last_name"]}}</td>
         <td>{{student["first_name"]}}</td>
@@ -26,50 +27,187 @@
         <td class="right-align">{{student["graduation_term_code"]}}</td>
         <td>{{student["employers"]}}</td>
         <td>{{student["graduate_schools"]}}</td>
+        <td><button class="btn-dark" (click)="viewDetail(student['student_id'])">View</button>
+          <button class="btn-dark">Edit</button>
+        </td>
+
       </tr>
-      </tbody>
-    </table>
+    </tbody>
+  </table>
+</div>
+
+
+
+<div id="pages-search">
+  <div id="search-box">
+    <div id="header">Search</div>
+    <div id="body">
+
+
+      <table>
+        <tr>
+          <td>Database ID:</td>
+          <td><input style="width: 30px;" type="text" name="student_id"
+              [(ngModel)]="searchValues['students.student_id']"></td>
+        </tr>
+        <tr>
+          <td>Last Name:</td>
+          <td><input type="text" name="last_name" [(ngModel)]="searchValues.last_name"></td>
+          <td>First Name:</td>
+          <td><input type="text" name="first_name" [(ngModel)]="searchValues.first_name"></td>
+        </tr>
+        <tr>
+          <td>City:</td>
+          <td><input type="text" [(ngModel)]="searchValues.mailing_address_city"></td>
+          <td>State:</td>
+          <td><input style="width: 30px;" type="text" [(ngModel)]="searchValues.mailing_address_state"></td>
+        </tr>
+        <tr>
+          <td>Employer:</td>
+          <td colspan="3"><select [(ngModel)]="searchValues.employer">
+              <option value=""></option>
+              <option *ngFor="let optionValue of employerList" value={{optionValue.value}}>{{optionValue.text}}</option>
+            </select></td>
+        </tr>
+        <tr>
+          <td>Graduate School:</td>
+          <td colspan="3"><select [(ngModel)]="searchValues.graduateSchool">
+              <option value=""></option>
+              <option *ngFor="let optionValue of graduateSchoolList" value={{optionValue.value}}>{{optionValue.text}}
+              </option>
+            </select></td>
+        </tr>
+      </table>
+      <div id="search-button">
+        <button class="btn-dark" (click)="getSearchResults()">Search</button>
+      </div>
+
+
     </div>
-    
-    
-   
-    <div id="pages-search">
-      <div id="search-box">
-        <div id="header">Search</div>
-        <div id="body">
-            
-            
+  </div>
+  <nav aria-label="Record pages" *ngIf="studentsList != undefined && studentsList.length > 0">
+    <ul class="pagination justify-content-end paging-links no-select">
+      <li class="page-item disabled" [class.disabled]="currentPage == 1">
+        <a class="page-link" href="#" tabindex="-1" aria-disabled="true"
+          (click)="gotoPage(this.currentPage - 1 )">Previous</a>
+      </li>
+      <li *ngFor="let item of pages; let i = index" class="page-item" [class.paging-links-active]="currentPage == i + 1"
+        (click)="gotoPage(i)"><a href="#" class="page-link"
+          [class.paging-links-active]="currentPage == (i+1)">{{i + 1}}</a></li>
+      <li class="page-item" [class.disabled]="currentPage >= (totalPages - 1)">
+        <a class="page-link" href="#" (click)="gotoPage(this.currentPage + 1 )">Next</a>
+      </li>
+    </ul>
+  </nav>
+
+</div>
+
+
+<div class="detail-form-back" [style.display]="detailVisible ? 'flex' : 'none'">
+  <div class="detail-form" (click)="$event.stopPropagation()">
+    <div class="header">
+      <div>
+      <div class="student-name">
+        {{ currentStudent?.alumni?.last_name + ', ' + currentStudent?.alumni?.first_name }}
+
+      </div>
+     Database ID:  {{ currentStudent?.alumni?.student_id}}
+    </div>
+      <div class="buttons">
+        <button class="btn-dark">Edit</button>
+        <button class="btn-light" (click)="closeDetail()">Close</button>
+      </div>
+    </div>
+    <div id="main">
+      <div class="section-name">
+        <div class="left">Mailing Address</div>
+        <div class="right">Telephone Number/Email</div>
+      </div>
+      <div class="flex-container">
+        <div class="left">
+          {{ currentStudent?.alumni?.mailing_address_line_1}}
+          <div *ngIf="currentStudent?.alumni?.mailing_address_line_2 != null">
+            {{currentStudent?.alumni?.mailing_address_line_2}}</div>
+          {{ currentStudent?.alumni?.mailing_address_city != null ? currentStudent?.alumni?.mailing_address_city + ', ' : '' }}
+          {{currentStudent?.alumni?.mailing_address_state != null ? currentStudent?.alumni?.mailing_address_state  + ' ' : ''}}
+          {{currentStudent?.alumni?.mailing_address_zipcode}}
+        </div>
+        <div class="right">
+          {{currentStudent?.alumni?.phone_number}}
+          <br />{{currentStudent?.alumni?.email}}
+        </div>
+      </div>
+
+      <div class="tab-control">
+        <div class="selections">
+
+
+          <button class="no-select" [class.selected]="currentDetailTab == 'degrees'">Degrees</button>
+          <button class="no-select" (click)="changeDetailTab('employments')" [class.selected]="currentDetailTab == 'employments'">Employments</button>
+          <button class="no-select">Graduate Schools</button>
+          <button class="no-select">Comments</button>
+        </div>
+        <div class="content-area">
+          <div id="degrees" [style.display]="currentDetailTab == 'degrees' ? 'inline-block' : 'none'">
               <table>
-                  <tr><td>Database ID:</td><td><input style="width: 30px;" type="text" name="student_id" [(ngModel)]="searchValues['students.student_id']"></td></tr>
-                  <tr><td>Last Name:</td><td><input type="text" name="last_name" [(ngModel)]="searchValues.last_name"></td><td>First Name:</td><td><input type="text" name="first_name" [(ngModel)]="searchValues.first_name"></td></tr>
-                    <tr><td>City:</td><td><input type="text" [(ngModel)]="searchValues.mailing_address_city"></td><td>State:</td><td><input style="width: 30px;" type="text" [(ngModel)]="searchValues.mailing_address_state"></td></tr>
-                <tr><td>Employer:</td><td colspan="3"><select [(ngModel)]="searchValues.employer">
-                    <option value=""></option>
-                  <option *ngFor="let optionValue of employerList" value={{optionValue.value}}>{{optionValue.text}}</option>
-                </select></td></tr>
-                <tr><td>Graduate School:</td><td colspan="3"><select [(ngModel)]="searchValues.graduateSchool">
-                  <option value=""></option>  
-                  <option *ngFor="let optionValue of graduateSchoolList" value={{optionValue.value}}>{{optionValue.text}}</option>
-                  </select></td></tr>
-                </table>
-                <div id="search-button">
-                <button class="btn-dark" (click)="getSearchResults()">Search</button>
-              </div>
-            
-            
-       </div>
-       </div>
-    <nav aria-label="Record pages" *ngIf="studentsList != undefined && studentsList.length > 0">
-      <ul class="pagination justify-content-end paging-links no-select">
-        <li class="page-item disabled" [class.disabled]="currentPage == 1">
-          <a class="page-link" href="#" tabindex="-1" aria-disabled="true" (click)="gotoPage(this.currentPage - 1 )">Previous</a>
-        </li>
-        <li *ngFor="let item of pages; let i = index"  class="page-item" [class.paging-links-active]="currentPage == i + 1" (click)="gotoPage(i)"><a href="#" class="page-link" [class.paging-links-active]="currentPage == (i+1)">{{i + 1}}</a></li>
-        <li class="page-item" [class.disabled]="currentPage >= (totalPages - 1)">
-          <a class="page-link" href="#" (click)="gotoPage(this.currentPage + 1 )">Next</a>
-        </li>
-      </ul>
-    </nav>
+                    
+        
+                  <tr>
+                    <th>Diploma Description</th>
+                    <th>Graduation Term Code</th>
+                    <th>Added By<br />Date/Time</th>
+                    <th>Updated By<br />Date/Time</th>
+                  </tr>
+                
+              <tr *ngFor="let degree of currentStudent?.degrees">
+                <td>{{degree['diploma_description']}}</td>
+                <td>{{degree['graduation_term_code']}}</td>
+                <td>{{degree['added_by']}}<br />{{degree['added_datetime'] | date:'L/d/yyyy h:mm a'}}</td>
+                <td>{{degree['updated_by']}}<br />{{degree['updated_datetime'] | date:'L/d/yyyy h:mm a' }}</td>
     
+    
+    
+              </tr>
+    
+    
+    
+              </table>
+    
+
+
+
+
+
+
+
+
+          </div>
+          <div id="employments" [style.display]="currentDetailTab == 'employments' ? 'inline-block' : 'none'">
+              
+              <table>
+                <tr><th>Employer Name</th>
+                  <th>Location</th>
+                <th>Role Title</th>
+                <th>Active<br />Employment</th>
+                <th>Added By<br />Date/Time</th>
+                <th>Updated By<br />Date/Time</th>
+                </tr>
+                <tr *ngFor="let employment of currentStudent?.employments">
+                  <td>{{employment['employer_name']}}</td>
+                  <td>{{employment['city']}} , {{employment['state']}}</td>
+                  <td>{{employment['job_title']}}</td>
+                  <td>{{employment['active'] ? 'Y' : 'N'}}</td>
+                  <td>{{employment['added_by']}}<br />{{employment['added_datetime'] | date:'L/d/yyyy h:mm a'}}</td>
+                  <td>{{employment['updated_by']}}<br />{{employment['updated_datetime'] | date:'L/d/yyyy h:mm a' }}</td>
+                </tr>
+              </table>
+
+          </div>
+        </div>
+
+      </div>
+
     </div>
-    
+
+  </div>
+</div>

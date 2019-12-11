@@ -12,6 +12,7 @@ import { NavigationComponent } from './navigation/navigation.component';
 import { AuthenticationComponent } from './authentication/authentication.component';
 import { HttpClientModule} from '@angular/common/http';
 import { FormsModule} from '@angular/forms';
+import { AlumniService } from './records/alumni/alumni.service';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,7 @@ import { FormsModule} from '@angular/forms';
     BrowserModule,
     AppRoutingModule,
     RouterModule.forRoot([
-       { path: '', component: AlumniComponent },
+       { path: '', redirectTo: 'records/alumni', pathMatch: 'full' },
        { path: 'records/employers', component: EmployersComponent},
        { path: 'records/graduate-schools', component: GraduateSchoolsComponent},
        { path: 'records/alumni', component: AlumniComponent},
@@ -41,7 +42,7 @@ import { FormsModule} from '@angular/forms';
   ,HttpClientModule,
   FormsModule
   ],
-  providers: [],
+  providers: [AlumniService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient} from '@angular/common/http';
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
+import { AlumniService } from './alumni.service';
 
 
 @Component({
@@ -11,15 +11,14 @@ import {Injectable} from '@angular/core';
 @Injectable()
 export class AlumniComponent implements OnInit {
 
-  readonly itemsPerPage = 20;
-  currentPage : number = 1;
+  readonly ITEMSPERPAGE = 20;
+  currentPage: number = 1;
   totalPages: number;
   public pages;
-  detailVisible : boolean = false;
+  detailVisible: boolean = false;
+  public currentDetailTab;
   public studentsList;
-  public currentStudent: { 
-    student_id: 0;
-  };
+  public currentStudent;
   public currentResultsQuery;
   public searchValues = {
     student_id: null,
@@ -33,7 +32,7 @@ export class AlumniComponent implements OnInit {
   public employerList;
   public graduateSchoolList;
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private service: AlumniService) { }
 
   ngOnInit() {
     this.getSearchResults();
@@ -45,72 +44,70 @@ export class AlumniComponent implements OnInit {
 
 
   getSearchResults() {
-      this.currentPage = 1;
-      let searchCriterions = {};
-      Object.keys(this.searchValues).forEach(a => 
-       {
-          if (this.searchValues[a] != null && this.searchValues[a] != '')
-          {
-             searchCriterions[a] = this.searchValues[a];
-          }
-        }
-          );
-      searchCriterions['itemsPerPage'] = this.itemsPerPage.toString();
-        console.log(searchCriterions);
-
-      this.httpClient.get("http://localhost:8080/data/alumni/search", 
-      {
-        params: searchCriterions
-      }).subscribe(data => { this.studentsList = data; console.log(this.studentsList); }, error => this.displayRetrievalError(error));
-
-      this.httpClient.get("http://localhost:8080/data/alumni/search/pageCount", 
-      {
-        params: searchCriterions
-      }).subscribe(data => {
-
-        this.pages = Array(Math.ceil(data['pageCount'] / this.itemsPerPage));
-        this.totalPages = this.pages.length;
-        
-
-
-      }, error => this.displayRetrievalError(error));
-      
-   }
-
-   fillEmployerList() {
-
-      this.httpClient.get("http://localhost:8080/data/employers/selectionList").subscribe(data => 
-      this.employerList = data, error =>  this.displayRetrievalError(error));
-      
-   }
-
-   fillGraduateSchoolList() {
-
-    this.httpClient.get("http://localhost:8080/data/graduate-schools/selectionList").subscribe(data => 
-    this.graduateSchoolList = data, error =>  this.displayRetrievalError(error));
     
- }
+   
+    this.service.getSearchResults(this.searchValues, this.ITEMSPERPAGE)
+    .then(res => {
+      this.studentsList = res['studentsList'];
+      this.pages = res['pages'];
+      this.totalPages = res['totalPages'];
+      
+    }).catch(error => console.log(error));
+    
 
-   displayRetrievalError(error)  {
+  }
 
+  fillEmployerList() {
+
+   this.service.getEmployerList().then(result => {
+     this.employerList = result;
+   });
+
+  }
+
+
+  fillGraduateSchoolList() {
+
+    this.service.getGraduateSchoolList().then(result => {
+      this.graduateSchoolList = result;
+    }).catch(error => console.log('caught'));
+ 
    }
 
-   viewDetail(recordID : number) {
-    // Implement view detail form display functionality
+  displayRetrievalError(error) {
+
+  }
+
+  viewDetail(recordID: number) {
+    this.currentDetailTab = "degrees";
+    this.service.getDetail(recordID).then(data => {
+      this.currentStudent = data;
+      this.detailVisible = true;
+    });
+    
+    
+
+  }
 
 
-   }
+    closeDetail() {
+      this.detailVisible = false;
+    }
 
-   editRecord(recordID : number) {
-     // Implement record editing form display functionality
-   }
+    changeDetailTab(newTab) {
+      this.currentDetailTab = newTab;
+    }
 
-   validateRecord() {
-     // Implement record editing validation functionality
-   }
+  editRecord(recordID: number) {
+    // Implement record editing form display functionality
+  }
 
-   saveRecord() {
-     //Implement record update/save functionality
-   }   
+  validateRecord() {
+    // Implement record editing validation functionality
+  }
+
+  saveRecord() {
+    //Implement record update/save functionality
+  }
 
 }
