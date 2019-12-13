@@ -2,6 +2,15 @@
 
 @import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
 
+button:focus {
+  outline:none !important;
+  
+}
+
+button {
+  font-weight: bold;
+}
+
 .records-list {
     margin-left: 20px;
     margin-right: 20px;
@@ -14,6 +23,9 @@
   padding-right: 70px;
 }
 
+.records-list button {
+  margin-right: 5px;
+}
 
 .no-select {
   -webkit-touch-callout: none; /* iOS Safari */
@@ -30,11 +42,7 @@
   background-color: rgba(211,211,211,0.8);
 
 }
-.university_id {
-  cursor: pointer;
 
-
-}
 
 
 
@@ -47,36 +55,35 @@
   width: 100%;
   background-color: rgba(0,0,0, 0.7);
   z-index: 3;
+  display: flex;
   align-items: center;
   justify-content: center;
+  transition: all 3s linear;
 }
 
 
 
 .detail-form {
     border-radius: 30px;
-    position: absolute;
-    top: 20%;
-    left: 30%;
     background-color: white;
     padding-bottom: 20px;
-    width: 40%;
-  
-  
+    width: 55%;
+    display:  inline-block;
+
+    
   }
 
 .detail-form table{
   width: 100%;
-
+  table-layout: fixed;
+  
 }
 
 
 
 
-.detail-form th, td {
-
-  padding-right: 15px;
-
+.detail-form th {
+  background-color:  rgba(196,196,196,0.25);
 }
 
 .detail-form .header {
@@ -89,40 +96,67 @@
   padding-bottom: 20px;
   border: solid rgb(154, 0, 0);
   padding-left: 20px;
+  padding-right: 20px;
+  display: flex;
+  justify-content: space-between;
 }
 
-.detail-form .header button {
-    margin-left: 10px;
+.detail-form #main {
+  display: inline-block;
+  margin-bottom: 30px;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 
+.detail-form .header .student-name {
+  font-weight: bold;
+  font-size: 16px;
+  color: white;
+}
 
-.detail-form .address {
-  padding-left: 20px;
-  width: 100%;
-  padding-top: 10px;
 
+.detail-form .header .buttons button {
+  margin-left: 10px;
+}
+
+
+.flex-container {
+  display: flex;
+}
+
+.detail-form .left {
+  flex: 1;
+  padding: 0 15px 0 15px;
+}
+
+.detail-form .right {
+  flex: 1;
+  
 }
 
 .detail-form .section-name {
   margin-top: 20px;
-  background-color: rgba(196,196,196,0.15);
+  background-color: rgba(196,196,196,0.25);
   font-weight: bold;
   width: 100%;
-  padding-left: 20px;
+  display: flex;
+  
 }
 
 
-.detail-form .employers {
-  padding-left: 20px;
-  width: 100%;
-  margin-top: 10px;
+.detail-form #employments, #degrees {
+  overflow: auto;
 }
 
 .detail-form .graduate-schools {
   padding-left: 20px;
   width: 100%;
   margin-top: 10px;
+}
+
+.detail-form td {
+  vertical-align: top;
 }
 
 
@@ -185,6 +219,7 @@
   background-color: #343a40;
   color: white;
   font-weight: bold;
+  
 
 
 }
@@ -231,4 +266,57 @@
 #search-box #search-button {
     margin-top: 10px;
     text-align: center;
+}
+
+.tab-control {
+  width: 100%;
+  margin-top: 20px;
+  height: 50px;
+  display: inline-block;
+  padding: 5px 5px 5px 5px;
+
+  overflow: visible;
+
+}
+
+
+.tab-control .selections {
+    display: flex;
+    background-color: #343a40;
+    height: 45px;
+
+
+}
+
+.tab-control button {
+  height: 100%;
+  padding-left: 20px;
+  padding-right: 20px;
+  background-color: rgba(255,255,255, 0.9);
+  border: none;
+  
+  
+}
+
+.tab-control .selections .selected {
+  background-color:  rgb(154,0,0);
+  color: white;
+  
+
+  
+}
+
+
+.tab-control .content-area {
+  margin-bottom: 10px;
+  padding: 15px 5px 15px 5px;
+  background-color: rgba(196,196,196,0.15);
+  border: solid lightgray;
+  border-top: none;
+  
+}
+
+.tab-control .content-area table {
+  table-layout: fixed;
+  border: solid  rgba(196,196,196,0.25);
 }
