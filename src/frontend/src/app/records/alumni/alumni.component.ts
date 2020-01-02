@@ -1,12 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Injectable } from '@angular/core';
 import { AlumniService } from './alumni.service';
-
+import { AlumniEditFormComponent } from './edit-form/edit-form.component';
 
 @Component({
   selector: 'app-alumni',
   templateUrl: './alumni.component.html',
-  styleUrls: ['./alumni.component.css']
+  styleUrls: ['./alumni.component.css'],
+  
 })
 @Injectable()
 export class AlumniComponent implements OnInit {
@@ -16,6 +17,7 @@ export class AlumniComponent implements OnInit {
   totalPages: number;
   public pages;
   detailVisible: boolean = false;
+  editMode: boolean = false;
   public currentDetailTab;
   public studentsList;
   public currentStudent;
@@ -31,7 +33,7 @@ export class AlumniComponent implements OnInit {
   };
   public employerList;
   public graduateSchoolList;
-
+  @ViewChild('editForm', null) editForm;
   constructor(private service: AlumniService) { }
 
   ngOnInit() {
@@ -78,20 +80,24 @@ export class AlumniComponent implements OnInit {
 
   }
 
-  viewDetail(recordID: number) {
+  viewDetail(recordID: number, editMode: boolean) {
     this.currentDetailTab = "degrees";
     this.service.getDetail(recordID).then(data => {
       this.currentStudent = data;
+      this.editMode = editMode;
+      this.editForm.loadStudentData(this.currentStudent);
       this.detailVisible = true;
+      
     });
     
     
 
   }
-
+  
 
     closeDetail() {
       this.detailVisible = false;
+      this.editMode = false;
     }
 
     changeDetailTab(newTab) {
