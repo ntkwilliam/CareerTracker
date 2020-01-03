@@ -1,0 +1,298 @@
+
+.no-select {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+}
+
+
+button:focus {
+  outline:none !important;
+  
+}
+
+button {
+  font-weight: bold;
+}
+
+
+.detail-form #main {
+  display: block;
+  margin-bottom: 40px;
+  padding-left: 10px;
+  padding-right: 10px;
+  width: 100%;
+}
+
+  .detail-form {
+    position: relative;
+    border-radius: 30px;
+    
+  }
+
+
+
+  .detail-form th {
+    background-color:  rgba(196,196,196,0.25);
+    vertical-align: top;
+  }
+
+.header {
+    color: white;
+    background-color: rgb(154,0,0);
+    width: 100%;
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    
+    padding-left: 20px;
+    padding-right: 20px;
+    display: flex;
+    justify-content: flex-start;
+    
+  }
+
+  .right {
+      margin-left: 20px;
+  }
+
+  input[type=text] {
+      margin-left: 5px;
+      margin-top: 3px;
+      margin-right: 10px;
+      
+  }
+
+  .input-error {
+    background-color: #ffdbdb;
+    border: solid 1px red;
+  }
+
+    .error-list {
+      background-color: #ffdbdb;
+      height: 100px;
+      overflow: auto;
+      margin-top: 10px;
+      display: none;
+
+    }
+
+    #main .error-message {
+      display: block;
+      color: red;
+      font-weight: bold;
+      
+    }
+
+    .error-list .error-header {
+      background-color: rgb(154,0,0);
+      color: white;
+      font-weight: bold;
+      padding-left: 10px;
+      position: sticky;
+      top: 0;
+      left: 0;
+    }
+
+
+  label {
+    margin-top: 3px;
+    font-weight: bold;
+  }
+
+  
+
+.detail-form .header .header-main {
+    font-weight: bold;
+    font-size: 14px;
+    color: white;
+    padding-top: 2px;
+
+  }
+
+  .detail-form #main label {
+    display: inline-block;
+    width: 35%;
+    min-height: 1ch;
+    vertical-align: top;
+
+  }
+
+  
+  .detail-form #main .label-input-group {
+      display: block;
+  }
+  
+  .detail-form #main .input-error-message-group {
+    display: inline-block;
+  }
+
+  .detail-form .header .main label {
+    margin-right: 10px;
+   
+  }
+
+  .header .buttons {
+      margin-left: auto;
+      padding-top: 5px;
+      right: 0;
+
+  }
+
+  .header .buttons button {
+    margin-left: 10px;
+  }
+
+
+   table{
+    width: 100%;
+    table-layout: fixed;
+    
+  }
+  
+  .detail-form #main {
+    display: inline-block;
+    margin-bottom: 40px;
+    padding-left: 10px;
+    padding-right: 10px;
+    width: 100%;
+  }
+  
+  
+  .detail-form .header .main {
+    font-weight: bold;
+    font-size: 16px;
+    color: white;
+  }
+  
+  
+  .detail-form .header .buttons button {
+    margin-left: 10px;
+  }
+  
+  
+  .flex-container {
+    display: flex;
+  
+  }
+  
+  .detail-form .left {
+    flex: 1;
+    padding: 0 15px 0 15px;
+  }
+  
+  .detail-form .right {
+    flex: 1;
+    
+  }
+  
+  .detail-form .section-name {
+    margin-top: 10px;
+    background-color: rgba(196,196,196,0.25);
+    font-weight: bold;
+    width: 100%;
+    display: flex;
+    margin-bottom: 10px;
+  }
+  
+  
+
+  
+.tab-control {
+  width: 100%;
+  margin-top: 20px;
+  height: 50px;
+  display: inline-block;
+  padding: 5px 5px 5px 5px;
+
+  overflow: visible;
+
+}
+
+.audit-data {
+  background-color: rgba(196,196,196,0.10);
+  display: flex;
+  margin-top: 5px;
+}
+
+.tab-control .selections {
+    display: flex;
+    background-color: #343a40;
+    height: 45px;
+
+
+}
+
+.tab-control button {
+  height: 100%;
+  padding-left: 20px;
+  padding-right: 20px;
+  background-color: rgba(255,255,255, 0.9);
+  border: none;
+  
+  
+}
+
+.tab-control .selections .selected {
+  background-color:  rgb(154,0,0);
+  color: white;
+  
+
+  
+}
+
+
+.tab-control .content-area {
+  margin-bottom: 10px;
+  padding: 15px 5px 15px 5px;
+  background-color: rgba(196,196,196,0.15);
+  border: solid lightgray;
+  border-top: none;
+  
+}
+
+.tab-control .content-area table {
+  table-layout: fixed;
+  border: solid  rgba(196,196,196,0.25);
+}
+
+.tab-control .content-area td {
+  vertical-align: top;
+}
+
+.detail-box {
+  height: 70%;
+  width: 70%;
+  background-color: white;
+  border-radius: 30px;
+  border: solid 2px;
+}
+  
+.detail-box #main {
+  margin-top: 20px;
+}
+
+.inactive-detail-back {
+  background-color: rgba(0,0,0, 0.7);
+  position: absolute;
+  display: flex;
+  top: 0;
+  left: 0;
+  margin-bottom: 40px;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  align-items: center;
+  justify-content: center;
+  border-top-left-radius: 25px;
+  border-top-right-radius: 25px;
+  border-bottom-left-radius: 25px;
+  border-bottom-right-radius: 25px;
+
+
+}

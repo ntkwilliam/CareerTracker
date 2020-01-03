@@ -27,8 +27,8 @@
         <td class="right-align">{{student["graduation_term_code"]}}</td>
         <td>{{student["employers"]}}</td>
         <td>{{student["graduate_schools"]}}</td>
-        <td><button class="btn-dark" (click)="viewDetail(student['student_id'])">View</button>
-          <button class="btn-dark">Edit</button>
+        <td><button class="btn-dark" (click)="viewDetail(student['student_id'], false)">View</button>
+          <button class="btn-dark" (click)="viewDetail(student['student_id'], true)">Edit</button>
         </td>
 
       </tr>
@@ -104,7 +104,8 @@
 
 
 <div class="detail-form-back" [style.display]="detailVisible ? 'flex' : 'none'">
-  <div class="detail-form" (click)="$event.stopPropagation()">
+  <div class="detail-form" [style.display]="editMode == false ? 'inline-block' : 'none'" (click)="$event.stopPropagation()">
+
     <div class="header">
       <div>
       <div class="student-name">
@@ -137,15 +138,24 @@
           <br />{{currentStudent?.alumni?.email}}
         </div>
       </div>
-
+      <div class="audit-data">
+        <div class="left" style="display: flex;">
+        <div style="font-weight: bold;">Added By:<br />Added Date/Time:</div>
+        <div>{{currentStudent?.added_by}}<br />{{currentStudent?.added_datetime | date:'L/d/yyyy h:mm a'}}</div>
+      </div>
+      <div class="right" style="display: flex;">
+        <div style="font-weight: bold;">Last Updated By:<br />Last Updated Date/Time:</div>
+        <div>{{currentStudent?.updated_by}}{{currentStudent?.updated_datetime | date:'L/d/yyyy h:mm a'}}</div>
+      </div>
+      </div>
       <div class="tab-control">
         <div class="selections">
 
 
-          <button class="no-select" [class.selected]="currentDetailTab == 'degrees'">Degrees</button>
+          <button class="no-select" [class.selected]="currentDetailTab == 'degrees'" (click)="changeDetailTab('degrees')">Degrees</button>
           <button class="no-select" (click)="changeDetailTab('employments')" [class.selected]="currentDetailTab == 'employments'">Employments</button>
-          <button class="no-select">Graduate Schools</button>
-          <button class="no-select">Comments</button>
+          <button class="no-select" [class.selected]="currentDetailTab == 'graduateSchools'" (click)="changeDetailTab('graduateSchools')">Graduate Schools</button>
+          <button class="no-select" [class.selected]="currentDetailTab == 'comments'" (click)="changeDetailTab('comments')">Comments</button>
         </div>
         <div class="content-area">
           <div id="degrees" [style.display]="currentDetailTab == 'degrees' ? 'inline-block' : 'none'">
@@ -156,7 +166,7 @@
                     <th>Diploma Description</th>
                     <th>Graduation Term Code</th>
                     <th>Added By<br />Date/Time</th>
-                    <th>Updated By<br />Date/Time</th>
+                    <th>Last Updated By<br />Date/Time</th>
                   </tr>
                 
               <tr *ngFor="let degree of currentStudent?.degrees">
@@ -190,7 +200,7 @@
                 <th>Role Title</th>
                 <th>Active<br />Employment</th>
                 <th>Added By<br />Date/Time</th>
-                <th>Updated By<br />Date/Time</th>
+                <th>Last Updated By<br />Date/Time</th>
                 </tr>
                 <tr *ngFor="let employment of currentStudent?.employments">
                   <td>{{employment['employer_name']}}</td>
@@ -203,6 +213,42 @@
               </table>
 
           </div>
+
+          <div id="graduate-schools" [style.display]="currentDetailTab == 'graduateSchools' ? 'inline-block' : 'none'">
+              
+            <table>
+              <tr><th>School Name</th>
+                <th>Location</th>
+              <th>Added By<br />Date/Time</th>
+              <th>Last Updated By<br />Date/Time</th>
+              </tr>
+              <tr *ngFor="let graduateSchool of currentStudent?.graduateSchools">
+                <td>{{graduateSchool['school_name']}}</td>
+                <td>{{graduateSchool['city']}} , {{graduateSchool['state']}}</td>
+                <td>{{graduateSchool['added_by']}}<br />{{graduateSchool['added_datetime'] | date:'L/d/yyyy h:mm a'}}</td>
+                <td>{{graduateSchool['updated_by']}}<br />{{graduateSchool['updated_datetime'] | date:'L/d/yyyy h:mm a' }}</td>
+              </tr>
+            </table>
+
+        </div>
+
+        <div id="comments" [style.display]="currentDetailTab == 'comments' ? 'inline-block' : 'none'">
+              
+          <table>
+            <tr><th>Comment</th>
+
+            <th>Added By<br />Date/Time</th>
+          
+            </tr>
+            <tr *ngFor="let comment of currentStudent?.comments">
+              <td>{{comment['comment']}}</td>
+              <td>{{comment['added_by']}}<br />{{comment['added_datetime'] | date:'L/d/yyyy h:mm a'}}</td>
+            </tr>
+          </table>
+
+      </div>
+
+
         </div>
 
       </div>
@@ -210,4 +256,12 @@
     </div>
 
   </div>
+
+  <div class="edit-form" [style.display]="editMode ? 'inline-block' : 'none'" (click)="$event.stopPropagation()">
+    
+      <AlumniEditFormComponent (close)="closeDetail()" [currentStudent]="currentStudent" #editForm></AlumniEditFormComponent>
+    
+    </div>
+
+
 </div>

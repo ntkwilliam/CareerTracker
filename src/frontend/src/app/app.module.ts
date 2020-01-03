@@ -13,6 +13,8 @@ import { AuthenticationComponent } from './authentication/authentication.compone
 import { HttpClientModule} from '@angular/common/http';
 import { FormsModule} from '@angular/forms';
 import { AlumniService } from './records/alumni/alumni.service';
+import { ReactiveFormsModule } from '@angular/forms';
+import { AlumniEditFormComponent } from './records/alumni/edit-form/edit-form.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +26,7 @@ import { AlumniService } from './records/alumni/alumni.service';
     ExportsReportsComponent,
     NavigationComponent,
     AuthenticationComponent,
+    AlumniEditFormComponent
   ],
   imports: [
     BrowserModule,
@@ -40,7 +43,8 @@ import { AlumniService } from './records/alumni/alumni.service';
   
   ])
   ,HttpClientModule,
-  FormsModule
+  FormsModule, 
+  ReactiveFormsModule
   ],
   providers: [AlumniService],
   bootstrap: [AppComponent]
