@@ -10,7 +10,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded( {extended: true}));
 const DEFAULT_PAGE_SIZE = 20;
 
-
+const alumniValidator = require('./validations/alumni/alumni');
 
 app.get('/data/alumni/search', (req, res) => {
         let baseQuery = 'SELECT students.student_id, last_name, first_name, middle_name, mailing_address_city, mailing_address_state, GROUP_CONCAT(DISTINCT graduation_term_code SEPARATOR \', \')' + 
@@ -181,8 +181,97 @@ res.send(req.body);
 
 
 app.put("/data/alumni", (req, res) => {
-// Implement alumni update functionality 
+	result = {
+        validationError: false,
+        otherError: false,
+        data: null
+    }
+    alumniData = req.body;
+    const validator = new alumniValidator();
+    let [errorsExist, errors] = validator.validateAlumniRecord(alumniData);
+    if (errorsExist) {
+        result.validationError = true;
+        result.data = errors;
+        res.send(result); 
+    }
+    else {
+	dbConnection.query('SELECT * FROM students where student_id = ?', alumniData['student_id'], (errors, results, fields) => {
+	
+	let existingStudent = results[0];
+	changeFound = false;
+	
+	changedFieldValues = {};
+	queryString = '';
+	for (let prop in alumniData) {
+	if (Object.prototype.hasOwnProperty.call(alumniData , prop)) {
+		if (alumniData[prop] != existingStudent[prop]) {
+			changeFound = true;
+			
+
+			changedFieldValues[prop] = alumniData[prop];
+			
+
+		}
+	
+	}	
+	
+
+
+	}
+	if (changeFound) {
+		
+		
+		changedFieldValues['student_id'] = alumniData['student_id'];
+        queryString = queryString + ',?? = ?, `updated_datetime` = NOW()';
+	//	dbConnection.query('UPDATE students SET ' + queryString + ' WHERE student_id = ?',changedFieldValues, (err, update_result) => {
+
+        dbConnection.query('UPDATE students SET ?, updated_datetime = NOW() WHERE student_id = ?',[changedFieldValues, 1], (err, update_result) => {
+		if (err) {
+            
+            result.otherError = true;
+            result.data = err;
+            res.send(result);
+            
+		}   
+		else {
+			dbConnection.query('SELECT * FROM students where student_id = ?', alumniData['student_id'], (errors, results, fields) => {
+			if (errors) {
+			
+                result.otherError = true;
+                result.data = errors;
+                res.send(result);
+			}
+			else {
+        
+            result.data = results[0];
+            
+            res.send(result);
+			
+			}	
+
+			
+
+		
+
 });
+
+}
+
+
+
+});
+
+        }
+
+
+    });
+    }
+    
+});
+
+
+
+
 
 app.get("/data/employers/selectionList", (req, res) => {
     let query = "SELECT employer_id value, employer_name text from employers WHERE deleted = 0 ORDER BY employer_name";
