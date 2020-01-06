@@ -112,11 +112,11 @@
 <div class="audit-data">
   <div class="left" style="display: flex;">
   <div style="font-weight: bold;">Added By:<br />Added Date/Time:</div>
-  <div>{{alumniForm.value?.added_by}}<br />{{alumniForm.value?.added_datetime | date:'L/d/yyyy h:mm a'}}</div>
+  <div>{{currentStudent?.alumni?.added_by}}<br />{{currentStudent?.alumni?.added_datetime | date:'L/d/yyyy h:mm a'}}</div>
 </div>
 <div class="right" style="display: flex;">
   <div style="font-weight: bold;">Last Updated By:<br />Last Updated Date/Time:</div>
-  <div>{{alumniForm.value?.updated_by}}<br />{{alumniForm.value?.updated_datetime | date:'L/d/yyyy h:mm a'}}</div>
+  <div>{{currentStudent?.alumni?.updated_by}}<br />{{currentStudent?.alumni?.updated_datetime | date:'L/d/yyyy h:mm a'}}</div>
 </div>
 </div>
 <div class="tab-control">
