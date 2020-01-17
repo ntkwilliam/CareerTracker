@@ -20,7 +20,7 @@ button {
 }
 
 
-.detail-form #main {
+.detail-form .main, .detail-box .main {
   display: block;
   margin-bottom: 40px;
   padding-left: 10px;
@@ -82,7 +82,7 @@ button {
 
     }
 
-    #main .error-message {
+    .main .error-message {
       display: block;
       color: red;
       font-weight: bold;
@@ -115,7 +115,7 @@ button {
 
   }
 
-  .detail-form #main label {
+  .detail-form .main label {
     display: inline-block;
     width: 35%;
     min-height: 1ch;
@@ -124,11 +124,11 @@ button {
   }
 
   
-  .detail-form #main .label-input-group {
+  .main .label-input-group {
       display: block;
   }
   
-  .detail-form #main .input-error-message-group {
+ .main .input-error-message-group {
     display: inline-block;
   }
 
@@ -155,7 +155,7 @@ button {
     
   }
   
-  .detail-form #main {
+  .detail-form .main {
     display: inline-block;
     margin-bottom: 40px;
     padding-left: 10px;
@@ -228,7 +228,7 @@ button {
 
 }
 
-.tab-control button {
+.tab-control .navigation-buttons button {
   height: 100%;
   padding-left: 20px;
   padding-right: 20px;
@@ -237,6 +237,15 @@ button {
   
   
 }
+
+.tab-control .content-area button {
+  margin-top: 2px;
+  
+  
+}
+
+
+
 
 .tab-control .selections .selected {
   background-color:  rgb(154,0,0);
@@ -265,17 +274,38 @@ button {
   vertical-align: top;
 }
 
+.tab-control .content-area button, .delete-confirmation button {
+  margin-right: 5px;
+  border: none;
+}
+
+
+
 .detail-box {
-  height: 70%;
-  width: 70%;
+  
+  min-width: 65%;
   background-color: white;
   border-radius: 30px;
   border: solid 2px;
 }
   
-.detail-box #main {
+.detail-box .main {
   margin-top: 20px;
 }
+
+.delete-confirmation {
+  height: 20%;
+  width: 20%;
+  background-color: white;
+  border: solid 2px rgb(154,0,0);
+  font-size: 18px;
+  font-weight: bold;
+  color:  rgb(154,0,0);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 
 .inactive-detail-back {
   background-color: rgba(0,0,0, 0.7);

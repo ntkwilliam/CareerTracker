@@ -23,7 +23,7 @@ DROP TABLE IF EXISTS `employers`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `employers` (
-  `employer_id` int(11) NOT NULL,
+  `employer_id` int(11) NOT NULL AUTO_INCREMENT,
   `employer_name` varchar(100) NOT NULL,
   `address_line_1` varchar(35) DEFAULT NULL,
   `address_line_2` varchar(35) DEFAULT NULL,
@@ -39,17 +39,8 @@ CREATE TABLE `employers` (
   `updated_datetime` datetime DEFAULT NULL,
   `deleted` bit(1) NOT NULL DEFAULT b'0',
   PRIMARY KEY (`employer_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='		';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='		';
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `employers`
---
-
-LOCK TABLES `employers` WRITE;
-/*!40000 ALTER TABLE `employers` DISABLE KEYS */;
-/*!40000 ALTER TABLE `employers` ENABLE KEYS */;
-UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -60,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-11-14 11:59:30
+-- Dump completed on 2020-01-16 18:27:36

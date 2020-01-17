@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { resolve } from 'url';
 
 
@@ -13,7 +13,7 @@ export class AlumniService {
 
   getSearchResults(searchValues, itemsPerPage: number, page: number = 1) {
     let results = {
-      studentsList: null,
+      alumniList: null,
       errorResult: null,
       pages: null,
       totalPages: null
@@ -32,7 +32,7 @@ export class AlumniService {
         {
           params: searchCriterions
         }).toPromise().then(res => {
-          results.studentsList = res;
+          results.alumniList = res;
 
 
           if (page == 1) {
@@ -81,11 +81,24 @@ export class AlumniService {
 
 
   
-  updateAlumni(studentID, data) {
-    data.student_id = studentID;
-    return this.httpClient.put("http://localhost:8080/data/alumni/", data).toPromise();
+  updateAlumniData(recordType, keyField, data) {
+    
 
+    let request = {
+      data: data,
+      keyField: keyField,
+      recordType: recordType
+    }
 
+    
+    return this.httpClient.put("http://localhost:8080/data/alumni/", request).toPromise();
+    
+
+  }
+
+  getChildDetail(childTable, recordID) {
+   
+    return this.httpClient.get("http://localhost:8080/data/alumni/childData",{params: { record_type: childTable, record_id: recordID}}).toPromise();
 
   }
 

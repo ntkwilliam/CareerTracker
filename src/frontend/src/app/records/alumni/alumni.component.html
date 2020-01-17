@@ -7,7 +7,7 @@
 <div class="records-list no-select">
   <table class="table table-striped">
     <thead class="thead-dark">
-      <th scope="col" class="right-align">Database ID</th>
+      <th scope="col" class="right-align">Alumnus ID</th>
       <th scope="col">Last Name</th>
       <th scope="col">First Name</th>
       <th scope="col">City</th>
@@ -18,17 +18,17 @@
       <th scope="col"></th>
     </thead>
     <tbody>
-      <tr *ngFor="let student of studentsList">
-        <td class="right-align">{{student["student_id"]}}</td>
+      <tr *ngFor="let student of alumniList">
+        <td class="right-align">{{student["alumnus_id"]}}</td>
         <td>{{student["last_name"]}}</td>
         <td>{{student["first_name"]}}</td>
         <td>{{student["mailing_address_city"]}}</td>
         <td>{{student["mailing_address_state"]}}</td>
-        <td class="right-align">{{student["graduation_term_code"]}}</td>
+        <td class="right-align">{{student["graduation_term_codes"]}}</td>
         <td>{{student["employers"]}}</td>
         <td>{{student["graduate_schools"]}}</td>
-        <td><button class="btn-dark" (click)="viewDetail(student['student_id'], false)">View</button>
-          <button class="btn-dark" (click)="viewDetail(student['student_id'], true)">Edit</button>
+        <td><button class="btn-dark shadow-none" (click)="viewDetail(student['alumnus_id'], false)">View</button>
+          <button class="btn-dark shadow-none" (click)="viewDetail(student['alumnus_id'], true)">Edit</button>
         </td>
 
       </tr>
@@ -46,9 +46,9 @@
 
       <table>
         <tr>
-          <td>Database ID:</td>
-          <td><input style="width: 30px;" type="text" name="student_id"
-              [(ngModel)]="searchValues['students.student_id']"></td>
+          <td>Alumnus ID:</td>
+          <td><input style="width: 30px;" type="text" name="alumnus_id"
+              [(ngModel)]="searchValues['alumni.alumnus_id']"></td>
         </tr>
         <tr>
           <td>Last Name:</td>
@@ -85,7 +85,7 @@
 
     </div>
   </div>
-  <nav aria-label="Record pages" *ngIf="studentsList != undefined && studentsList.length > 0">
+  <nav aria-label="Record pages" *ngIf="alumniList != undefined && alumniList.length > 0">
     <ul class="pagination justify-content-end paging-links no-select">
       <li class="page-item disabled" [class.disabled]="currentPage == 1">
         <a class="page-link" href="#" tabindex="-1" aria-disabled="true"
@@ -109,10 +109,10 @@
     <div class="header">
       <div>
       <div class="student-name">
-        {{ currentStudent?.alumni?.last_name + ', ' + currentStudent?.alumni?.first_name }}
+        {{ currentAlumnus?.alumni?.last_name + ', ' + currentAlumnus?.alumni?.first_name }}
 
       </div>
-     Database ID:  {{ currentStudent?.alumni?.student_id}}
+     Alumnus ID:  {{ currentAlumnus?.alumni?.alumnus_id}}
     </div>
       <div class="buttons">
         <button class="btn-dark">Edit</button>
@@ -126,26 +126,26 @@
       </div>
       <div class="flex-container">
         <div class="left">
-          {{ currentStudent?.alumni?.mailing_address_line_1}}
-          <div *ngIf="currentStudent?.alumni?.mailing_address_line_2 != null">
-            {{currentStudent?.alumni?.mailing_address_line_2}}</div>
-          {{ currentStudent?.alumni?.mailing_address_city != null ? currentStudent?.alumni?.mailing_address_city + ', ' : '' }}
-          {{currentStudent?.alumni?.mailing_address_state != null ? currentStudent?.alumni?.mailing_address_state  + ' ' : ''}}
-          {{currentStudent?.alumni?.mailing_address_zipcode}}
+          {{ currentAlumnus?.alumni?.mailing_address_line_1}}
+          <div *ngIf="currentAlumnus?.alumni?.mailing_address_line_2 != null">
+            {{currentAlumnus?.alumni?.mailing_address_line_2}}</div>
+          {{ currentAlumnus?.alumni?.mailing_address_city != null ? currentAlumnus?.alumni?.mailing_address_city + ', ' : '' }}
+          {{currentAlumnus?.alumni?.mailing_address_state != null ? currentAlumnus?.alumni?.mailing_address_state  + ' ' : ''}}
+          {{currentAlumnus?.alumni?.mailing_address_zipcode}}
         </div>
         <div class="right">
-          {{currentStudent?.alumni?.phone_number}}
-          <br />{{currentStudent?.alumni?.email}}
+          {{currentAlumnus?.alumni?.phone_number}}
+          <br />{{currentAlumnus?.alumni?.email}}
         </div>
       </div>
       <div class="audit-data">
         <div class="left" style="display: flex;">
         <div style="font-weight: bold;">Added By:<br />Added Date/Time:</div>
-        <div>{{currentStudent?.added_by}}<br />{{currentStudent?.added_datetime | date:'L/d/yyyy h:mm a'}}</div>
+        <div>{{currentAlumnus?.alumni?.added_by}}<br />{{currentAlumnus?.alumni?.added_datetime | date:'L/d/yyyy h:mm a'}}</div>
       </div>
       <div class="right" style="display: flex;">
         <div style="font-weight: bold;">Last Updated By:<br />Last Updated Date/Time:</div>
-        <div>{{currentStudent?.updated_by}}{{currentStudent?.updated_datetime | date:'L/d/yyyy h:mm a'}}</div>
+        <div>{{currentAlumnus?.alumni?.updated_by}}<br />{{currentAlumnus?.alumni?.updated_datetime | date:'L/d/yyyy h:mm a'}}</div>
       </div>
       </div>
       <div class="tab-control">
@@ -169,7 +169,7 @@
                     <th>Last Updated By<br />Date/Time</th>
                   </tr>
                 
-              <tr *ngFor="let degree of currentStudent?.degrees">
+              <tr *ngFor="let degree of currentAlumnus?.alumni_degrees">
                 <td>{{degree['diploma_description']}}</td>
                 <td>{{degree['graduation_term_code']}}</td>
                 <td>{{degree['added_by']}}<br />{{degree['added_datetime'] | date:'L/d/yyyy h:mm a'}}</td>
@@ -202,7 +202,7 @@
                 <th>Added By<br />Date/Time</th>
                 <th>Last Updated By<br />Date/Time</th>
                 </tr>
-                <tr *ngFor="let employment of currentStudent?.employments">
+                <tr *ngFor="let employment of currentAlumnus?.employments">
                   <td>{{employment['employer_name']}}</td>
                   <td>{{employment['city']}} , {{employment['state']}}</td>
                   <td>{{employment['job_title']}}</td>
@@ -222,7 +222,7 @@
               <th>Added By<br />Date/Time</th>
               <th>Last Updated By<br />Date/Time</th>
               </tr>
-              <tr *ngFor="let graduateSchool of currentStudent?.graduateSchools">
+              <tr *ngFor="let graduateSchool of currentAlumnus?.graduateSchools">
                 <td>{{graduateSchool['school_name']}}</td>
                 <td>{{graduateSchool['city']}} , {{graduateSchool['state']}}</td>
                 <td>{{graduateSchool['added_by']}}<br />{{graduateSchool['added_datetime'] | date:'L/d/yyyy h:mm a'}}</td>
@@ -240,7 +240,7 @@
             <th>Added By<br />Date/Time</th>
           
             </tr>
-            <tr *ngFor="let comment of currentStudent?.comments">
+            <tr *ngFor="let comment of currentAlumnus?.comments">
               <td>{{comment['comment']}}</td>
               <td>{{comment['added_by']}}<br />{{comment['added_datetime'] | date:'L/d/yyyy h:mm a'}}</td>
             </tr>
@@ -259,7 +259,7 @@
 
   <div class="edit-form" [style.display]="editMode ? 'inline-block' : 'none'" (click)="$event.stopPropagation()">
     
-      <AlumniEditFormComponent (close)="closeDetail()" [currentStudent]="currentStudent" #editForm></AlumniEditFormComponent>
+      <AlumniEditFormComponent (close)="closeDetail()" [currentAlumnus]="currentAlumnus" #editForm></AlumniEditFormComponent>
     
     </div>
 

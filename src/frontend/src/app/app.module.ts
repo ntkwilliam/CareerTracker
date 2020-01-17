@@ -10,7 +10,7 @@ import { ImportsComponent } from './imports/imports.component';
 import { ExportsReportsComponent } from './exports-reports/exports-reports.component';
 import { NavigationComponent } from './navigation/navigation.component';
 import { AuthenticationComponent } from './authentication/authentication.component';
-import { HttpClientModule} from '@angular/common/http';
+import { HttpClientModule} from '@angular/common/http'
 import { FormsModule} from '@angular/forms';
 import { AlumniService } from './records/alumni/alumni.service';
 import { ReactiveFormsModule } from '@angular/forms';

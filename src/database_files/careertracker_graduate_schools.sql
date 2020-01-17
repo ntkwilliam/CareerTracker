@@ -23,7 +23,7 @@ DROP TABLE IF EXISTS `graduate_schools`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `graduate_schools` (
-  `graduate_school_id` int(11) NOT NULL,
+  `graduate_school_id` int(11) NOT NULL AUTO_INCREMENT,
   `school_name` varchar(100) NOT NULL,
   `city` varchar(25) DEFAULT NULL,
   `state` char(2) DEFAULT NULL,
@@ -33,17 +33,8 @@ CREATE TABLE `graduate_schools` (
   `updated_datetime` datetime DEFAULT NULL,
   `deleted` bit(1) NOT NULL DEFAULT b'1',
   PRIMARY KEY (`graduate_school_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `graduate_schools`
---
-
-LOCK TABLES `graduate_schools` WRITE;
-/*!40000 ALTER TABLE `graduate_schools` DISABLE KEYS */;
-/*!40000 ALTER TABLE `graduate_schools` ENABLE KEYS */;
-UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -54,4 +45,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-11-14 11:59:30
+-- Dump completed on 2020-01-16 18:27:36
