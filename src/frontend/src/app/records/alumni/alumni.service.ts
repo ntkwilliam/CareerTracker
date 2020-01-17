@@ -97,7 +97,7 @@ export class AlumniService {
   }
 
   getChildDetail(childTable, recordID) {
-   
+   console.log(childTable);
     return this.httpClient.get("http://localhost:8080/data/alumni/childData",{params: { record_type: childTable, record_id: recordID}}).toPromise();
 
   }

@@ -190,7 +190,8 @@ app.get("/data/alumni/childData", (req, res) => {
 
 
     selectString: String;
-    if (!tableData[req['record_type']]) {
+    
+    if (!tableData[req.query['record_type']]) {
    
         result.error = true;
         result.data = 'Table specified is not valid for this operation.';
@@ -258,9 +259,10 @@ app.put("/data/alumni", (req, res) => {
     }
     alumniData = req.body;
 
-    if (!recordType || !keyField) {
-        result.otherError = 'Required record and key data missing from request.';
-
+    if (!alumniData['recordType'] || !alumniData['keyField']) {
+        result.otherError = true;
+        result.data = 'Required record and key data missing from request.';
+        res.send(result);
     }
     else {
     recordType = alumniData['recordType']

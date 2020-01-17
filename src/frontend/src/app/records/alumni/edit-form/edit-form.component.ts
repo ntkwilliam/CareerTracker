@@ -85,6 +85,7 @@ public deleteConfirmationVisible: boolean = false;
     {
       this.service.getChildDetail(detailType,recordID).then(result => { 
         this.detailForms.currentRecord = result['data'];
+        console.log(result);
         this.detailForms[detailType].formGroup.patchValue(result['data'])
       });
     }
