@@ -16,22 +16,25 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `comments`
+-- Table structure for table `alumni_degrees`
 --
 
-DROP TABLE IF EXISTS `comments`;
+DROP TABLE IF EXISTS `alumni_degrees`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `comments` (
-  `comment_id` int(11) NOT NULL AUTO_INCREMENT,
-  `entity_type` char(1) DEFAULT NULL,
-  `entity_id` int(11) DEFAULT NULL,
-  `comment` varchar(1000) DEFAULT NULL,
+CREATE TABLE `alumni_degrees` (
+  `degree_id` int(11) NOT NULL AUTO_INCREMENT,
+  `alumnus_id` int(11) NOT NULL,
+  `diploma_description` varchar(100) NOT NULL,
+  `graduation_term_code` varchar(10) NOT NULL,
   `added_by` varchar(15) DEFAULT NULL,
   `added_datetime` datetime DEFAULT NULL,
+  `updated_by` varchar(15) DEFAULT NULL,
+  `updated_datetime` datetime DEFAULT NULL,
   `deleted` bit(1) NOT NULL DEFAULT b'0',
-  PRIMARY KEY (`comment_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  PRIMARY KEY (`degree_id`),
+  KEY `ALUMNUS_ID` (`alumnus_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 

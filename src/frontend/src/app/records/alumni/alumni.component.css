@@ -9,6 +9,7 @@ button:focus {
 
 button {
   font-weight: bold;
+  outline: none !important;
 }
 
 .records-list {

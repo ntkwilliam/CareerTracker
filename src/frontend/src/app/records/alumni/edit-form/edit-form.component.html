@@ -16,12 +16,12 @@
 
 </div>
 <div class="buttons">
-        <button class="btn-dark" type="submit">Save</button>
-        <button class="btn-light" (click)="this.close.emit()">Close</button>
+        <button class="btn-dark shadow-none" type="submit">Save</button>
+        <button class="btn-light shadow-none" (click)="this.close.emit()">Close</button>
       </div>
 </div>
 
-<div id="main">
+<div class="main">
     <div class="error-list">
       <div class="error-header">Validation Errors</div>
       
@@ -42,7 +42,7 @@
               <div class="label-input-group">
                <label></label>
                <div class="input-error-message-group">
-                 <input type="text" [formControl]="formControls.mailing_address_line_2" name="mailing_address_line_2" style="width: 25ch;" maxlength="32" [class.input-error]="validationErrors?.mailing_address_line_1 != null"><br />
+                 <input type="text" [formControl]="formControls.mailing_address_line_2" name="mailing_address_line_2" style="width: 25ch;" maxlength="32" [class.input-error]="validationErrors?.mailing_address_line_2 != null"><br />
                  <div class="error-message">{{validationErrors?.mailing_address_line_2}}</div>
                 </div>
               </div>
@@ -112,24 +112,25 @@
 <div class="audit-data">
   <div class="left" style="display: flex;">
   <div style="font-weight: bold;">Added By:<br />Added Date/Time:</div>
-  <div>{{alumniForm.value?.added_by}}<br />{{alumniForm.value?.added_datetime | date:'L/d/yyyy h:mm a'}}</div>
+  <div>{{currentAlumnus?.alumni?.added_by}}<br />{{currentAlumnus?.alumni?.added_datetime | date:'L/d/yyyy h:mm a'}}</div>
 </div>
 <div class="right" style="display: flex;">
   <div style="font-weight: bold;">Last Updated By:<br />Last Updated Date/Time:</div>
-  <div>{{alumniForm.value?.updated_by}}<br />{{alumniForm.value?.updated_datetime | date:'L/d/yyyy h:mm a'}}</div>
+  <div>{{currentAlumnus?.alumni?.updated_by}}<br />{{currentAlumnus?.alumni?.updated_datetime | date:'L/d/yyyy h:mm a'}}</div>
 </div>
 </div>
 <div class="tab-control">
     <div class="selections">
 
-
-      <button class="no-select" [class.selected]="currentDetailTab == 'degrees'" (click)="changeDetailTab('degrees')">Degrees</button>
-      <button class="no-select" (click)="changeDetailTab('employments')" [class.selected]="currentDetailTab == 'employments'">Employments</button>
-      <button class="no-select" [class.selected]="currentDetailTab == 'graduateSchools'" (click)="changeDetailTab('graduateSchools')">Graduate Schools</button>
-      <button class="no-select" [class.selected]="currentDetailTab == 'comments'" (click)="changeDetailTab('comments')">Comments</button>
+      <div class="navigation-buttons">
+      <button class="shadow-none no-select" [class.selected]="currentDetailTab == 'alumni_degrees'" (click)="changeDetailTab('alumni_degrees')">Degrees</button>
+      <button class="shadow-none no-select" (click)="changeDetailTab('employments')" [class.selected]="currentDetailTab == 'employments'">Employments</button>
+      <button class="shadow-none no-select" [class.selected]="currentDetailTab == 'graduateSchools'" (click)="changeDetailTab('graduateSchools')">Graduate Schools</button>
+      <button class="shadow-none no-select" [class.selected]="currentDetailTab == 'comments'" (click)="changeDetailTab('comments')">Comments</button>
     </div>
+  </div>
     <div class="content-area">
-      <div id="degrees" [style.display]="currentDetailTab == 'degrees' ? 'inline-block' : 'none'">
+      <div id="degrees" [style.display]="currentDetailTab == 'alumni_degrees' ? 'inline-block' : 'none'">
 
 
 
@@ -141,14 +142,20 @@
                 <th>Graduation Term Code</th>
                 <th>Added By<br />Date/Time</th>
                 <th>Last Updated By<br />Date/Time</th>
+                <th>Actions</th>
               </tr>
             
-          <tr *ngFor="let degree of currentStudent?.degrees">
+          <tr *ngFor="let degree of currentAlumnus?.alumni_degrees">
             <td>{{degree['diploma_description']}}</td>
             <td>{{degree['graduation_term_code']}}</td>
             <td>{{degree['added_by']}}<br />{{degree['added_datetime'] | date:'L/d/yyyy h:mm a'}}</td>
             <td>{{degree['updated_by']}}<br />{{degree['updated_datetime'] | date:'L/d/yyyy h:mm a' }}</td>
-
+            <td>
+              <button class="btn-dark shadow-none" (click)="displaySubDetail('alumni_degrees',degree['degree_id'])">Edit</button>
+              <button class="btn-dark shadow-none" style="background-color:rgb(154,0,0)" (click)="deleteChildRecord('alumni_degrees',degree['degree_id'])">Delete</button>
+            
+            
+            </td>
 
 
           </tr>
@@ -176,7 +183,7 @@
             <th>Added By<br />Date/Time</th>
             <th>Last Updated By<br />Date/Time</th>
             </tr>
-            <tr *ngFor="let employment of currentStudent?.employments">
+            <tr *ngFor="let employment of currentAlumnus?.employments">
               <td>{{employment['employer_name']}}</td>
               <td>{{employment['city']}} , {{employment['state']}}</td>
               <td>{{employment['job_title']}}</td>
@@ -196,7 +203,7 @@
           <th>Added By<br />Date/Time</th>
           <th>Last Updated By<br />Date/Time</th>
           </tr>
-          <tr *ngFor="let graduateSchool of currentStudent?.graduateSchools">
+          <tr *ngFor="let graduateSchool of currentAlumnus?.graduateSchools">
             <td>{{graduateSchool['school_name']}}</td>
             <td>{{graduateSchool['city']}} , {{graduateSchool['state']}}</td>
             <td>{{graduateSchool['added_by']}}<br />{{graduateSchool['added_datetime'] | date:'L/d/yyyy h:mm a'}}</td>
@@ -214,7 +221,7 @@
         <th>Added By<br />Date/Time</th>
       
         </tr>
-        <tr *ngFor="let comment of currentStudent?.comments">
+        <tr *ngFor="let comment of currentAlumnus?.comments">
           <td>{{comment['comment']}}</td>
           <td>{{comment['added_by']}}<br />{{comment['added_datetime'] | date:'L/d/yyyy h:mm a'}}</td>
         </tr>
@@ -234,31 +241,30 @@
 <div class="detail-box">
   <div class="header">
     <div class="header-main">
-        
-            Test
           </div>
           <div class="buttons">
-            <button class="btn-dark" (click)="this.close.emit()">Save</button>
-            <button class="btn-light" (click)="this.close.emit()">Close</button>
+            <button class="btn-dark shaadow-none" (click)="submitAlumniChildData()">Save</button>
+            <button class="btn-light shadow-none" (click)="closeSubDetail()">Close</button>
           </div>
           
         </div>
-        <div id="main">
+        <div class="main">
     <div class="flex-container">
       
         <div class="left">
-            <div class="flex-container">
-           <div><div class="control-block-list">
-               <label>Diploma Description:</label>
-               <label>Graduation Term Code:</label>
-               </div>
-               </div>
-               <div>
-                   <div class="control-block-list">
-                       <input type="textbox" name="diploma_description" id="diploma_description">
-                   </div>
-               </div>
+                <div class="label-input-group">
 
+                  <label>Diploma Description:</label>
+                  <input type="text" [formControl]="detailForms.alumni_degrees.formGroup.controls['diploma_description']" name="diploma_description" style="width: 35ch;" maxlength="32" [class.input-error]="detailForms.alumni_degrees.validationErrors?.diploma_description != null"><br />
+                
+                </div>
+                <div class="label-input-group">
+
+               <label>Graduation Term Code:</label>
+               <input type="text" [formControl]="detailForms.alumni_degrees.formGroup.controls['graduation_term_code']" name="graduation_term_code" style="width: 10ch;" maxlength="5" [class.input-error]="detailForms.alumni_degrees.validationErrors?.graduation_term_code != null"><br />
+
+</div>          
+               
 
       
 
@@ -267,6 +273,23 @@
 </div>
 </div>
 </div>
+
+
+</div>
+
 </div>
 </div>
+<div class="inactive-detail-back" [style.display]="deleteConfirmationVisible == true ? 'flex' : 'none'">
+<div class="delete-confirmation">
+  <div style="display: block;">
+<div style="margin-bottom: 5px;">Are you sure you wish<br />to delete this record?</div>
+<div style="text-align: center;">
+  <button class="btn-dark shadow-none" style="background-color: rgb(154,0,0);">Yes</button>
+  <button class="btn-dark shadow-none" (click)="cancelDelete()">No</button>
+</div>
+  </div>
+</div>
+
+
+
 </div>

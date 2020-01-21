@@ -19,11 +19,11 @@ export class AlumniComponent implements OnInit {
   detailVisible: boolean = false;
   editMode: boolean = false;
   public currentDetailTab;
-  public studentsList;
-  public currentStudent;
+  public alumniList;
+  public currentAlumnus;
   public currentResultsQuery;
   public searchValues = {
-    student_id: null,
+    alumnus_id: null,
     lastName: null,
     firstName: null,
     city: null,
@@ -50,7 +50,7 @@ export class AlumniComponent implements OnInit {
    
     this.service.getSearchResults(this.searchValues, this.ITEMSPERPAGE)
     .then(res => {
-      this.studentsList = res['studentsList'];
+      this.alumniList = res['alumniList'];
       this.pages = res['pages'];
       this.totalPages = res['totalPages'];
       
@@ -83,9 +83,9 @@ export class AlumniComponent implements OnInit {
   viewDetail(recordID: number, editMode: boolean) {
     this.currentDetailTab = "degrees";
     this.service.getDetail(recordID).then(data => {
-      this.currentStudent = data;
+      this.currentAlumnus = data;
       this.editMode = editMode;
-      this.editForm.loadStudentData(this.currentStudent);
+      this.editForm.loadStudentData(this.currentAlumnus);
       this.detailVisible = true;
       
     });
