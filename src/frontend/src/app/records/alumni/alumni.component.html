@@ -1,9 +1,10 @@
-<!--Build out alumni list with paging-->
+
+<div class="add-button">
+  <button class="btn-dark" (click)="addNewAlumni()">Add New</button>
+</div>
 
 
-<!--Build out alumni search HTML elements-->
 
-<!--Build out detail view/edit form HTML elements-->
 <div class="records-list no-select">
   <table class="table table-striped">
     <thead class="thead-dark">
@@ -206,7 +207,7 @@
                   <td>{{employment['employer_name']}}</td>
                   <td>{{employment['city']}} , {{employment['state']}}</td>
                   <td>{{employment['job_title']}}</td>
-                  <td>{{employment['active'] ? 'Y' : 'N'}}</td>
+                  <td>{{employment['active'] == 1 ? 'Y' : 'N'}}</td>
                   <td>{{employment['added_by']}}<br />{{employment['added_datetime'] | date:'L/d/yyyy h:mm a'}}</td>
                   <td>{{employment['updated_by']}}<br />{{employment['updated_datetime'] | date:'L/d/yyyy h:mm a' }}</td>
                 </tr>
@@ -237,12 +238,18 @@
           <table>
             <tr><th>Comment</th>
 
-            <th>Added By<br />Date/Time</th>
+            
           
+        <th>Added By<br />Date/Time</th>
+        <th>Last Updated By<br />Date/Time</th>
+        <th>Actions</th>
             </tr>
             <tr *ngFor="let comment of currentAlumnus?.comments">
-              <td>{{comment['comment']}}</td>
+              <td><div class="cell-content">{{comment['comment']}}</div></td>
               <td>{{comment['added_by']}}<br />{{comment['added_datetime'] | date:'L/d/yyyy h:mm a'}}</td>
+              <td>{{comment['updated_by']}}<br />{{comment['updated_datetime'] | date:'L/d/yyyy h:mm a'}}</td>
+              <td><button class="btn-dark shadow-none" (click)="toggleViewAllactive()">View All</button></td>
+         
             </tr>
           </table>
 
@@ -259,9 +266,29 @@
 
   <div class="edit-form" [style.display]="editMode ? 'inline-block' : 'none'" (click)="$event.stopPropagation()">
     
-      <AlumniEditFormComponent (close)="closeDetail()" [currentAlumnus]="currentAlumnus" #editForm></AlumniEditFormComponent>
+      <AlumniEditFormComponent *ngIf="editMode" (close)="closeDetail()" [currentAlumnus]="currentAlumnus" [employerList]="employerList" [graduateSchoolList]="graduateSchoolList" [addMode]="addMode" #editForm></AlumniEditFormComponent>
     
     </div>
 
 
+
+</div>
+
+     
+<div class="detail-form-back" [style.display]="viewAllActive ? 'flex' : 'none'">
+  <div class="detail-box">
+    <div class="header">
+      <div class="header-main">
+            </div>
+            <div class="buttons">
+              
+              <button class="btn-light shadow-none" (click)="closeSubDetail()">Close</button>
+            
+            </div>
+            
+          </div>
+          <div class="main">
+            
+          </div>
+  </div>
 </div>

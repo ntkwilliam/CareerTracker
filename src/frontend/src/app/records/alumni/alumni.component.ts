@@ -12,11 +12,12 @@ import { AlumniEditFormComponent } from './edit-form/edit-form.component';
 @Injectable()
 export class AlumniComponent implements OnInit {
 
-  readonly ITEMSPERPAGE = 20;
+  readonly ITEMSPERPAGE = 10;
   currentPage: number = 1;
   totalPages: number;
   public pages;
   detailVisible: boolean = false;
+  viewAllActive: boolean = false;
   editMode: boolean = false;
   public currentDetailTab;
   public alumniList;
@@ -34,6 +35,7 @@ export class AlumniComponent implements OnInit {
   public employerList;
   public graduateSchoolList;
   @ViewChild('editForm', null) editForm;
+  private addMode: boolean = false;
   constructor(private service: AlumniService) { }
 
   ngOnInit() {
@@ -62,6 +64,7 @@ export class AlumniComponent implements OnInit {
   fillEmployerList() {
 
    this.service.getEmployerList().then(result => {
+     
      this.employerList = result;
    });
 
@@ -81,19 +84,34 @@ export class AlumniComponent implements OnInit {
   }
 
   viewDetail(recordID: number, editMode: boolean) {
+    this.addMode = false;
     this.currentDetailTab = "degrees";
     this.service.getDetail(recordID).then(data => {
       this.currentAlumnus = data;
       this.editMode = editMode;
-      this.editForm.loadStudentData(this.currentAlumnus);
       this.detailVisible = true;
+      
+      
       
     });
     
     
 
   }
+
+  toggleViewAllactive() {
   
+    this.viewAllActive = !this.viewAllActive;
+    
+  }
+  
+addNewAlumni() {
+  this.addMode = true;
+  this.editMode = true;
+  this.detailVisible = true;
+}
+
+
 
     closeDetail() {
       this.detailVisible = false;
