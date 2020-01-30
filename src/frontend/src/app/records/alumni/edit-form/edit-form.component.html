@@ -1,6 +1,6 @@
 
 <div class="detail-form">
-      <form [formGroup]="alumniForm" (ngSubmit)="submitAlumniGeneralData()">
+      <form [formGroup]="alumniForm">
 <div class="header">
   <div class="header-main">
 <label>
@@ -16,16 +16,16 @@
 
 </div>
 <div class="buttons">
-        <button class="btn-dark shadow-none" type="submit">Save</button>
+        <button class="btn-dark shadow-none" (click)="deleteRecord('alumni',currentAlumnus?.alumni.alumnus_id)">Delete</button>
+        <button class="btn-dark shadow-none" (click)="submitAlumniGeneralData()">Save</button>
         <button class="btn-light shadow-none" (click)="this.close.emit()">Close</button>
+        
+        <div id="record-status" [style.display]="recordStatus == null ? 'none' : 'block'">{{recordStatus}}</div>
       </div>
 </div>
 
 <div class="main">
-    <div class="error-list">
-      <div class="error-header">Validation Errors</div>
-      
-    </div>
+    
     <div class="section-name">
         <div class="left">Mailing Address</div>
         <div class="right">Telephone Number/Email</div>
@@ -112,20 +112,20 @@
 <div class="audit-data">
   <div class="left" style="display: flex;">
   <div style="font-weight: bold;">Added By:<br />Added Date/Time:</div>
-  <div>{{currentAlumnus?.alumni?.added_by}}<br />{{currentAlumnus?.alumni?.added_datetime | date:'L/d/yyyy h:mm a'}}</div>
+  <div style="margin-left: 5px;">{{currentAlumnus?.alumni?.added_by}}<br />{{currentAlumnus?.alumni?.added_datetime | date:'L/d/yyyy h:mm a'}}</div>
 </div>
 <div class="right" style="display: flex;">
   <div style="font-weight: bold;">Last Updated By:<br />Last Updated Date/Time:</div>
-  <div>{{currentAlumnus?.alumni?.updated_by}}<br />{{currentAlumnus?.alumni?.updated_datetime | date:'L/d/yyyy h:mm a'}}</div>
+  <div style="margin-left: 5px;">{{currentAlumnus?.alumni?.updated_by}}<br />{{currentAlumnus?.alumni?.updated_datetime | date:'L/d/yyyy h:mm a'}}</div>
 </div>
 </div>
-<div class="tab-control">
+<div class="tab-control" [style.display]="addMode ? 'none' : 'inline-block'">
     <div class="selections">
 
       <div class="navigation-buttons">
       <button class="shadow-none no-select" [class.selected]="currentDetailTab == 'alumni_degrees'" (click)="changeDetailTab('alumni_degrees')">Degrees</button>
-      <button class="shadow-none no-select" (click)="changeDetailTab('employments')" [class.selected]="currentDetailTab == 'employments'">Employments</button>
-      <button class="shadow-none no-select" [class.selected]="currentDetailTab == 'graduateSchools'" (click)="changeDetailTab('graduateSchools')">Graduate Schools</button>
+      <button class="shadow-none no-select" (click)="changeDetailTab('alumni_employments')" [class.selected]="currentDetailTab == 'alumni_employments'">Employments</button>
+      <button class="shadow-none no-select" [class.selected]="currentDetailTab == 'alumni_graduateSchools'" (click)="changeDetailTab('alumni_graduateSchools')">Graduate Schools</button>
       <button class="shadow-none no-select" [class.selected]="currentDetailTab == 'comments'" (click)="changeDetailTab('comments')">Comments</button>
     </div>
   </div>
@@ -142,7 +142,7 @@
                 <th>Graduation Term Code</th>
                 <th>Added By<br />Date/Time</th>
                 <th>Last Updated By<br />Date/Time</th>
-                <th>Actions</th>
+                <th style="text-align: center;">Actions</th>
               </tr>
             
           <tr *ngFor="let degree of currentAlumnus?.alumni_degrees">
@@ -150,9 +150,9 @@
             <td>{{degree['graduation_term_code']}}</td>
             <td>{{degree['added_by']}}<br />{{degree['added_datetime'] | date:'L/d/yyyy h:mm a'}}</td>
             <td>{{degree['updated_by']}}<br />{{degree['updated_datetime'] | date:'L/d/yyyy h:mm a' }}</td>
-            <td>
+            <td style="text-align: center;">
               <button class="btn-dark shadow-none" (click)="displaySubDetail('alumni_degrees',degree['degree_id'])">Edit</button>
-              <button class="btn-dark shadow-none" style="background-color:rgb(154,0,0)" (click)="deleteChildRecord('alumni_degrees',degree['degree_id'])">Delete</button>
+              <button class="btn-dark shadow-none" (click)="deleteRecord('alumni_degrees',degree['degree_id'])">Delete</button>
             
             
             </td>
@@ -173,7 +173,7 @@
 
 
       </div>
-      <div id="employments" [style.display]="currentDetailTab == 'employments' ? 'inline-block' : 'none'">
+      <div id="employments" [style.display]="currentDetailTab == 'alumni_employments' ? 'inline-block' : 'none'">
           
           <table>
             <tr><th>Employer Name</th>
@@ -182,32 +182,44 @@
             <th>Active<br />Employment</th>
             <th>Added By<br />Date/Time</th>
             <th>Last Updated By<br />Date/Time</th>
+            <th style="text-align: center;">Actions</th>
             </tr>
-            <tr *ngFor="let employment of currentAlumnus?.employments">
+            <tr *ngFor="let employment of currentAlumnus?.alumni_employments">
               <td>{{employment['employer_name']}}</td>
               <td>{{employment['city']}} , {{employment['state']}}</td>
               <td>{{employment['job_title']}}</td>
-              <td>{{employment['active'] ? 'Y' : 'N'}}</td>
+              <td>{{employment['active'] == 1 ? 'Y' : 'N'}}</td>
               <td>{{employment['added_by']}}<br />{{employment['added_datetime'] | date:'L/d/yyyy h:mm a'}}</td>
               <td>{{employment['updated_by']}}<br />{{employment['updated_datetime'] | date:'L/d/yyyy h:mm a' }}</td>
+              <td style="text-align: center;">
+                <button class="btn-dark shadow-none" (click)="displaySubDetail('alumni_employments',employment['employment_id'])">Edit</button>
+                <button class="btn-dark shadow-none" (click)="deleteRecord('alumni_employments',employment['employment_id'])">Delete</button>
+            
+              </td>
             </tr>
           </table>
 
       </div>
 
-      <div id="graduate-schools" [style.display]="currentDetailTab == 'graduateSchools' ? 'inline-block' : 'none'">
+      <div id="graduate-schools" [style.display]="currentDetailTab == 'alumni_graduateSchools' ? 'inline-block' : 'none'">
           
         <table>
           <tr><th>School Name</th>
             <th>Location</th>
           <th>Added By<br />Date/Time</th>
           <th>Last Updated By<br />Date/Time</th>
+          <th style="text-align: center;">Actions</th>
           </tr>
-          <tr *ngFor="let graduateSchool of currentAlumnus?.graduateSchools">
+          <tr *ngFor="let graduateSchool of currentAlumnus?.alumni_graduate_schools">
             <td>{{graduateSchool['school_name']}}</td>
             <td>{{graduateSchool['city']}} , {{graduateSchool['state']}}</td>
             <td>{{graduateSchool['added_by']}}<br />{{graduateSchool['added_datetime'] | date:'L/d/yyyy h:mm a'}}</td>
             <td>{{graduateSchool['updated_by']}}<br />{{graduateSchool['updated_datetime'] | date:'L/d/yyyy h:mm a' }}</td>
+            <td style="text-align: center;">
+              <button class="btn-dark shadow-none" (click)="displaySubDetail('alumni_graduate_schools',graduateSchool['alumni_graduate_school_id'])">Edit</button>
+              <button class="btn-dark shadow-none" (click)="deleteRecord('alumni_graduate_schools',graduateSchool['alumni_graduate_school_id'])">Delete</button>
+            
+            </td>
           </tr>
         </table>
 
@@ -219,11 +231,20 @@
         <tr><th>Comment</th>
 
         <th>Added By<br />Date/Time</th>
-      
+        <th>Last Updated By<br />Date/Time</th>
+          <th style="text-align: center;">Actions</th>
         </tr>
         <tr *ngFor="let comment of currentAlumnus?.comments">
-          <td>{{comment['comment']}}</td>
+          <td><div class="cell-content">{{comment['comment']}}</div></td>
           <td>{{comment['added_by']}}<br />{{comment['added_datetime'] | date:'L/d/yyyy h:mm a'}}</td>
+          
+          <td>{{comment['updated_by']}}<br />{{comment['updated_datetime'] | date:'L/d/yyyy h:mm a'}}</td>
+          <td style="text-align: center;">
+            <button class="btn-dark shadow-none" (click)="displaySubDetail('comments',comment['comment_id'])">Edit</button>
+            <button class="btn-dark shadow-none" (click)="deleteRecord('comments',comment['comment_id'])">Delete</button>
+          
+
+          </td>
         </tr>
       </table>
 
@@ -237,54 +258,121 @@
 
 </div>
 </form>
-<div class="inactive-detail-back" [style.display]="subDetailVisible ? 'flex' : 'none'">
-<div class="detail-box">
+<div class="inactive-detail-back" [style.display]="detailForms.detailVisible ? 'flex' : 'none'">
+<div class="detail-box"></div>
   <div class="header">
     <div class="header-main">
           </div>
           <div class="buttons">
             <button class="btn-dark shaadow-none" (click)="submitAlumniChildData()">Save</button>
             <button class="btn-light shadow-none" (click)="closeSubDetail()">Close</button>
+            <div [style.display]="detailForms.recordStatus == null ? 'none' : 'block'">{{detailForms.recordStatus}}</div>
           </div>
           
         </div>
         <div class="main">
+          <div class="detail_alumni_degrees" [style.display]="detailForms.currentForm == 'alumni_degrees' ? 'block' : 'none'">
     <div class="flex-container">
       
         <div class="left">
                 <div class="label-input-group">
 
                   <label>Diploma Description:</label>
-                  <input type="text" [formControl]="detailForms.alumni_degrees.formGroup.controls['diploma_description']" name="diploma_description" style="width: 35ch;" maxlength="32" [class.input-error]="detailForms.alumni_degrees.validationErrors?.diploma_description != null"><br />
-                
+                  <div class="input-error-message-group">
+                  <input type="text" [formControl]="detailForms.alumni_degrees.formGroup.controls['diploma_description']" name="diploma_description" style="width: 35ch;" maxlength="100" [class.input-error]="detailForms.alumni_degrees.validationErrors?.diploma_description != null"><br />
+                  <div class="error-message">{{detailForms.validationErrors?.diploma_description}}</div>
+                  
+                </div>
                 </div>
                 <div class="label-input-group">
 
                <label>Graduation Term Code:</label>
+               <div class="input-error-message-group">
                <input type="text" [formControl]="detailForms.alumni_degrees.formGroup.controls['graduation_term_code']" name="graduation_term_code" style="width: 10ch;" maxlength="5" [class.input-error]="detailForms.alumni_degrees.validationErrors?.graduation_term_code != null"><br />
-
+               <div class="error-message">{{detailForms.validationErrors?.graduation_term_code}}</div>
+                
+              </div>
 </div>          
+</div>
+</div>
+</div>
+<div class="detail_alumni_employments" [style.display]="detailForms.currentForm == 'alumni_employments' ? 'block' : 'none'">
+  <div class="flex-container">
+    
+      <div class="left">
+              <div class="label-input-group">
+
+                <label>Employer:</label>
+                <div class="input-error-message-group">
+                <select [formControl]="detailForms.alumni_employments.formGroup.controls['employer_id']" name="employer_id" style="width: 35ch;">
+                  <option value=""></option>
+                  <option *ngFor="let optionValue of employerList" value={{optionValue.value}}>{{optionValue.text}}</option>
+                </select>
+                <div class="error-message">{{detailForms.validationErrors?.employer_id}}</div>
+
+              </div>
+              </div>
+              <div class="label-input-group">
+                <label>Role Title</label>
+                <div class="input-error-message-group">
+             <input type="text" [formControl]="detailForms.alumni_employments.formGroup.controls['job_title']" name="job_title" style="width: 35ch;" maxlength="45" [class.input-error]="detailForms.alumni_degrees.validationErrors?.job_title != null"><br />
+             <div class="error-message">{{detailForms.validationErrors?.job_title}}</div>
+</div>
+</div>
+<div class="label-input-group">
+  <label>Active Employment:</label>
+<input type="checkbox" [formControl]="detailForms.alumni_employments.formGroup.controls['active']" name="active">
+</div>          
+</div>
+</div>
+</div>
+
+<div class="detail_alumni_graduate_schools" [style.display]="detailForms.currentForm == 'alumni_graduate_schools' ? 'block' : 'none'">
+  <div class="flex-container">
+    
+      <div class="left">
+              <div class="label-input-group">
+
+                <label>Graduate School:</label>
+                <select [formControl]="detailForms.alumni_graduate_schools.formGroup.controls['graduate_school_id']" name="graduate_school_id" style="width: 35ch;">
+                  <option value=""></option>
+                  <option *ngFor="let optionValue of graduateSchoolList" value={{optionValue.value}}>{{optionValue.text}}</option>
+                </select>
                
+              </div>
+       
+</div>
+</div>
+</div>
 
-      
+<div class="detail_comments" [style.display]="detailForms.currentForm == 'comments' ? 'block' : 'none'">
+  <div class="flex-container">
+    
+      <div class="left">
+              <div class="label-input-group">
 
+                <label>Comment:</label>
+                <textarea [formControl]="detailForms.comments.formGroup.controls['comment']" name="comment" style="width: 100%;height:200px;" maxlength="1000" [class.input-error]="detailForms.comments.validationErrors?.comment != null"></textarea>
+                  <br />
 
-
+              </div>
+       
 </div>
 </div>
 </div>
 
 
 </div>
-
 </div>
+
+
 </div>
 <div class="inactive-detail-back" [style.display]="deleteConfirmationVisible == true ? 'flex' : 'none'">
 <div class="delete-confirmation">
   <div style="display: block;">
 <div style="margin-bottom: 5px;">Are you sure you wish<br />to delete this record?</div>
 <div style="text-align: center;">
-  <button class="btn-dark shadow-none" style="background-color: rgb(154,0,0);">Yes</button>
+  <button class="btn-dark shadow-none" style="background-color: rgb(154,0,0);" (click)="finalizeDelete()">Yes</button>
   <button class="btn-dark shadow-none" (click)="cancelDelete()">No</button>
 </div>
   </div>

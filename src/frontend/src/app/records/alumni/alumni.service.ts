@@ -58,7 +58,7 @@ export class AlumniService {
 
     return this.httpClient.get("http://localhost:8080/data/employers/selectionList").
       toPromise();
-
+    
 
   }
 
@@ -81,12 +81,11 @@ export class AlumniService {
 
 
   
-  updateAlumniData(recordType, keyField, data) {
+  updateAlumniData(recordType,data) {
     
 
     let request = {
       data: data,
-      keyField: keyField,
       recordType: recordType
     }
 
@@ -96,9 +95,25 @@ export class AlumniService {
 
   }
 
-  getChildDetail(childTable, recordID) {
-   console.log(childTable);
-    return this.httpClient.get("http://localhost:8080/data/alumni/childData",{params: { record_type: childTable, record_id: recordID}}).toPromise();
+
+  deleteAlumniData(recordType,recordID) {
+    
+
+    return this.httpClient.delete("http://localhost:8080/data/alumni/", {params: { record_type: recordType, record_id: recordID}}).toPromise();
+    
+
+  }
+
+
+
+
+
+
+
+
+  getChildDetail(recordType, recordID) {
+   
+    return this.httpClient.get("http://localhost:8080/data/alumni/childData",{params: { record_type: recordType, record_id: recordID}}).toPromise();
 
   }
 

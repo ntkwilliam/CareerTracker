@@ -139,14 +139,12 @@ button {
 
   .header .buttons {
       margin-left: auto;
-      padding-top: 5px;
+      padding-top: 7px;
       right: 0;
+      text-align: right;
 
   }
 
-  .header .buttons button {
-    margin-left: 10px;
-  }
 
 
    table{
@@ -172,7 +170,7 @@ button {
   
   
   .detail-form .header .buttons button {
-    margin-left: 10px;
+    margin-left: 5px;
   }
   
   
@@ -272,6 +270,14 @@ button {
 
 .tab-control .content-area td {
   vertical-align: top;
+  height: 30px;
+  
+
+}
+
+.tab-control .content-area .cell-content {
+max-height: 100px;
+overflow: hidden;
 }
 
 .tab-control .content-area button, .delete-confirmation button {
@@ -291,6 +297,10 @@ button {
   
 .detail-box .main {
   margin-top: 20px;
+}
+
+.detail-box input[type=text] {
+  margin-left: 0;
 }
 
 .delete-confirmation {
