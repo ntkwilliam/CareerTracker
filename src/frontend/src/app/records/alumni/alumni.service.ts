@@ -33,14 +33,14 @@ export class AlumniService {
           params: searchCriterions
         }).toPromise().then(res => {
           results.alumniList = res;
-
+          console.log(results);
 
           if (page == 1) {
             this.httpClient.get("http://localhost:8080/data/alumni/search/pageCount",
               {
                 params: searchCriterions
               }).toPromise().then(res => {
-
+                  
                 results.totalPages = res['pageCount'];
                 results.pages = Array(results.totalPages);
                 resolve(results)
@@ -95,6 +95,23 @@ export class AlumniService {
 
   }
 
+  addNewAlumniData(recordType, data) {
+
+
+
+    let request = {
+      data: data,
+      recordType: recordType
+    }
+
+
+    return this.httpClient.post("http://localhost:8080/data/alumni/", request).toPromise();
+    
+
+
+
+
+  }
 
   deleteAlumniData(recordType,recordID) {
     

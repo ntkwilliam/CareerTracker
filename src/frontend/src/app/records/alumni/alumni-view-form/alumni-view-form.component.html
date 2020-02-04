@@ -1,0 +1,159 @@
+<div class="detail-form" (click)="$event.stopPropagation()">
+
+    <div class="header">
+      <div>
+      <div class="student-name">
+        {{ currentAlumnus?.alumni?.last_name + ', ' + currentAlumnus?.alumni?.first_name }}
+
+      </div>
+     Alumnus ID:  {{ currentAlumnus?.alumni?.alumnus_id}}
+    </div>
+      <div class="buttons">
+        <button class="btn-dark">Edit</button>
+        <button class="btn-light" (click)="this.close.emit()">Close</button>
+      </div>
+    </div>
+    <div id="main">
+      <div class="section-name">
+        <div class="left">Mailing Address</div>
+        <div class="right">Telephone Number/Email</div>
+      </div>
+      <div class="flex-container">
+        <div class="left">
+          {{ currentAlumnus?.alumni?.mailing_address_line_1}}
+          <div *ngIf="currentAlumnus?.alumni?.mailing_address_line_2 != null">
+            {{currentAlumnus?.alumni?.mailing_address_line_2}}</div>
+          {{ currentAlumnus?.alumni?.mailing_address_city != null ? currentAlumnus?.alumni?.mailing_address_city + ', ' : '' }}
+          {{currentAlumnus?.alumni?.mailing_address_state != null ? currentAlumnus?.alumni?.mailing_address_state  + ' ' : ''}}
+          {{currentAlumnus?.alumni?.mailing_address_zipcode}}
+        </div>
+        <div class="right">
+          {{currentAlumnus?.alumni?.phone_number}}
+          <br />{{currentAlumnus?.alumni?.email_address}}
+        </div>
+      </div>
+      <div class="audit-data">
+        <div class="left" style="display: flex;">
+        <div style="font-weight: bold;">Added By:<br />Added Date/Time:</div>
+        <div>{{currentAlumnus?.alumni?.added_by}}<br />{{currentAlumnus?.alumni?.added_datetime | date:'L/d/yyyy h:mm a'}}</div>
+      </div>
+      <div class="right" style="display: flex;">
+        <div style="font-weight: bold;">Last Updated By:<br />Last Updated Date/Time:</div>
+        <div>{{currentAlumnus?.alumni?.updated_by}}<br />{{currentAlumnus?.alumni?.updated_datetime | date:'L/d/yyyy h:mm a'}}</div>
+      </div>
+      </div>
+      <div class="tab-control">
+        <div class="selections">
+        <div class="navigation-buttons">
+          <button class="shadow-none no-select" [class.selected]="currentDetailTab == 'alumni_degrees'" (click)="changeDetailTab('alumni_degrees')">Degrees</button>
+          <button class="shadow-none no-select" (click)="changeDetailTab('alumni_employments')" [class.selected]="currentDetailTab == 'alumni_employments'">Employments</button>
+          <button class="shadow-none no-select" [class.selected]="currentDetailTab == 'alumni_graduate_schools'" (click)="changeDetailTab('alumni_graduate_schools')">Graduate Schools</button>
+          <button class="shadow-none no-select" [class.selected]="currentDetailTab == 'comments'" (click)="changeDetailTab('comments')">Comments</button>
+        </div>
+    </div>
+
+        <div class="content-area">
+          <div id="degrees" [style.display]="currentDetailTab == 'alumni_degrees' ? 'inline-block' : 'none'">
+              <table>
+                    
+        
+                  <tr>
+                    <th>Diploma Description</th>
+                    <th>Graduation Term Code</th>
+                    <th>Added By<br />Date/Time</th>
+                    <th>Last Updated By<br />Date/Time</th>
+                  </tr>
+                
+              <tr *ngFor="let degree of currentAlumnus?.alumni_degrees">
+                <td>{{degree['diploma_description']}}</td>
+                <td>{{degree['graduation_term_code']}}</td>
+                <td>{{degree['added_by']}}<br />{{degree['added_datetime'] | date:'L/d/yyyy h:mm a'}}</td>
+                <td>{{degree['updated_by']}}<br />{{degree['updated_datetime'] | date:'L/d/yyyy h:mm a' }}</td>
+    
+    
+    
+              </tr>
+    
+    
+    
+              </table>
+    
+
+
+
+
+
+
+
+
+          </div>
+          <div id="employments" [style.display]="currentDetailTab == 'alumni_employments' ? 'inline-block' : 'none'">
+              
+              <table>
+                <tr><th>Employer Name</th>
+                  <th>Location</th>
+                <th>Role Title</th>
+                <th>Active<br />Employment</th>
+                <th>Added By<br />Date/Time</th>
+                <th>Last Updated By<br />Date/Time</th>
+                </tr>
+                <tr *ngFor="let employment of currentAlumnus?.alumni_employments">
+                  <td>{{employment['employer_name']}}</td>
+                  <td>{{employment['city']}} , {{employment['state']}}</td>
+                  <td>{{employment['job_title']}}</td>
+                  <td>{{employment['active'] == 1 ? 'Y' : 'N'}}</td>
+                  <td>{{employment['added_by']}}<br />{{employment['added_datetime'] | date:'L/d/yyyy h:mm a'}}</td>
+                  <td>{{employment['updated_by']}}<br />{{employment['updated_datetime'] | date:'L/d/yyyy h:mm a' }}</td>
+                </tr>
+              </table>
+
+          </div>
+
+          <div id="graduate-schools" [style.display]="currentDetailTab == 'alumni_graduate_schools' ? 'inline-block' : 'none'">
+              
+            <table>
+              <tr><th>School Name</th>
+                <th>Location</th>
+              <th>Added By<br />Date/Time</th>
+              <th>Last Updated By<br />Date/Time</th>
+              </tr>
+              <tr *ngFor="let graduateSchool of currentAlumnus?.alumni_graduate_schools">
+                <td>{{graduateSchool['school_name']}}</td>
+                <td>{{graduateSchool['city']}} , {{graduateSchool['state']}}</td>
+                <td>{{graduateSchool['added_by']}}<br />{{graduateSchool['added_datetime'] | date:'L/d/yyyy h:mm a'}}</td>
+                <td>{{graduateSchool['updated_by']}}<br />{{graduateSchool['updated_datetime'] | date:'L/d/yyyy h:mm a' }}</td>
+              </tr>
+            </table>
+
+        </div>
+
+        <div id="comments" [style.display]="currentDetailTab == 'comments' ? 'inline-block' : 'none'">
+              
+          <table>
+            <tr><th>Comment</th>
+
+            
+          
+        <th>Added By<br />Date/Time</th>
+        <th>Last Updated By<br />Date/Time</th>
+        <th>Actions</th>
+            </tr>
+            <tr *ngFor="let comment of currentAlumnus?.comments">
+              <td><div class="cell-content">{{comment['comment']}}</div></td>
+              <td>{{comment['added_by']}}<br />{{comment['added_datetime'] | date:'L/d/yyyy h:mm a'}}</td>
+              <td>{{comment['updated_by']}}<br />{{comment['updated_datetime'] | date:'L/d/yyyy h:mm a'}}</td>
+              <td><button class="btn-dark shadow-none" (click)="toggleViewAllactive()">View</button></td>
+         
+            </tr>
+          </table>
+
+      </div>
+
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>

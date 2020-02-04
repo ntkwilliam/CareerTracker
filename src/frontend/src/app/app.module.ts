@@ -15,6 +15,8 @@ import { FormsModule} from '@angular/forms';
 import { AlumniService } from './records/alumni/alumni.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AlumniEditFormComponent } from './records/alumni/edit-form/edit-form.component';
+import { AlumniViewFormComponent } from './records/alumni/alumni-view-form/alumni-view-form.component';
+
 
 @NgModule({
   declarations: [
@@ -26,7 +28,9 @@ import { AlumniEditFormComponent } from './records/alumni/edit-form/edit-form.co
     ExportsReportsComponent,
     NavigationComponent,
     AuthenticationComponent,
-    AlumniEditFormComponent
+    AlumniEditFormComponent,
+    AlumniViewFormComponent,
+    
   ],
   imports: [
     BrowserModule,

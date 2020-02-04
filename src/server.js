@@ -18,7 +18,7 @@ const alumniValidator = require('./validations/alumni/alumni');
 
 
 app.get('/data/alumni/search', (req, res) => {
-    let baseQuery = 'SELECT alumni.alumnus_id, last_name, first_name, middle_name, mailing_address_city, mailing_address_state, GROUP_CONCAT(DISTINCT graduation_term_code SEPARATOR \', \')' +
+    let baseQuery = 'SELECT alumni.alumnus_id, last_name, first_name, middle_name, CONCAT(mailing_address_city,\', \', mailing_address_state) location, GROUP_CONCAT(DISTINCT graduation_term_code SEPARATOR \', \')' +
         ' graduation_term_codes, GROUP_CONCAT(DISTINCT employer_name SEPARATOR \', \') employers, GROUP_CONCAT(DISTINCT school_name SEPARATOR \', \') graduate_schools' +
         ' FROM alumni LEFT JOIN alumni_employments on alumni_employments.alumnus_id = alumni.alumnus_id AND alumni_employments.active = 1 AND alumni_employments.deleted = 0' +
         ' LEFT JOIN employers ON alumni_employments.employer_id = employers.employer_id AND employers.deleted = 0 LEFT JOIN alumni_degrees' +
@@ -42,17 +42,18 @@ app.get('/data/alumni/search', (req, res) => {
 });
 
 app.get('/data/alumni/search/pageCount', (req, res) => {
-    let baseQuery = 'SELECT COUNT(*) ItemCount FROM alumni LEFT JOIN alumni_employments on alumni_employments.alumnus_id = alumni.alumnus_id AND alumni_employments.active = 1 AND alumni_employments.deleted = 0' +
+    let baseQuery = 'SELECT COUNT(DISTINCT alumni.alumnus_id) ItemCount FROM alumni LEFT JOIN alumni_employments on alumni_employments.alumnus_id = alumni.alumnus_id AND alumni_employments.active = 1 AND alumni_employments.deleted = 0' +
         ' LEFT JOIN employers ON alumni_employments.employer_id = employers.employer_id AND employers.deleted = 0 LEFT JOIN alumni_degrees' +
         ' ON alumni_degrees.alumnus_id = alumni.alumnus_id AND alumni_degrees.deleted = 0 LEFT JOIN alumni_graduate_schools ON alumni_graduate_schools.alumnus_id' +
         ' = alumni.alumnus_id AND alumni_graduate_schools.deleted = 0 LEFT JOIN graduate_schools ON alumni_graduate_schools.graduate_school_id = graduate_schools.graduate_school_id' +
         ' AND graduate_schools.deleted = 0 WHERE alumni.deleted = 0'
 
     let [criteria, propValues] = getQueryValues(req.query, 'alumni');
-
+  
 
     dbConnection.query(baseQuery + criteria, propValues, (error, results, fields) => {
         if (!error) {
+            console.log(results);
             res.send({ pageCount: Math.ceil(results[0].ItemCount / (req.query.itemsPerPage == undefined ? DEFAULT_PAGE_SIZE : req.query.itemsPerPage)) });
         }
         else {
@@ -178,10 +179,6 @@ app.get("/data/alumni/childData", (req, res) => {
 
 
 
-app.post("/data/alumni", (req, res) => {
-    res.send(req.body);
-});
-
 app.delete("/data/alumni", (req, res) => {
 let keyField;
 
@@ -222,6 +219,67 @@ else
 
 
 
+app.post("/data/alumni", (req, res) => {
+    result = {
+        validationError: false,
+        otherError: false,
+        noChange: false,
+        data: null
+    }
+    alumniData = req.body;
+    
+    if (!alumniData['recordType'] || !tableData[alumniData['recordType']]) {
+        result.otherError = true;
+        result.data = 'Record type is missing or invalid.';
+        
+        res.send(result);
+    }
+    else {
+    let recordType = alumniData['recordType'];
+    let keyField = tableData[alumniData['recordType']].keyField;
+    let data = alumniData['data'];
+    const validator = new alumniValidator();
+    let errorsExist;
+    let errors;
+
+
+    if (recordType == 'alumni') {
+        [errorsExist, errors] = validator.validateAlumniRecord(data);
+    }
+    else {
+     [errorsExist, errors] = validator.validateChildRecord(recordType, data);
+    }
+
+
+    if (errorsExist) {
+        result.validationError = true;
+        result.data = errors;
+        console.log(result);
+        res.send(result);
+    }
+    else {
+     
+        let [changesFound, newData] = detectChanges(null, data);
+
+        dbConnection.query('INSERT INTO ?? SET ?', [recordType, newData], (errors, results, fields) => {
+            
+            dbConnection.query(tableData[recordType].recordQueryString, results.insertId, (errors, results, fields) => {
+                console.log(errors);
+                console.log(results);
+                result.data = results;
+                res.send(result);
+                      
+    
+            });
+
+        });
+
+    }   
+
+    }
+});
+
+
 app.put("/data/alumni", (req, res) => {
     result = {
         validationError: false,
@@ -230,7 +288,7 @@ app.put("/data/alumni", (req, res) => {
         data: null
     }
     alumniData = req.body;
-
+    
     if (!alumniData['recordType'] || !tableData[alumniData['recordType']]) {
         result.otherError = true;
         result.data = 'Record type is missing or invalid.';
@@ -260,7 +318,7 @@ app.put("/data/alumni", (req, res) => {
     }
     else {
      
-        if (data['alumnus_id'] != '') {
+        
         dbConnection.query(tableData[recordType].recordQueryString, data[keyField], (errors, results, fields) => {
         
             let [changesFound, changedFieldValues] = detectChanges(results[0], data);
@@ -303,24 +361,11 @@ app.put("/data/alumni", (req, res) => {
             }
         });
     }
-    else 
-    {
-       let  [changesFound,newData] = detectChanges(null, data);
-        
-        dbConnection.query('INSERT INTO ?? SET ?', [recordType, newData], (errors, results, fields) => {
-            dbConnection.query(tableData[recordType].recordQueryString, results.insertId, (errors, results, fields) => {
-            
-                res.send(results);
-                      
-    
-            });
+      
 
-        });
-
-    }   
-}
     }
 });
+
 
 detectChanges = (existingRecord, updatedRecord) => {
 
@@ -478,11 +523,13 @@ const tableData = {
     alumni: {
         keyField: string = 'alumnus_id',
         recordQueryString: string = 'SELECT * FROM alumni WHERE alumnus_id = ?'
+        
     },
     alumni_degrees: {
         keyField: string = 'degree_id',
         recordQueryString: string = 'SELECT alumnus_id, degree_id, diploma_description, graduation_term_code, added_by, added_datetime, updated_by, updated_datetime' +
         ' FROM alumni_degrees WHERE degree_id = ?'
+      
     },
     alumni_employments: {
         keyField: string = 'employment_id',
@@ -499,8 +546,7 @@ const tableData = {
     },
     comments: {
         keyField: string = 'comment_id',
-        recordQueryString: string = 'SELECT entity_type, entity_id, comment_id, comment, added_by, added_datetime, updated_by, updated_datetime FROM comments WHERE comment_id = ?'
-    
+        recordQueryString: string = 'SELECT entity_type, entity_id, comment_id, comment, added_by, added_datetime, updated_by, updated_datetime FROM comments WHERE comment_id = ?' 
     }
 
 }
