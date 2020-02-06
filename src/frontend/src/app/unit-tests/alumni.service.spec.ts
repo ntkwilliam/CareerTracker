@@ -111,7 +111,7 @@ export class AlumniSearchTest {
 
     getDataFromCollection(searchCriterions, page, itemsPerPage) {
         let searchResult = this.searchData;
-        for (let property in searchCriterions {
+        for (let property in searchCriterions) {
             if (searchCriterions[property] != null) {
 
                 searchResult = searchResult.filter(item => item[property] == searchCriterions[property]);
@@ -121,14 +121,14 @@ export class AlumniSearchTest {
             }
         }
 
-        return searchResult.slice((page - 1) * itemsPerPage), (page - 1) * itemsPerPage) + itemsPerPage);
+        return searchResult.slice((page - 1) * itemsPerPage, (page - 1) * itemsPerPage + itemsPerPage);
 
     }
 
     getPageCount(searchCriterions, itemsPerPage) {
 
         let searchResult = this.searchData;
-        for (let property in searchCriterions {
+        for (let property in searchCriterions) {
             if (searchCriterions[property] != null) {
 
                 searchResult = searchResult.filter(item => item[property] == searchCriterions[property]);
@@ -176,7 +176,7 @@ export class AlumniSearchTest {
 
 describe('alumni general data validation', () => {
     it('Test last_name null', () => {
-        let validator = new AlumniSearchTest();
+        let searchTest = new AlumniSearchTest();
         let searchValues = {
             alumnus_id: null,
             lastName: null,
@@ -187,6 +187,8 @@ describe('alumni general data validation', () => {
             graduateSchool: null
         }
 
+        let results = searchTest.getSearchResults(searchValues, 20, 1);
+        expect(results.alumniList.length).toBe(10);
     });
 
 

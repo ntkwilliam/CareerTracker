@@ -125,11 +125,12 @@
       <div class="navigation-buttons">
       <button class="shadow-none no-select" [class.selected]="currentDetailTab == 'alumni_degrees'" (click)="changeDetailTab('alumni_degrees')">Degrees</button>
       <button class="shadow-none no-select" (click)="changeDetailTab('alumni_employments')" [class.selected]="currentDetailTab == 'alumni_employments'">Employments</button>
-      <button class="shadow-none no-select" [class.selected]="currentDetailTab == 'alumni_graduateSchools'" (click)="changeDetailTab('alumni_graduateSchools')">Graduate Schools</button>
+      <button class="shadow-none no-select" [class.selected]="currentDetailTab == 'alumni_graduate_schools'" (click)="changeDetailTab('alumni_graduate_schools')">Graduate Schools</button>
       <button class="shadow-none no-select" [class.selected]="currentDetailTab == 'comments'" (click)="changeDetailTab('comments')">Comments</button>
     </div>
   </div>
-    <div class="content-area">
+  <div class="content-area">
+    <div class="add-new-child-record"><button class="btn-dark shadow-none" style="background-color:  rgb(154,0,0);" (click)="addnewDetailRecord()">Add New</button></div>
       <div id="degrees" [style.display]="currentDetailTab == 'alumni_degrees' ? 'inline-block' : 'none'">
 
 
@@ -174,35 +175,34 @@
 
       </div>
       <div id="employments" [style.display]="currentDetailTab == 'alumni_employments' ? 'inline-block' : 'none'">
+        <table>
+          <tr><th>Employer Name</th>
+            <th>Location</th>
+          <th>Role Title</th>
+          <th>Active<br />Employment</th>
+          <th>Added By<br />Date/Time</th>
+          <th>Last Updated By<br />Date/Time</th>
+          <th style="text-align: center;">Actions</th>
+          </tr>
+          <tr *ngFor="let employment of currentAlumnus?.alumni_employments">
+            <td>{{employment['employer_name']}}</td>
+            <td>{{employment['city']}} , {{employment['state']}}</td>
+            <td>{{employment['job_title']}}</td>
+            <td>{{employment['active'] == 1 ? 'Y' : 'N'}}</td>
+            <td>{{employment['added_by']}}<br />{{employment['added_datetime'] | date:'L/d/yyyy h:mm a'}}</td>
+            <td>{{employment['updated_by']}}<br />{{employment['updated_datetime'] | date:'L/d/yyyy h:mm a' }}</td>
+            <td style="text-align: center;">
+              <button class="btn-dark shadow-none" (click)="displaySubDetail('alumni_employments',employment['employment_id'])">Edit</button>
+              <button class="btn-dark shadow-none" (click)="deleteRecord('alumni_employments',employment['employment_id'])">Delete</button>
           
-          <table>
-            <tr><th>Employer Name</th>
-              <th>Location</th>
-            <th>Role Title</th>
-            <th>Active<br />Employment</th>
-            <th>Added By<br />Date/Time</th>
-            <th>Last Updated By<br />Date/Time</th>
-            <th style="text-align: center;">Actions</th>
-            </tr>
-            <tr *ngFor="let employment of currentAlumnus?.alumni_employments">
-              <td>{{employment['employer_name']}}</td>
-              <td>{{employment['city']}} , {{employment['state']}}</td>
-              <td>{{employment['job_title']}}</td>
-              <td>{{employment['active'] == 1 ? 'Y' : 'N'}}</td>
-              <td>{{employment['added_by']}}<br />{{employment['added_datetime'] | date:'L/d/yyyy h:mm a'}}</td>
-              <td>{{employment['updated_by']}}<br />{{employment['updated_datetime'] | date:'L/d/yyyy h:mm a' }}</td>
-              <td style="text-align: center;">
-                <button class="btn-dark shadow-none" (click)="displaySubDetail('alumni_employments',employment['employment_id'])">Edit</button>
-                <button class="btn-dark shadow-none" (click)="deleteRecord('alumni_employments',employment['employment_id'])">Delete</button>
-            
-              </td>
-            </tr>
-          </table>
-
+            </td>
+          </tr>
+        </table>
+        
       </div>
 
-      <div id="graduate-schools" [style.display]="currentDetailTab == 'alumni_graduateSchools' ? 'inline-block' : 'none'">
-          
+      <div id="graduate-schools" [style.display]="currentDetailTab == 'alumni_graduate_schools' ? 'inline-block' : 'none'">
+         
         <table>
           <tr><th>School Name</th>
             <th>Location</th>
@@ -259,7 +259,7 @@
 </div>
 </form>
 <div class="inactive-detail-back" [style.display]="detailForms.detailVisible ? 'flex' : 'none'">
-<div class="detail-box"></div>
+<div class="detail-box">
   <div class="header">
     <div class="header-main">
           </div>

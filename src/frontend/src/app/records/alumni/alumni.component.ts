@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Injectable } from '@angular/core';
 import { AlumniService } from './alumni.service';
 import { AlumniEditFormComponent } from './edit-form/edit-form.component';
-
+import { AlumniViewFormComponent} from './alumni-view-form/alumni-view-form.component'
 @Component({
   selector: 'app-alumni',
   templateUrl: './alumni.component.html',
@@ -35,11 +35,12 @@ export class AlumniComponent implements OnInit {
   public employerList;
   public graduateSchoolList;
   @ViewChild('editForm', null) editForm;
+  @ViewChild('viewForm', null) viewForm;
   private addMode: boolean = false;
   constructor(private service: AlumniService) { }
 
   ngOnInit() {
-    this.getSearchResults();
+    this.getSearchResults(true);
     this.fillEmployerList();
     this.fillGraduateSchoolList();
   }
@@ -47,17 +48,23 @@ export class AlumniComponent implements OnInit {
 
 
 
-  getSearchResults() {
+  getSearchResults(newQuery: boolean) {
     
    
-    this.service.getSearchResults(this.searchValues, this.ITEMSPERPAGE)
+    if (newQuery) {
+      this.currentPage = 1;
+    }
+
+    this.service.getSearchResults(this.searchValues, this.ITEMSPERPAGE, this.currentPage)
     .then(res => {
       this.alumniList = res['alumniList'];
+      if (newQuery) {
       this.pages = res['pages'];
       this.totalPages = res['totalPages'];
-      
+      }
     }).catch(error => console.log(error));
     
+  
 
   }
 
@@ -99,6 +106,14 @@ export class AlumniComponent implements OnInit {
 
   }
 
+  gotoPage(i) {
+    console.log(i);
+    this.currentPage = i;
+    this.getSearchResults(false);
+    return false;
+  }
+
+
   toggleViewAllactive() {
   
     this.viewAllActive = !this.viewAllActive;
@@ -109,6 +124,9 @@ addNewAlumni() {
   this.addMode = true;
   this.editMode = true;
   this.detailVisible = true;
+  this.currentAlumnus = {
+    
+  }
 }
 
 
@@ -121,17 +139,5 @@ addNewAlumni() {
     changeDetailTab(newTab) {
       this.currentDetailTab = newTab;
     }
-
-  editRecord(recordID: number) {
-    // Implement record editing form display functionality
-  }
-
-  validateRecord() {
-    // Implement record editing validation functionality
-  }
-
-  saveRecord() {
-    //Implement record update/save functionality
-  }
 
 }

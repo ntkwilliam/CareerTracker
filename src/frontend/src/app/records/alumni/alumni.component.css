@@ -2,6 +2,8 @@
 
 @import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
 
+
+
 .add-button {
   margin-right: 20px;
   margin-bottom: 7px;
@@ -39,6 +41,12 @@ button {
   margin-right: 5px;
 }
 
+.records-list td { 
+  padding-top: 5px;
+  padding-bottom: 5px;
+  vertical-align: middle;
+}
+
 .no-select {
   -webkit-touch-callout: none; /* iOS Safari */
   -webkit-user-select: none; /* Safari */
@@ -49,11 +57,6 @@ button {
                                   supported by Chrome and Opera */
 }
 
-
-.records-list tr:hover  {
-  background-color: rgba(211,211,211,0.8);
-
-}
 
 
 
@@ -70,6 +73,7 @@ button {
   align-items: center;
   justify-content: center;
   
+  
 }
 
 
@@ -80,6 +84,7 @@ button {
     width: 55%;
     display:  inline-block;
     border: solid 2px;
+    max-height: 85%;
     
   }
 
@@ -89,7 +94,8 @@ button {
 .detail-form table,.edit-form table{
   width: 100%;
   table-layout: fixed;
-  
+  margin-bottom: 5px;
+
 }
 
 .audit-data {
@@ -99,85 +105,6 @@ button {
 }
 
 
-.detail-form th {
-  background-color:  rgba(196,196,196,0.25);
-  vertical-align: top;
-}
-
-.header {
-  color: white;
-  background-color: rgb(154,0,0);
-  width: 100%;
-  border-top-left-radius: 25px;
-  border-top-right-radius: 25px;
-  padding-top: 20px;
-  padding-bottom: 20px;
-
-  padding-left: 20px;
-  padding-right: 20px;
-  display: flex;
-  justify-content: space-between;
-}
-
-.detail-form #main {
-  display: inline-block;
-  margin-bottom: 40px;
-  padding-left: 10px;
-  padding-right: 10px;
-  width: 100%;
-  
-}
-
-
-.detail-form .header .student-name {
-  font-weight: bold;
-  font-size: 16px;
-  color: white;
-}
-
-
-.detail-form .header .buttons button {
-  margin-left: 10px;
-}
-
-
-.flex-container {
-  display: flex;
-}
-
-.detail-form .left {
-  flex: 1;
-  padding: 0 15px 0 15px;
-}
-
-.detail-form .right {
-  flex: 1;
-  
-}
-
-.detail-form .section-name {
-  margin-top: 20px;
-  background-color: rgba(196,196,196,0.25);
-  font-weight: bold;
-  width: 100%;
-  display: flex;
-  
-}
-
-
-.detail-form #employments, #degrees {
-  overflow: auto;
-}
-
-.detail-form .graduate-schools {
-  padding-left: 20px;
-  width: 100%;
-  margin-top: 10px;
-}
-
-.detail-form td {
-  vertical-align: top;
-}
 
 
 .align-right {
@@ -291,66 +218,6 @@ button {
     margin-top: 10px;
     text-align: center;
 }
-
-.tab-control {
-  width: 100%;
-  margin-top: 20px;
-  height: 50px;
-  display: inline-block;
-  padding: 5px 5px 5px 5px;
-
-  overflow: visible;
-
-}
-
-
-.tab-control .selections {
-    display: flex;
-    background-color: #343a40;
-    height: 45px;
-
-
-}
-
-.tab-control .selections button {
-  height: 100%;
-  padding-left: 20px;
-  padding-right: 20px;
-  background-color: rgba(255,255,255, 0.9);
-  border: none;
-  
-  
-}
-
-.tab-control .selections .selected {
-  background-color:  rgb(154,0,0);
-  color: white;
-  
-
-  
-}
-
-
-.tab-control .content-area {
-  margin-bottom: 10px;
-  padding: 15px 5px 15px 5px;
-  background-color: rgba(196,196,196,0.15);
-  border: solid lightgray;
-  border-top: none;
-  
-}
-
-.tab-control .content-area table {
-  table-layout: fixed;
-  border: solid  rgba(196,196,196,0.25);
-}
-
-.tab-control .content-area .cell-content {
-  max-height: 100px;
-  overflow: hidden;
-  }
-  
-
   .detail-box {
   
     width: 35%;

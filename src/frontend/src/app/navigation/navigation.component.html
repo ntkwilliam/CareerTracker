@@ -4,22 +4,20 @@
   
     </div>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav text-right">
-        <li class="nav-item nav-link" routerLinkActive="active-nav"><a routerLink="records/alumni">Records</a></li>
-        <li class="nav-item nav-link" routerLinkActive="active-nav"><a routerLink="imports">Import Data</a></li>
-        <li class="nav-item nav-link" routerLinkActive="active-nav"><a routerLink='exports-reports'>Reports</a></li>
-        <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle"  style="background-color: rgb(154,0,0); border: 0" routerLinkActive="active-nav" routerLink="records/alumni" button id="recordDropDownButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Records</button>
+      
+         <div class="dropdown" style="background-color: rgb(154,0,0);">
+        <button class="btn btn-secondary dropdown-toggle shadow-none"  style="background-color: rgb(154,0,0); border: 0" routerLink="records" routerLinkActive="active-nav" button id="recordDropDownButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Records</button>
           <div class="dropdown-menu" aria-labelledby="recordDropDownButton">
-            <a class="dropdown-item">Alumni</a>
-
-
+            <div class="drop-down-item"><a routerLink="records/alumni">Alumni</a></div>
+            <div class="drop-down-item"><a routerLink="records/employers">Employers</a></div>
+            <div class="drop-down-item"><a routerLink="records/graduateSchools">Graduate Schools</a></div>
           </div>
       </div>
+      <button class="btn btn-secondary shadow-none"  style="background-color: rgb(154,0,0); border: 0" routerLinkActive="active-nav" routerLink="imports" aria-haspopup="true" aria-expanded="false">Import Data</button>
+      <button class="btn btn-secondary shadow-none"  style="background-color: rgb(154,0,0); border: 0" routerLinkActive="active-nav" routerLink="exports-reports" aria-haspopup="true" aria-expanded="false">Reports/Exports</button>
 
 
-
-      </ul>
+      
     </div>
     <div class="ml-auto mr-1">
       <div class="nav-link">Logout</div>
