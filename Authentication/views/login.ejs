@@ -1,0 +1,31 @@
+<h1>Login</h1>
+
+<!-- Display message if login error -->
+<% if (messages.error) { %>
+    <%= messages.error %>
+<% } %>
+
+<!-- Post to login route -->
+<form action="/login" method="POST">
+
+    <!-- Username text box -->
+    <div>
+        <label for="username">Username</label>
+        <input type="username" id="username" name="username"
+        required>
+    </div>
+
+    <!-- Password text box -->
+    <div>
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password"
+        required>
+    </div>
+
+    <!-- Submit login information for authentication -->
+    <button type="submit">Login</button>
+
+</form>
+
+<!-- Link to signup page -->
+<a href="/signup">Signup</a>
