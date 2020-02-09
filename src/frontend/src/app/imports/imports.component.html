@@ -1,1 +1,13 @@
 <!--Build out CSV import submission form HTML elements-->
+<div class="container">
+    <input type="file" (change)="onFileChange($event)"/>
+</div>
+<table class="table">
+    <tbody>
+        <tr *ngFor="let row of data">
+            <td *ngFor="let val of row">
+                {{val}}
+            </td>
+        </tr>
+    </tbody>
+</table>
