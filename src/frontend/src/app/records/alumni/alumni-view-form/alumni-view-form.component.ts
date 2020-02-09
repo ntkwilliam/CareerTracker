@@ -10,18 +10,27 @@ export class AlumniViewFormComponent implements OnInit {
   @Output() close: EventEmitter<any> = new EventEmitter();
   @Input() currentAlumnus;
   private currentDetailTab = 'alumni_degrees';
-
+  viewAllActive: boolean = false;
   constructor(private renderer: Renderer2) { }
-
+  private currentCommentDetail = {};
   ngOnInit() {
     
     
   }
 
+  
+  toggleViewAllactive(comment) {
+    this.currentCommentDetail = comment;
+    this.viewAllActive = !this.viewAllActive;
+    
+  }
+  
 
   changeDetailTab(newTab) {
     console.log(this.currentDetailTab);
     this.currentDetailTab = newTab;
   }
+
+  
 
 }

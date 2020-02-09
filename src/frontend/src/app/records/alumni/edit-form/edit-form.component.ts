@@ -246,7 +246,7 @@ export class AlumniEditFormComponent implements OnInit {
 
 
     if (recordType == 'alumni') {
-      console.log(response);
+      
       if (response.validationError) {
 
 
@@ -288,10 +288,13 @@ export class AlumniEditFormComponent implements OnInit {
         if (this.currentAlumnus[recordType] == undefined) {
           this.currentAlumnus[recordType] = [];
         }
-        console.log(response['data']);
+      
         this.currentAlumnus[recordType].push(response['data'][0]);
-        console.log(this.currentAlumnus);
+        
+        this.detailForms[recordType].formGroup.patchValue(response['data'][0]);
         this.detailForms.addMode = false;   
+        
+        this.showRecordStatus('The record has been saved successfully.');
       }
       else {
 
@@ -365,6 +368,8 @@ export class AlumniEditFormComponent implements OnInit {
           this.service.addNewAlumniData(this.detailForms.currentForm, this.detailForms[currentForm].formGroup.value).then(result => this.processSaveResponse(currentForm, result));
 
         } else {
+          console.log(this.detailForms.currentForm);
+          console.log(this.detailForms[currentForm].formGroup.value);
           this.service.updateAlumniData(this.detailForms.currentForm, this.detailForms[currentForm].formGroup.value).then(result => this.processSaveResponse(currentForm, result)
 
           );

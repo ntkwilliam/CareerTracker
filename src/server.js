@@ -260,8 +260,10 @@ app.post("/data/alumni", (req, res) => {
     else {
      
         let [changesFound, newData] = detectChanges(null, data);
-
-        dbConnection.query('INSERT INTO ?? SET ?', [recordType, newData], (errors, results, fields) => {
+        newData['added_by'] = newData['updated_by'] = 'CURRENTUSER';
+        
+        
+        dbConnection.query('INSERT INTO ?? SET ?, added_datetime = NOW(), updated_datetime = NOW()', [recordType, newData], (errors, results, fields) => {
             
             dbConnection.query(tableData[recordType].recordQueryString, results.insertId, (errors, results, fields) => {
                 console.log(errors);
@@ -318,15 +320,18 @@ app.put("/data/alumni", (req, res) => {
     }
     else {
      
-        
+        console.log(keyField);
+        console.log(data);
         dbConnection.query(tableData[recordType].recordQueryString, data[keyField], (errors, results, fields) => {
         
+            console.log(errors);
+
             let [changesFound, changedFieldValues] = detectChanges(results[0], data);
 
             if (changesFound) {
                // changedFieldValues[keyField] = data[keyField];
     
-               
+               changedFieldValues['updated_by'] = 'CURRENTUSER';
                 dbConnection.query('UPDATE ?? SET ?, updated_datetime = NOW() WHERE ?? = ?', [recordType, changedFieldValues, keyField, data[keyField]],
                  (err, update_result) => {
                     if (err) {

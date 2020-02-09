@@ -38,69 +38,6 @@
 
 
 
-<div id="pages-search">
-  <div id="search-box">
-    <div id="header">Search</div>
-    <div id="body">
-
-
-      <table>
-        <tr>
-          <td>Alumnus ID:</td>
-          <td><input style="width: 30px;" type="text" name="alumnus_id"
-              [(ngModel)]="searchValues['alumni.alumnus_id']"></td>
-        </tr>
-        <tr>
-          <td>Last Name:</td>
-          <td><input type="text" name="last_name" [(ngModel)]="searchValues.last_name"></td>
-          <td>First Name:</td>
-          <td><input type="text" name="first_name" [(ngModel)]="searchValues.first_name"></td>
-        </tr>
-        <tr>
-          <td>City:</td>
-          <td><input type="text" [(ngModel)]="searchValues.mailing_address_city"></td>
-          <td>State:</td>
-          <td><input style="width: 30px;" type="text" [(ngModel)]="searchValues.mailing_address_state"></td>
-        </tr>
-        <tr>
-          <td>Employer:</td>
-          <td colspan="3"><select [(ngModel)]="searchValues.employer">
-              <option value=""></option>
-              <option *ngFor="let optionValue of employerList" value={{optionValue.value}}>{{optionValue.text}}</option>
-            </select></td>
-        </tr>
-        <tr>
-          <td>Graduate School:</td>
-          <td colspan="3"><select [(ngModel)]="searchValues.graduateSchool">
-              <option value=""></option>
-              <option *ngFor="let optionValue of graduateSchoolList" value={{optionValue.value}}>{{optionValue.text}}
-              </option>
-            </select></td>
-        </tr>
-      </table>
-      <div id="search-button">
-        <button class="btn-dark" (click)="getSearchResults(true)">Search</button>
-      </div>
-
-
-    </div>
-  </div>
-  <nav aria-label="Record pages" *ngIf="alumniList != undefined && alumniList.length > 0">
-    <ul class="pagination justify-content-end paging-links no-select">
-      <li class="page-item disabled" [class.disabled]="currentPage == 1">
-        <a class="page-link" href="#" tabindex="-1" aria-disabled="true"
-          (click)="gotoPage(this.currentPage - 1 )">Previous</a>
-      </li>
-      <li *ngFor="let item of pages; let i = index" class="page-item" [class.paging-links-active]="currentPage == i + 1"
-        ><a (click)="gotoPage(i+1)" class="page-link"
-        [class.paging-links-active]="currentPage == (i+1)">{{i + 1}}</a></li>
-      <li class="page-item" [class.disabled]="currentPage >= totalPages">
-        <a class="page-link" href="#" (click)="gotoPage(this.currentPage + 1 )">Next</a>
-      </li>
-    </ul>
-  </nav>
-
-</div>
 
 
 <div class="detail-form-back" [style.display]="detailVisible ? 'flex' : 'none'">
@@ -124,21 +61,69 @@
 
 </div>
 
-     
-<div class="detail-form-back" [style.display]="viewAllActive ? 'flex' : 'none'">
-  <div class="detail-box">
-    <div class="header">
-      <div class="header-main">
-            </div>
-            <div class="buttons">
-              
-              <button class="btn-light shadow-none" (click)="closeSubDetail()">Close</button>
-            
-            </div>
-            
-          </div>
-          <div class="main">
-            
-          </div>
+<div class="detail-form-back" ngIf*="searchActive == true">
+  <div id="pages-search">
+    <div id="search-box">
+      <div id="header">Search</div>
+      <div id="body">
+  
+  
+        <table>
+          <tr>
+            <td>Alumnus ID:</td>
+            <td><input style="width: 30px;" type="text" name="alumnus_id"
+                [(ngModel)]="searchValues['alumni.alumnus_id']"></td>
+          </tr>
+          <tr>
+            <td>Last Name:</td>
+            <td><input type="text" name="last_name" [(ngModel)]="searchValues.last_name"></td>
+            <td>First Name:</td>
+            <td><input type="text" name="first_name" [(ngModel)]="searchValues.first_name"></td>
+          </tr>
+          <tr>
+            <td>City:</td>
+            <td><input type="text" [(ngModel)]="searchValues.mailing_address_city"></td>
+            <td>State:</td>
+            <td><input style="width: 30px;" type="text" [(ngModel)]="searchValues.mailing_address_state"></td>
+          </tr>
+          <tr>
+            <td>Employer:</td>
+            <td colspan="3"><select [(ngModel)]="searchValues.employer">
+                <option value=""></option>
+                <option *ngFor="let optionValue of employerList" value={{optionValue.value}}>{{optionValue.text}}</option>
+              </select></td>
+          </tr>
+          <tr>
+            <td>Graduate School:</td>
+            <td colspan="3"><select [(ngModel)]="searchValues.graduateSchool">
+                <option value=""></option>
+                <option *ngFor="let optionValue of graduateSchoolList" value={{optionValue.value}}>{{optionValue.text}}
+                </option>
+              </select></td>
+          </tr>
+        </table>
+        <div id="search-button">
+          <button class="btn-dark" (click)="getSearchResults(true)">Search</button>
+        </div>
+  
+  
+      </div>
+    </div>
+    <nav aria-label="Record pages" *ngIf="alumniList != undefined && alumniList.length > 0">
+      <ul class="pagination justify-content-end paging-links no-select">
+        <li class="page-item disabled" [class.disabled]="currentPage == 1">
+          <a class="page-link" href="#" tabindex="-1" aria-disabled="true"
+            (click)="gotoPage(this.currentPage - 1 )">Previous</a>
+        </li>
+        <li *ngFor="let item of pages; let i = index" class="page-item" [class.paging-links-active]="currentPage == i + 1"
+          ><a (click)="gotoPage(i+1)" class="page-link"
+          [class.paging-links-active]="currentPage == (i+1)">{{i + 1}}</a></li>
+        <li class="page-item" [class.disabled]="currentPage >= totalPages">
+          <a class="page-link" href="#" (click)="gotoPage(this.currentPage + 1 )">Next</a>
+        </li>
+      </ul>
+    </nav>
+  
   </div>
+  
 </div>
