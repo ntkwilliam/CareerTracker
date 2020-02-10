@@ -21,6 +21,7 @@ button {
 
 .detail-form .main, .detail-box .main {
   display: block;
+  margin-top: 10px;
   margin-bottom: 40px;
   padding-left: 10px;
   padding-right: 10px;
@@ -43,7 +44,7 @@ button {
     vertical-align: top;
   }
 
-.header {
+.detail-form  .header {
     color: white;
     background-color: rgb(154,0,0);
     width: 100%;
@@ -53,9 +54,10 @@ button {
     padding-bottom: 10px;
     
     padding-left: 20px;
-    padding-right: 20px;
+    padding-right: 10px;
     display: flex;
     justify-content: flex-start;
+    align-items: center;
     
   }
 
@@ -88,6 +90,7 @@ button {
       display: block;
       color: red;
       font-weight: bold;
+      margin-left: 4px;
       
     }
 
@@ -132,6 +135,7 @@ button {
   
  .main .input-error-message-group {
     display: inline-block;
+    
   }
 
   .detail-form .header .main label {
@@ -212,7 +216,7 @@ button {
   margin-bottom: 5px;
   display: inline-block;
   padding: 5px 5px 5px 5px;
-
+  
 
 }
 
@@ -226,9 +230,14 @@ button {
     display: flex;
     background-color: #343a40;
     height: 45px;
-   
+    justify-content: space-between;
+    align-items: center;
 
 
+}
+
+.tab-control .navigation-buttons {
+  height: 100%;
 }
 
 .tab-control .navigation-buttons button {
@@ -277,7 +286,7 @@ button {
   table-layout: fixed;
   border: solid  rgba(196,196,196,0.25);
   margin-bottom: 5px;
-  white-space: nowrap;
+  
 }
 
 .tab-control .content-area td {
@@ -308,7 +317,26 @@ overflow: hidden;
   border-radius: 30px;
   border: solid 2px;
 }
+ 
+
+.detail-box  .header {
+  color: white;
+  background-color: rgb(154,0,0);
+  width: 100%;
+  border-top-left-radius: 25px;
+  border-top-right-radius: 25px;
+  padding-top: 5px;
+  padding-bottom: 5px;
   
+  padding-left: 20px;
+  padding-right: 10px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  
+}
+
+
 .detail-box .main {
   margin-top: 20px;
 }

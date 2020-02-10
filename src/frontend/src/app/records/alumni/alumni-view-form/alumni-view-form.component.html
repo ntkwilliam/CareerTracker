@@ -9,8 +9,8 @@
      Alumnus ID:  {{ currentAlumnus?.alumni?.alumnus_id}}
     </div>
       <div class="buttons">
-        <button class="btn-dark">Edit</button>
-        <button class="btn-light" (click)="this.close.emit()">Close</button>
+        <button class="far fa-edit" style="border: none; background: transparent; color: white; font-size: 1.2em;" (click)="this.invokeEdit.emit()"></button>
+        <button class="far fa-window-close" style="border: none; background: transparent; color: white; font-size: 1.2em;" (click)="this.close.emit()"></button>
       </div>
     </div>
     <div id="main">
@@ -20,9 +20,9 @@
       </div>
       <div class="flex-container">
         <div class="left">
-          {{ currentAlumnus?.alumni?.mailing_address_line_1}}
+          {{ currentAlumnus?.alumni?.mailing_address_line_1}}<br />
           <div *ngIf="currentAlumnus?.alumni?.mailing_address_line_2 != null">
-            {{currentAlumnus?.alumni?.mailing_address_line_2}}</div>
+            {{currentAlumnus?.alumni?.mailing_address_line_2}}<br /></div>
           {{ currentAlumnus?.alumni?.mailing_address_city != null ? currentAlumnus?.alumni?.mailing_address_city + ', ' : '' }}
           {{currentAlumnus?.alumni?.mailing_address_state != null ? currentAlumnus?.alumni?.mailing_address_state  + ' ' : ''}}
           {{currentAlumnus?.alumni?.mailing_address_zipcode}}

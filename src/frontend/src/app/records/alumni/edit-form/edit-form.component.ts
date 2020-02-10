@@ -98,8 +98,13 @@ export class AlumniEditFormComponent implements OnInit {
 
   ngOnInit() {
     this.renderer.addClass(document.body, 'no-scroll');
-    if (!this.addMode) {
+    
+    if (this.currentAlumnus.alumni != undefined) {
       this.loadStudentData();
+    }
+    else
+    {
+      this.addMode = true;
     }
   }
 
@@ -133,9 +138,9 @@ export class AlumniEditFormComponent implements OnInit {
             this.close.emit();
           }
           else {
-            let index = this.currentAlumnus[this.deleteRequest['recordType']].map(element => element[this.detailForms[this.deleteRequest['recordType']].keyField]).indexOf(this.deleteRequest['record_id']);
-            this.currentAlumnus[this.deleteRequest['recordType']].splice(index, 1);
-
+            let index = this.currentAlumnus[this.deleteRequest['recordType']].map(element => element[this.detailForms[this.deleteRequest['recordType']].keyField]).indexOf(this.deleteRequest['recordID']);
+          this.currentAlumnus[this.deleteRequest['recordType']].splice(index, 1);
+          
           }
         }, b => console.log(b));
 

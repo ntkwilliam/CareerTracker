@@ -6,7 +6,6 @@ import { AppComponent } from './app.component';
 import { AlumniComponent } from './records/alumni/alumni.component';
 import { EmployersComponent } from './records/employers/employers.component';
 import { GraduateSchoolsComponent } from './records/graduate-schools/graduate-schools.component';
-import { ImportsComponent } from './imports/imports.component';
 import { ExportsReportsComponent } from './exports-reports/exports-reports.component';
 import { NavigationComponent } from './navigation/navigation.component';
 import { AuthenticationComponent } from './authentication/authentication.component';
@@ -16,7 +15,7 @@ import { AlumniService } from './records/alumni/alumni.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AlumniEditFormComponent } from './records/alumni/edit-form/edit-form.component';
 import { AlumniViewFormComponent } from './records/alumni/alumni-view-form/alumni-view-form.component';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -24,7 +23,6 @@ import { AlumniViewFormComponent } from './records/alumni/alumni-view-form/alumn
     AlumniComponent,
     EmployersComponent,
     GraduateSchoolsComponent,
-    ImportsComponent,
     ExportsReportsComponent,
     NavigationComponent,
     AuthenticationComponent,
@@ -35,12 +33,12 @@ import { AlumniViewFormComponent } from './records/alumni/alumni-view-form/alumn
   imports: [
     BrowserModule,
     AppRoutingModule,
+    BrowserAnimationsModule,
     RouterModule.forRoot([
        { path: '', redirectTo: 'records/alumni', pathMatch: 'full' },
        { path: 'records/employers', component: EmployersComponent},
        { path: 'records/graduate-schools', component: GraduateSchoolsComponent},
        { path: 'records/alumni', component: AlumniComponent},
-       { path: 'imports', component: ImportsComponent},
        { path: 'exports-reports', component: ExportsReportsComponent}
   
   

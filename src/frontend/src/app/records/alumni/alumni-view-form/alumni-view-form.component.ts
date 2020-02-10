@@ -8,6 +8,7 @@ import { EventEmitter } from '@angular/core';
 @Injectable()
 export class AlumniViewFormComponent implements OnInit {
   @Output() close: EventEmitter<any> = new EventEmitter();
+  @Output() invokeEdit: EventEmitter<any> = new EventEmitter();
   @Input() currentAlumnus;
   private currentDetailTab = 'alumni_degrees';
   viewAllActive: boolean = false;

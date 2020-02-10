@@ -3,27 +3,38 @@ import { Injectable } from '@angular/core';
 import { AlumniService } from './alumni.service';
 import { AlumniEditFormComponent } from './edit-form/edit-form.component';
 import { AlumniViewFormComponent} from './alumni-view-form/alumni-view-form.component'
+import { ObjectUnsubscribedError } from 'rxjs';
+import { trigger, state, transition, style, animation, animate } from '@angular/animations';
 @Component({
   selector: 'app-alumni',
   templateUrl: './alumni.component.html',
   styleUrls: ['./alumni.component.css'],
-  
-})
+  animations: [
+    trigger('fade', [
+      state('void', style({ opacity:0})),
+      transition('void => visible', 
+        animate('0.3s')),
+      state('visible', style ( { opacity: 1})),
+        transition('* => void', animate(500))
+    
+  ]
+)
+]})
 @Injectable()
 export class AlumniComponent implements OnInit {
-
-  readonly ITEMSPERPAGE = 10;
+  
+  readonly ITEMSPERPAGE = 15;
   currentPage: number = 1;
   totalPages: number;
-  public pages;
   detailVisible: boolean = false;
   viewAllActive: boolean = false;
   editMode: boolean = false;
-  public alumniList;
-  public currentAlumnus;
-  public currentResultsQuery;
-  public searchActive = false;
-  public searchValues = {
+  private alumniList;
+  private currentAlumnus;
+  private currentResultsQuery;
+  private searchDialogActive = false;
+  private searchApplied = false;
+  private searchValues = {
     alumnus_id: null,
     lastName: null,
     firstName: null,
@@ -36,11 +47,11 @@ export class AlumniComponent implements OnInit {
   public graduateSchoolList;
   @ViewChild('editForm', null) editForm;
   @ViewChild('viewForm', null) viewForm;
-  private addMode: boolean = false;
+
   constructor(private service: AlumniService) { }
 
   ngOnInit() {
-    this.getSearchResults(true);
+    this.getSearchResults(true, true);
     this.fillEmployerList();
     this.fillGraduateSchoolList();
   }
@@ -48,10 +59,37 @@ export class AlumniComponent implements OnInit {
 
 
 
-  getSearchResults(newQuery: boolean) {
+  removeSearchFilter() {
+    Object.keys(this.searchValues).forEach(a => {
+      this.searchValues[a] = null;
+    });
+    this.getSearchResults(true,true);
+  
+
+  }
+
+
+  getSearchResults(newQuery: boolean, clearQuery: boolean = false) {
     
    
     if (newQuery) {
+      if (this.searchApplied && clearQuery) {
+        this.searchApplied = false;
+        
+      }
+      else if (!this.searchApplied && !clearQuery)
+      {
+        let criteriaExist = false;
+        Object.keys(this.searchValues).forEach(a => {
+          if (this.searchValues[a]) {
+            criteriaExist = true;
+          }
+        });
+
+        if (criteriaExist) {
+        this.searchApplied = true;
+        }
+      }
       this.currentPage = 1;
     }
 
@@ -59,8 +97,8 @@ export class AlumniComponent implements OnInit {
     .then(res => {
       this.alumniList = res['alumniList'];
       if (newQuery) {
-      this.pages = res['pages'];
       this.totalPages = res['totalPages'];
+      this.searchDialogActive = false;
       }
     }).catch(error => console.log(error));
     
@@ -68,8 +106,19 @@ export class AlumniComponent implements OnInit {
 
   }
 
-  fillEmployerList() {
+  getPageWindowArray() {
 
+    let beginIndex = Math.floor((this.currentPage - 1.0) / 10.0);
+    let newArray = [];
+    for (let i = beginIndex; i < Math.min(beginIndex + 10, this.totalPages); i++) {
+      newArray.push(i);
+    }
+    console.log(newArray);
+    return newArray;
+  }
+
+  fillEmployerList() {
+    
    this.service.getEmployerList().then(result => {
      
      this.employerList = result;
@@ -91,9 +140,30 @@ export class AlumniComponent implements OnInit {
   }
 
     
-    
+    viewDetail(recordID, editMode) {
+      
+      this.service.getDetail(recordID).then(
+        (result) => {
+          this.currentAlumnus = result;
+          this.editMode = editMode;
+          this.detailVisible = true;
+          console.log(this.editMode);
+
+
+
+        }
+
+      )
+
+
+
+
+    }
 
   
+    invokeEdit() {
+      this.editMode = true;
+    }
 
   gotoPage(i) {
     console.log(i);
@@ -104,21 +174,26 @@ export class AlumniComponent implements OnInit {
 
 
 addNewAlumni() {
-  this.addMode = true;
+  this.currentAlumnus = {};
   this.editMode = true;
   this.detailVisible = true;
-  this.currentAlumnus = {
-    
-  }
+  
 }
 
 
 
     closeDetail() {
+      
       this.detailVisible = false;
       this.editMode = false;
+      
     }
 
-    
+
+    toggleSearchActive() {
+     
+      this.searchDialogActive = !this.searchDialogActive;
+   
+    }
 
 }
