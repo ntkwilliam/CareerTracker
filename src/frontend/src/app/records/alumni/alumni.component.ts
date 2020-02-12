@@ -36,12 +36,16 @@ export class AlumniComponent implements OnInit {
   private searchApplied = false;
   private searchValues = {
     alumnus_id: null,
-    lastName: null,
-    firstName: null,
-    city: null,
-    state: null,
+    last_name: null,
+    first_name: null,
+    mailing_address_city: null,
+    mailing_address_state: null,
     employer: null,
-    graduateSchool: null
+    graduateSchool: null,
+    noEmployer: false,
+    noGraduateSchool: false,
+    graduation_term_code: null
+
   };
   public employerList;
   public graduateSchoolList;
@@ -54,6 +58,7 @@ export class AlumniComponent implements OnInit {
     this.getSearchResults(true, true);
     this.fillEmployerList();
     this.fillGraduateSchoolList();
+    
   }
 
 

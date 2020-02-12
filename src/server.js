@@ -35,6 +35,7 @@ app.get('/data/alumni/search', (req, res) => {
             res.send(results);
         }
         else {
+            console.log(error);
                 sendErrorResponse(res,error.message);
         }
     });
@@ -482,10 +483,13 @@ app.get("/exports/:reportID", (req, res) => {
 });
 
 getQueryValues = (queryValues, entityName) => {
+
     let criteria = '';
     let propValues = [];
     for (let propName in queryValues) {
+        let specialQuery = specialQueryStrings[entityName][propName];
         if (queryValues.hasOwnProperty(propName) && propName != 'page' && propName != 'itemsPerPage') {
+          if  (specialQuery == undefined || specialQuery.includeParameter) {
             if (propName.endsWith("_id")) {
 
                 let intID = parseInt(queryValues[propName]);
@@ -501,15 +505,16 @@ getQueryValues = (queryValues, entityName) => {
                 propValues.push(queryValues[propName]);
 
             }
-
+        }
             if (specialQueryStrings[entityName][propName] == undefined) {
                 criteria += ' AND ' + propName + ' = ?';
             }
             else {
-                criteria += ' AND ' + specialQueryStrings[entityName][propName];
+                criteria += ' AND ' + specialQueryStrings[entityName][propName].queryString;
             }
         }
     }
+    console.log(criteria, propValues);
     return [criteria, propValues];
 
 };
@@ -517,8 +522,24 @@ getQueryValues = (queryValues, entityName) => {
 const specialQueryStrings = {
 
     alumni: {
-        employer: "alumni.alumnus_id IN (SELECT alumnus_id from alumni_employments WHERE employer_id = ? AND active = 1 and deleted = 0)",
-        graduateSchool: "alumni.alumnus_id IN (SELECT alumnus_id from alumni_graduate_schools WHERE graduate_school_id = ? and deleted = 0)"
+        employer: {
+            includeParameter: boolean = true,
+          queryString: string =  "alumni.alumnus_id IN (SELECT alumnus_id from alumni_employments WHERE employer_id = ? AND active = 1 and deleted = 0)"
+        },
+        graduateSchool:
+    {
+            includeParameter:boolean = true,
+         queryString: string = "alumni.alumnus_id IN (SELECT alumnus_id from alumni_graduate_schools WHERE graduate_school_id = ? and deleted = 0)",
+        },
+        noEmployer: {
+            includeParameter: boolean = false,
+            queryString: string = "alumni_employments.employer_id IS NULL"
+        },
+        noGraduateSchool: {
+            includeParameter: boolean = false,
+            queryString: string = "alumni_graduate_schools.graduate_school_id IS NULL"
+        }       
+        
     }
 
 

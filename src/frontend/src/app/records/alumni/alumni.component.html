@@ -109,19 +109,40 @@
           </tr>
           <tr>
             <td>Employer:</td>
-            <td colspan="3"><select [(ngModel)]="searchValues.employer">
+            <td colspan="2"><select [(ngModel)]="searchValues.employer" [class.disabled-select]="searchValues.noEmployer" [disabled]="searchValues.noEmployer">
                 <option value=""></option>
                 <option *ngFor="let optionValue of employerList" value={{optionValue.value}}>{{optionValue.text}}</option>
-              </select></td>
+              </select>
+            </td>
+            <td>
+              <label>None: 
+            <input style="width: 15px; vertical-align: middle; border: none;" type="checkbox" name="noEmployer" [(ngModel)]="searchValues.noEmployer">
+          </label>
+            
+            </td>
           </tr>
           <tr>
             <td>Graduate School:</td>
-            <td colspan="3"><select [(ngModel)]="searchValues.graduateSchool">
+            <td colspan="2"><select [(ngModel)]="searchValues.graduateSchool" [class.disabled-select]="searchValues.noGraduateSchool" [disabled]="searchValues.noGraduateSchool">
                 <option value=""></option>
                 <option *ngFor="let optionValue of graduateSchoolList" value={{optionValue.value}}>{{optionValue.text}}
                 </option>
               </select></td>
+              <td>
+                <label>None: 
+              <input style="width: 15px; vertical-align: middle;" type="checkbox" name="noGraduateSchool" [(ngModel)]="searchValues.noGraduateSchool">
+            </label>
+              
+              </td>
           </tr>
+
+          <tr>
+            
+            <td>Graduation Term Code:</td>
+            <td><input type="text" maxlength="5" style="width: 50px;" name="graduation_term_code" [(ngModel)]="searchValues.graduation_term_code"></td>
+            
+          </tr>
+          
         </table>
         <div id="search-button">
           <button class="btn-dark" (click)="getSearchResults(true)">Search</button>
