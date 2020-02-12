@@ -1,6 +1,129 @@
-<!--Build out employer list with paging-->
 
 
-<!--Build out employer search HTML elements-->
 
-<!--Build out detail view/edit form HTML elements-->
+<div class="records-list">
+    <table class="table table-striped">
+      <thead class="thead-dark">
+        <th scope="col" class="right-align">Employer ID</th>
+        <th scope="col">Employer Name</th>
+        <th scope="col">Location</th>
+     
+        <th scope="col" style="text-align: center;"><button class="fas fa-plus-circle" style="border: none; color: white; background: transparent;" (click)="addNewAlumni()"></button>
+          <button class="fas fa-binoculars" style="border: none; color: white; background: transparent;" (click)="toggleSearchActive()"></button>
+          <button class="fas fa-window-close" style="background-color: transparent; color: white; border: none;" *ngIf="searchApplied" (click)="removeSearchFilter()"></button>
+  
+        </th>
+      </thead>
+      <tbody>
+        <tr *ngFor="let employer of employerList">
+          <td class="right-align">{{employer["employer_id"]}}</td>
+          <td>{{employer["employer_name"]}}</td>
+          <td>{{employer["first_name"]}}</td>
+          <td style="text-align: center;"><button class="fas fa-search"  style="color: black; background: transparent; border: none;" (click)="viewDetail(employer['employer_id'], false)"></button>
+            <button class="fas fa-edit" style="color: black; background: transparent; border: none;" (click)="viewDetail(employer['employer_id'], true)"></button>
+  
+          </td>
+  
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <nav aria-label="Record pages" *ngIf="alumniList != undefined && alumniList.length > 0">
+    <ul class="pagination justify-content-end paging-links no-select">
+      <li class="page-item disabled" [class.disabled]="currentPage == 1">
+        <a class="page-link" href="#" tabindex="-1" aria-disabled="true"
+          (click)="gotoPage(this.currentPage - 1 )">Previous</a>
+      </li>
+      <li *ngFor="let item of getPageWindowArray()" class="page-item" [class.paging-links-active]="currentPage == i + 1">
+        <a (click)="gotoPage(item+1)" class="page-link" [class.paging-links-active]="currentPage == (item+1)">{{item + 1}}</a></li>
+      <li class="page-item" [class.disabled]="currentPage >= totalPages">
+        <a class="page-link" href="#" (click)="gotoPage(this.currentPage + 1 )">Next</a>
+      </li>
+    </ul>
+  </nav>
+  
+  
+  
+  
+  
+  <div class="detail-form-back" [style.display]="detailVisible ? 'flex' : 'none'" [@fade]="detailVisible ? 'visible' : 'void'">
+  
+    <div class="detail-form" [style.display]="!editMode ? 'inline-block' : 'none'" (click)="$event.stopPropagation()">
+      
+    <AlumniViewFormComponent *ngIf="!editMode" (close)="closeDetail()" (invokeEdit)="invokeEdit()" [currentAlumnus]="currentAlumnus" #viewForm></AlumniViewFormComponent>
+    </div>
+  
+  
+  
+  
+  
+    <div class="edit-form" [style.display]="editMode ? 'inline-block' : 'none'" (click)="$event.stopPropagation()">
+      
+        <AlumniEditFormComponent *ngIf="editMode" (close)="closeDetail()" [currentAlumnus]="currentAlumnus" [employerList]="employerList" [graduateSchoolList]="graduateSchoolList" [addMode]="addMode" #editForm></AlumniEditFormComponent>
+      
+      </div>
+  
+  
+  
+  </div>
+  
+  <div class="detail-form-back" [@fade]="searchDialogActive ? 'visible' : 'void'"  [style.display]="searchDialogActive ? 'flex' : 'none'">
+    
+      <div id="search-box">
+        
+        <div id="header">
+        <div id="header-title">Search</div>
+        <div id="header-buttons">
+          <button class="far fa-window-close" style="border: none; background: transparent; color: white; font-size: 1.3em;" (click)="toggleSearchActive()"></button>
+  
+          
+        </div>
+      </div>
+        <div id="body">
+    
+    
+          <table>
+            <tr>
+              <td>Alumnus ID:</td>
+              <td><input style="width: 30px;" type="text" name="alumnus_id"
+                  [(ngModel)]="searchValues['alumni.alumnus_id']"></td>
+            </tr>
+            <tr>
+              <td>Last Name:</td>
+              <td><input type="text" name="last_name" [(ngModel)]="searchValues.last_name"></td>
+              <td>First Name:</td>
+              <td><input type="text" name="first_name" [(ngModel)]="searchValues.first_name"></td>
+            </tr>
+            <tr>
+              <td>City:</td>
+              <td><input type="text" [(ngModel)]="searchValues.mailing_address_city"></td>
+              <td>State:</td>
+              <td><input style="width: 30px;" type="text" [(ngModel)]="searchValues.mailing_address_state"></td>
+            </tr>
+            <tr>
+              <td>Employer:</td>
+              <td colspan="3"><select [(ngModel)]="searchValues.employer">
+                  <option value=""></option>
+                  <option *ngFor="let optionValue of employerList" value={{optionValue.value}}>{{optionValue.text}}</option>
+                </select></td>
+            </tr>
+            <tr>
+              <td>Graduate School:</td>
+              <td colspan="3"><select [(ngModel)]="searchValues.graduateSchool">
+                  <option value=""></option>
+                  <option *ngFor="let optionValue of graduateSchoolList" value={{optionValue.value}}>{{optionValue.text}}
+                  </option>
+                </select></td>
+            </tr>
+          </table>
+          <div id="search-button">
+            <button class="btn-dark" (click)="getSearchResults(true)">Search</button>
+          </div>
+    
+    
+        </div>
+      
+      
+    </div>
+    
+  </div>
