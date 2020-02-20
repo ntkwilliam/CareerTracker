@@ -12,6 +12,8 @@ import { $ } from 'protractor';
 @Injectable()
 export class AlumniEditFormComponent implements OnInit {
   @Output() close: EventEmitter<any> = new EventEmitter();
+  
+  @Output() refreshData: EventEmitter<any> = new EventEmitter();
   @Input() currentAlumnus;
   @Input() employerList;
   @Input() graduateSchoolList;
@@ -118,6 +120,13 @@ export class AlumniEditFormComponent implements OnInit {
 
   }
 
+
+  closeWindow() {
+    this.refreshData.emit();
+    this.close.emit();
+  }
+
+
   deleteRecord(recordType, recordID) {
     this.deleteRequest = {
       recordType: recordType,
@@ -135,6 +144,7 @@ export class AlumniEditFormComponent implements OnInit {
         a => {
 
           if (this.deleteRequest['recordType'] == 'alumni') {
+            this.refreshData.emit();
             this.close.emit();
           }
           else {
@@ -359,6 +369,7 @@ export class AlumniEditFormComponent implements OnInit {
   submitAlumniChildData() {
     let currentForm = this.detailForms.currentForm;
     if (!this.detailForms[currentForm].formGroup.pristine) {
+      this.detailForms.validationErrors = null;
       this.detailForms.recordStatus = null;
       let validator: AlumniValidator = new AlumniValidator();
       this.validationErrors = null;

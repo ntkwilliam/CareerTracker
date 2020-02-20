@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Injectable } from '@angular/core';
 import { AlumniService } from './alumni.service';
 import { AlumniEditFormComponent } from './edit-form/edit-form.component';
-import { AlumniViewFormComponent} from './alumni-view-form/alumni-view-form.component'
+import { AlumniViewFormComponent} from './view-form/view-form.component'
 import { ObjectUnsubscribedError } from 'rxjs';
 import { trigger, state, transition, style, animation, animate } from '@angular/animations';
 @Component({
@@ -47,8 +47,8 @@ export class AlumniComponent implements OnInit {
     graduation_term_code: null
 
   };
-  public employerList;
-  public graduateSchoolList;
+  private employerList;
+  private graduateSchoolList;
   @ViewChild('editForm', null) editForm;
   @ViewChild('viewForm', null) viewForm;
 
@@ -74,8 +74,12 @@ export class AlumniComponent implements OnInit {
   }
 
 
+refreshData() {
+    this.getSearchResults(false,false);
+  }
+
   getSearchResults(newQuery: boolean, clearQuery: boolean = false) {
-    
+    console.log("running update");
    
     if (newQuery) {
       if (this.searchApplied && clearQuery) {

@@ -2,8 +2,8 @@ import { Component, OnInit, Output, Input, Injectable, ComponentFactoryResolver 
 import { EventEmitter } from '@angular/core';
 @Component({
   selector: 'AlumniViewFormComponent',
-  templateUrl: './alumni-view-form.component.html',
-  styleUrls: ['./alumni-view-form.component.css']
+  templateUrl: './view-form.component.html',
+  styleUrls: ['./view-form.component.css']
 })
 @Injectable()
 export class AlumniViewFormComponent implements OnInit {

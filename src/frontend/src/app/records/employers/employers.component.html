@@ -7,8 +7,8 @@
         <th scope="col" class="right-align">Employer ID</th>
         <th scope="col">Employer Name</th>
         <th scope="col">Location</th>
-     
-        <th scope="col" style="text-align: center;"><button class="fas fa-plus-circle" style="border: none; color: white; background: transparent;" (click)="addNewAlumni()"></button>
+        <th scope="col">Contact</th>
+        <th scope="col" style="text-align: center;"><button class="fas fa-plus-circle" style="border: none; color: white; background: transparent;" (click)="addNewEmployer()"></button>
           <button class="fas fa-binoculars" style="border: none; color: white; background: transparent;" (click)="toggleSearchActive()"></button>
           <button class="fas fa-window-close" style="background-color: transparent; color: white; border: none;" *ngIf="searchApplied" (click)="removeSearchFilter()"></button>
   
@@ -18,7 +18,12 @@
         <tr *ngFor="let employer of employerList">
           <td class="right-align">{{employer["employer_id"]}}</td>
           <td>{{employer["employer_name"]}}</td>
-          <td>{{employer["first_name"]}}</td>
+          <td>{{employer["address_line_1"] != null ? employer["address_line_1"] + " "  : ""}}
+               {{ employer["address_line_2"] != null ? employer["address_line_2"] + " " : ""}}
+               {{ employer["city"] != null ? employer["city"] + ", " + employer["state"] : ""}}
+
+          </td>
+          <td>{{employer["contact_name"]}}</td>
           <td style="text-align: center;"><button class="fas fa-search"  style="color: black; background: transparent; border: none;" (click)="viewDetail(employer['employer_id'], false)"></button>
             <button class="fas fa-edit" style="color: black; background: transparent; border: none;" (click)="viewDetail(employer['employer_id'], true)"></button>
   
@@ -28,7 +33,7 @@
       </tbody>
     </table>
   </div>
-  <nav aria-label="Record pages" *ngIf="alumniList != undefined && alumniList.length > 0">
+  <nav aria-label="Record pages" *ngIf="EmployerList != undefined && EmployerList.length > 0">
     <ul class="pagination justify-content-end paging-links no-select">
       <li class="page-item disabled" [class.disabled]="currentPage == 1">
         <a class="page-link" href="#" tabindex="-1" aria-disabled="true"
@@ -50,7 +55,7 @@
   
     <div class="detail-form" [style.display]="!editMode ? 'inline-block' : 'none'" (click)="$event.stopPropagation()">
       
-    <AlumniViewFormComponent *ngIf="!editMode" (close)="closeDetail()" (invokeEdit)="invokeEdit()" [currentAlumnus]="currentAlumnus" #viewForm></AlumniViewFormComponent>
+    <EmployerViewFormComponent *ngIf="!editMode" (close)="closeDetail()" (invokeEdit)="invokeEdit()" [currentEmployer]="currentEmployer" #viewForm></EmployerViewFormComponent>
     </div>
   
   
@@ -59,7 +64,7 @@
   
     <div class="edit-form" [style.display]="editMode ? 'inline-block' : 'none'" (click)="$event.stopPropagation()">
       
-        <AlumniEditFormComponent *ngIf="editMode" (close)="closeDetail()" [currentAlumnus]="currentAlumnus" [employerList]="employerList" [graduateSchoolList]="graduateSchoolList" [addMode]="addMode" #editForm></AlumniEditFormComponent>
+        <EmployerEditFormComponent *ngIf="editMode" (close)="closeDetail()" (refreshData) = "refreshData()" [currentEmployer]="currentEmployer" [addMode]="addMode" #editForm></EmployerEditFormComponent>
       
       </div>
   
@@ -84,37 +89,17 @@
     
           <table>
             <tr>
-              <td>Alumnus ID:</td>
-              <td><input style="width: 30px;" type="text" name="alumnus_id"
-                  [(ngModel)]="searchValues['alumni.alumnus_id']"></td>
-            </tr>
-            <tr>
-              <td>Last Name:</td>
-              <td><input type="text" name="last_name" [(ngModel)]="searchValues.last_name"></td>
-              <td>First Name:</td>
-              <td><input type="text" name="first_name" [(ngModel)]="searchValues.first_name"></td>
+              <td>Employer Name:</td>
+              <td colspan="3"><input type="text" name="employer_name" [(ngModel)]="searchValues.employer_name"></td>
+             
             </tr>
             <tr>
               <td>City:</td>
-              <td><input type="text" [(ngModel)]="searchValues.mailing_address_city"></td>
+              <td><input type="text" [(ngModel)]="searchValues.employer_address_city"></td>
               <td>State:</td>
-              <td><input style="width: 30px;" type="text" [(ngModel)]="searchValues.mailing_address_state"></td>
+              <td><input style="width: 30px;" type="text" [(ngModel)]="searchValues.employer_address_state"></td>
             </tr>
-            <tr>
-              <td>Employer:</td>
-              <td colspan="3"><select [(ngModel)]="searchValues.employer">
-                  <option value=""></option>
-                  <option *ngFor="let optionValue of employerList" value={{optionValue.value}}>{{optionValue.text}}</option>
-                </select></td>
-            </tr>
-            <tr>
-              <td>Graduate School:</td>
-              <td colspan="3"><select [(ngModel)]="searchValues.graduateSchool">
-                  <option value=""></option>
-                  <option *ngFor="let optionValue of graduateSchoolList" value={{optionValue.value}}>{{optionValue.text}}
-                  </option>
-                </select></td>
-            </tr>
+            
           </table>
           <div id="search-button">
             <button class="btn-dark" (click)="getSearchResults(true)">Search</button>

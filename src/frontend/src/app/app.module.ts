@@ -14,8 +14,11 @@ import { FormsModule} from '@angular/forms';
 import { AlumniService } from './records/alumni/alumni.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AlumniEditFormComponent } from './records/alumni/edit-form/edit-form.component';
-import { AlumniViewFormComponent } from './records/alumni/alumni-view-form/alumni-view-form.component';
+import { AlumniViewFormComponent } from './records/alumni/view-form/view-form.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { EmployerEditFormComponent} from './records/employers/edit-form/edit-form.component';
+import { EmployerViewFormComponent} from './records/employers/view-form/view-form.component';
+import { EmployerService } from './records/employers/employer.service';
 
 @NgModule({
   declarations: [
@@ -28,6 +31,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AuthenticationComponent,
     AlumniEditFormComponent,
     AlumniViewFormComponent,
+    EmployerEditFormComponent,
+    EmployerViewFormComponent
     
   ],
   imports: [
@@ -48,7 +53,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   FormsModule, 
   ReactiveFormsModule
   ],
-  providers: [AlumniService],
+  providers: [[AlumniService],[EmployerService]],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

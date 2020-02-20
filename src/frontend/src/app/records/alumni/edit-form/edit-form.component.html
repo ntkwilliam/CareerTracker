@@ -8,7 +8,7 @@
 <div class="buttons">
         <button class="far fa-trash-alt" style="border: none; background: transparent; color: white; font-size: 1.2em;" (click)="deleteRecord('alumni',currentAlumnus?.alumni.alumnus_id)"></button>
         <button class="far fa-save" style="border: none; background: transparent; color: white; font-size: 1.2em;" (click)="submitAlumniGeneralData()"></button>
-        <button class="far fa-window-close" style="border: none; background: transparent; color: white; font-size: 1.2em;" (click)="this.close.emit()"></button>
+        <button class="far fa-window-close" style="border: none; background: transparent; color: white; font-size: 1.2em;" (click)="closeWindow()"></button>
         
         <div id="record-status" [style.display]="recordStatus == null ? 'none' : 'block'">{{recordStatus}}</div>
       </div>
@@ -294,7 +294,7 @@
 
                   <label>Diploma Description:</label>
                   <div class="input-error-message-group">
-                  <input type="text" [formControl]="detailForms.alumni_degrees.formGroup.controls['diploma_description']" name="diploma_description" style="width: 35ch;" maxlength="100" [class.input-error]="detailForms.alumni_degrees.validationErrors?.diploma_description != null"><br />
+                  <input type="text" [class.input-error]="detailForms.validationErrors?.diploma_description" [formControl]="detailForms.alumni_degrees.formGroup.controls['diploma_description']" name="diploma_description" style="width: 35ch;" maxlength="100" [class.input-error]="detailForms.alumni_degrees.validationErrors?.diploma_description != null"><br />
                   <div class="error-message">{{detailForms.validationErrors?.diploma_description}}</div>
                   
                 </div>
@@ -303,7 +303,7 @@
 
                <label>Graduation Term Code:</label>
                <div class="input-error-message-group">
-               <input type="text" [formControl]="detailForms.alumni_degrees.formGroup.controls['graduation_term_code']" name="graduation_term_code" style="width: 10ch;" maxlength="5" [class.input-error]="detailForms.alumni_degrees.validationErrors?.graduation_term_code != null"><br />
+               <input type="text" [class.input-error]="detailForms.validationErrors?.graduation_term_code" [formControl]="detailForms.alumni_degrees.formGroup.controls['graduation_term_code']" name="graduation_term_code" style="width: 10ch;" maxlength="5" [class.input-error]="detailForms.alumni_degrees.validationErrors?.graduation_term_code != null"><br />
                <div class="error-message">{{detailForms.validationErrors?.graduation_term_code}}</div>
                 
               </div>
@@ -319,7 +319,7 @@
 
                 <label>Employer:</label>
                 <div class="input-error-message-group">
-                <select [formControl]="detailForms.alumni_employments.formGroup.controls['employer_id']" name="employer_id" style="width: 35ch;">
+                <select [formControl]="detailForms.alumni_employments.formGroup.controls['employer_id']" [class.input-error]="detailForms.validationErrors?.employer_id" name="employer_id" style="width: 35ch;">
                   <option value=""></option>
                   <option *ngFor="let optionValue of employerList" value={{optionValue.value}}>{{optionValue.text}}</option>
                 </select>
@@ -330,7 +330,7 @@
               <div class="label-input-group">
                 <label>Role Title</label>
                 <div class="input-error-message-group">
-             <input type="text" [formControl]="detailForms.alumni_employments.formGroup.controls['job_title']" name="job_title" style="width: 35ch;" maxlength="45" [class.input-error]="detailForms.alumni_degrees.validationErrors?.job_title != null"><br />
+             <input type="text" [formControl]="detailForms.alumni_employments.formGroup.controls['job_title']" [class.input-error]="detailForms.validationErrors?.job_title" name="job_title" style="width: 35ch;" maxlength="45" [class.input-error]="detailForms.alumni_degrees.validationErrors?.job_title != null"><br />
              <div class="error-message">{{detailForms.validationErrors?.job_title}}</div>
 </div>
 </div>
@@ -349,12 +349,14 @@
               <div class="label-input-group">
 
                 <label>Graduate School:</label>
-                <select [formControl]="detailForms.alumni_graduate_schools.formGroup.controls['graduate_school_id']" name="graduate_school_id" style="width: 35ch;">
+                
+                <div class="input-error-message-group">
+                <select [formControl]="detailForms.alumni_graduate_schools.formGroup.controls['graduate_school_id']" [class.input-error]="detailForms.validationErrors?.graduate_school_id" name="graduate_school_id" style="width: 35ch;">
                   <option value=""></option>
                   <option *ngFor="let optionValue of graduateSchoolList" value={{optionValue.value}}>{{optionValue.text}}</option>
                 </select>
-               
-              </div>
+                <div class="error-message">{{detailForms.validationErrors?.graduate_school_id}}</div>
+              </div></div>
        
 </div>
 </div>
@@ -365,12 +367,14 @@
     
       <div class="left">
               <div class="label-input-group">
-
+                  
+                <div class="input-error-message-group" style="width: 100%">
                 <label>Comment:</label>
-                <textarea [formControl]="detailForms.comments.formGroup.controls['comment']" name="comment" style="width: 100%;height:200px;" maxlength="1000" [class.input-error]="detailForms.comments.validationErrors?.comment != null"></textarea>
+                <textarea [formControl]="detailForms.comments.formGroup.controls['comment']" name="comment" style="width: 100%;height:200px;" maxlength="1000" [class.input-error]="detailForms.validationErrors?.comment != null"></textarea>
                   <br />
-
-              </div>
+                
+                  <div class="error-message">{{detailForms.validationErrors?.comment}}</div>
+              </div></div>
        
 </div>
 </div>

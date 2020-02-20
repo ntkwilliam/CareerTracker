@@ -66,7 +66,7 @@
 
   <div class="edit-form" [style.display]="editMode ? 'inline-block' : 'none'" (click)="$event.stopPropagation()">
     
-      <AlumniEditFormComponent *ngIf="editMode" (close)="closeDetail()" [currentAlumnus]="currentAlumnus" [employerList]="employerList" [graduateSchoolList]="graduateSchoolList" [addMode]="addMode" #editForm></AlumniEditFormComponent>
+      <AlumniEditFormComponent *ngIf="editMode" (close)="closeDetail()" (refreshData) = "refreshData()" [currentAlumnus]="currentAlumnus" [employerList]="employerList" [graduateSchoolList]="graduateSchoolList" [addMode]="addMode" #editForm></AlumniEditFormComponent>
     
     </div>
 

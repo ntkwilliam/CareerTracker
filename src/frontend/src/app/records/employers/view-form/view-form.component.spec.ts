@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AlumniViewFormComponent } from './alumni-view-form.component';
+import { EmployerViewFormComponent } from './view-form.component';
 
-describe('AlumniViewFormComponent', () => {
-  let component: AlumniViewFormComponent;
-  let fixture: ComponentFixture<AlumniViewFormComponent>;
+describe('EmployerViewFormComponent', () => {
+  let component: EmployerViewFormComponent;
+  let fixture: ComponentFixture<EmployerViewFormComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AlumniViewFormComponent ]
+      declarations: [ EmployerViewFormComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AlumniViewFormComponent);
+    fixture = TestBed.createComponent(EmployerViewFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -13,6 +13,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const DEFAULT_PAGE_SIZE = 15;
 
 const alumniValidator = require('./validations/alumni/alumni');
+const employerValidator = require('./validations/employers/employers');
 
 
 
@@ -321,11 +322,8 @@ app.put("/data/alumni", (req, res) => {
     }
     else {
      
-        console.log(keyField);
-        console.log(data);
         dbConnection.query(tableData[recordType].recordQueryString, data[keyField], (errors, results, fields) => {
         
-            console.log(errors);
 
             let [changesFound, changedFieldValues] = detectChanges(results[0], data);
 
@@ -418,23 +416,346 @@ app.get("/data/employers/selectionList", (req, res) => {
 });
 
 
-app.get("/data/employers/search", (req, res) => {
-    // Implement employer search results HTTP endpoint
+
+
+app.get('/data/employers/search', (req, res) => {
+    let baseQuery = 'SELECT employer_id, employer_name, city, state FROM employers WHERE deleted = 0'
+    let [criteria, propValues] = getQueryValues(req.query, 'employers');
+
+    criteria += ' ORDER BY employer_name, state, city';
+    criteria += ' LIMIT ' + (req.query.page == undefined ? 0 : req.query.page - 1) * (req.query.itemsPerPage == undefined ? DEFAULT_PAGE_SIZE : req.query.itemsPerPage) + ',' + (req.query.itemsPerPage == undefined ? DEFAULT_PAGE_SIZE : req.query.itemsPerPage);
+    dbConnection.query(baseQuery + criteria, propValues, (error, results, fields) => {
+        if (!error) {
+            res.send(results);
+        }
+        else {
+            console.log(error);
+                sendErrorResponse(res,error.message);
+        }
+    });
+
 });
 
-app.get("/data/employers/byid/:id", (req, res) => {
-    // Implement employer detail record HTTP endpoint
+
+
+app.get('/data/employers/search/pageCount', (req, res) => {
+    let baseQuery = 'SELECT COUNT(DISTINCT employer_id) ItemCount FROM employers WHERE deleted = 0'
+
+    let [criteria, propValues] = getQueryValues(req.query, 'employers');
+  
+
+    dbConnection.query(baseQuery + criteria, propValues, (error, results, fields) => {
+        if (!error) {
+            console.log(results);
+            res.send({ pageCount: Math.ceil(results[0].ItemCount / (req.query.itemsPerPage == undefined ? DEFAULT_PAGE_SIZE : req.query.itemsPerPage)) });
+        }
+        else {
+            sendErrorResponse(res,error.message);
+        }
+    });
+
 });
+
+app.get('/data/employers/byid/:id', (req, res) => {
+
+    let result = {
+        employer: null,
+        comments: null
+        
+
+    };
+
+
+
+
+    let query = 'SELECT * FROM employers WHERE employer_id = ?';
+
+    dbConnection.query(query, req.params['id'], (error, results, fields) => {
+        if (!error) {
+            result.employer = results[0];
+
+
+                                    query = 'SELECT entity_type, entity_id, comment_id, comment, added_by, added_datetime, updated_by, updated_datetime FROM comments WHERE entity_type = \'E\' AND entity_id = ? AND deleted = 0';
+                                    dbConnection.query(query, req.params['id'], (error, results, fields) => {
+                                        if (!error) {
+                                            result.comments = results;
+                                            res.send(result);
+                                        }
+                                        else {   
+                                            sendErrorResponse(res,error.message);
+                                        }
+                                    });
+        }
+        else {
+            sendErrorResponse(res,error.message);
+        }
+
+    });
+
+
+
+});
+
+
+
+app.get("/data/employers/childData", (req, res) => {
+
+    result = {
+        data: null
+    }
+
+
+
+    selectString: String;
+    
+    if (!tableData[req.query['record_type']]) {
+       sendErrorResponse(res,'Record type specified is not valid for this operation.');
+        return;
+    }
+    
+    dbConnection.query(tableData[req.query['record_type']].recordQueryString,req.query['record_id'], (error, results, fields) => {
+        if (error) {
+            sendErrorResponse(res,error.message);
+        }
+        else {
+            result.data = results[0];
+            res.send(result);
+        }
+
+    });
+
+});
+
+
 
 
 app.post("/data/employers", (req, res) => {
-    // Implement employer add functionality 
+    result = {
+        validationError: false,
+        otherError: false,
+        noChange: false,
+        data: null
+    }
+    employerData = req.body;
+    
+    if (!employerData['recordType'] || !tableData[employerData['recordType']]) {
+        result.otherError = true;
+        result.data = 'Record type is missing or invalid.';
+        
+        res.send(result);
+    }
+    else {
+    let recordType = employerData['recordType'];
+    let keyField = tableData[employerData['recordType']].keyField;
+    let data = employerData['data'];
+    const validator = new employerValidator();
+    let errorsExist;
+    let errors;
+
+
+    if (recordType == 'employer') {
+        [errorsExist, errors] = validator.validateemployerRecord(data);
+    }
+    else {
+     [errorsExist, errors] = validator.validateChildRecord(recordType, data);
+    }
+
+
+    if (errorsExist) {
+        result.validationError = true;
+        result.data = errors;
+        console.log(result);
+        res.send(result);
+    }
+    else {
+     
+        let [changesFound, newData] = detectChanges(null, data);
+        newData['added_by'] = newData['updated_by'] = 'CURRENTUSER';
+        
+        
+        dbConnection.query('INSERT INTO ?? SET ?, added_datetime = NOW(), updated_datetime = NOW()', [recordType, newData], (errors, results, fields) => {
+            
+            dbConnection.query(tableData[recordType].recordQueryString, results.insertId, (errors, results, fields) => {
+                console.log(errors);
+                console.log(results);
+                result.data = results;
+                res.send(result);
+                      
+    
+            });
+
+        });
+
+    }   
+
+    }
 });
 
 
 app.put("/data/employers", (req, res) => {
-    // Implement employer update functionality 
+    result = {
+        validationError: false,
+        otherError: false,
+        noChange: false,
+        data: null
+    }
+    employerData = req.body;
+    console.log(employerData);
+    if (!employerData['recordType'] || !tableData[employerData['recordType']]) {
+        result.otherError = true;
+        result.data = 'Record type is missing or invalid.';
+        res.send(result);
+    }
+    else {
+    let recordType = employerData['recordType'];
+    let keyField = tableData[employerData['recordType']].keyField;
+    let data = employerData['data'];
+    const validator = new employerValidator();
+    let errorsExist;
+    let errors;
+
+
+    if (recordType == 'employers') {
+
+        [errorsExist, errors] = validator.validateEmployerRecord(data);
+    }
+    else {
+     [errorsExist, errors] = validator.validateChildRecord(recordType, data);
+    }
+
+    if (errorsExist) {
+        result.validationError = true;
+        result.data = errors;
+        res.send(result);
+    }
+    else {
+     
+        dbConnection.query(tableData[recordType].recordQueryString, data[keyField], (errors, results, fields) => {
+        
+
+            let [changesFound, changedFieldValues] = detectChanges(results[0], data);
+          
+            if (changesFound) {
+               // changedFieldValues[keyField] = data[keyField];
+            console.log(keyField);
+               changedFieldValues['updated_by'] = 'CURRENTUSER';
+                dbConnection.query('UPDATE ?? SET ?, updated_datetime = NOW() WHERE ?? = ?', [recordType, changedFieldValues, keyField, data[keyField]],
+                 (err, update_result) => {
+                    if (err) {
+                        console.log(err);
+                        result.otherError = true;
+                        result.data = err;
+                        res.send(result);
+
+                    }
+                    else {
+                        dbConnection.query(tableData[recordType].recordQueryString, data[keyField], (errors, results, fields) => {
+                            if (errors) {
+                                console.log(errors);
+                                result.otherError = true;
+                                result.data = errors;
+                                res.send(result);
+                            }
+                            else {
+                                console.log(results[0]);
+                                result.data = results[0];
+
+                                res.send(result);
+
+                            }
+                        });
+                    }
+                });
+            }
+            else {
+                result.noChange = true;
+                res.send(result);
+            }
+        });
+    }
+      
+
+    }
 });
+
+
+detectChanges = (existingRecord, updatedRecord) => {
+
+    changesFound = false;
+
+    changedFieldValues = {};
+    queryString = '';
+    for (let prop in updatedRecord) {
+        if (Object.prototype.hasOwnProperty.call(updatedRecord, prop)) {
+            if (!existingRecord && updatedRecord[prop] != '' || existingRecord &&  existingRecord[prop] != updatedRecord[prop]) {
+                changesFound = true;
+                changedFieldValues[prop] = updatedRecord[prop];
+            }
+
+        }
+
+    }
+   
+
+   return [changesFound, changedFieldValues]
+
+
+
+
+
+}
+
+app.delete("/data/employers", (req, res) => {
+    let keyField;
+    
+    if (!req.query['record_type'] || !req.query['record_id']) {
+        sendErrorResponse(res,'Required parameters were not supplied.');   
+     
+    
+    }
+    
+    else if (tableData[req.query['record_type']] == null || (keyField = tableData[req.query['record_type']]['keyField']) == null)
+    {
+    
+       sendErrorResponse(res,'Record type specified is not valid for this operation.');
+    
+    }
+    
+    else
+     {
+        
+        dbConnection.query('UPDATE ?? SET deleted = 1, updated_datetime = NOW() WHERE ?? = ?', [req.query['record_type'], keyField, req.query['record_id']], (error, update_result) => {
+        
+            if (error) {
+            sendErrorResponse(res, error.message);
+        }
+        else
+        {
+            res.send({
+                message: 'Request has been processed'
+            });
+        
+        }
+        
+    
+        });
+    }
+    
+    });
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
 
 app.get("/data/graduate-schools/selectionList", (req, res) => {
     let query = "SELECT graduate_school_id value, CASE WHEN city IS NULL THEN school_name ELSE CONCAT(school_name," +
@@ -483,10 +804,11 @@ app.get("/exports/:reportID", (req, res) => {
 });
 
 getQueryValues = (queryValues, entityName) => {
-
+    console.log(queryValues);
     let criteria = '';
     let propValues = [];
     for (let propName in queryValues) {
+        
         let specialQuery = specialQueryStrings[entityName][propName];
         if (queryValues.hasOwnProperty(propName) && propName != 'page' && propName != 'itemsPerPage') {
           if  (specialQuery == undefined || specialQuery.includeParameter) {
@@ -507,7 +829,13 @@ getQueryValues = (queryValues, entityName) => {
             }
         }
             if (specialQueryStrings[entityName][propName] == undefined) {
+                if (queryValues[propName].search(/\%/g) == -1) {
                 criteria += ' AND ' + propName + ' = ?';
+                }
+                else 
+                {
+                criteria += ' AND ' + propName + ' LIKE ?';
+                }
             }
             else {
                 criteria += ' AND ' + specialQueryStrings[entityName][propName].queryString;
@@ -540,8 +868,10 @@ const specialQueryStrings = {
             queryString: string = "alumni_graduate_schools.graduate_school_id IS NULL"
         }       
         
-    }
+    },
+    employers: {
 
+    }
 
 }
 
@@ -573,6 +903,11 @@ const tableData = {
     comments: {
         keyField: string = 'comment_id',
         recordQueryString: string = 'SELECT entity_type, entity_id, comment_id, comment, added_by, added_datetime, updated_by, updated_datetime FROM comments WHERE comment_id = ?' 
+    },
+
+    employers: {
+        keyField: string = 'employer_id',
+        recordQueryString: string = 'SELECT * FROM employers WHERE employer_id = ?'
     }
 
 }
