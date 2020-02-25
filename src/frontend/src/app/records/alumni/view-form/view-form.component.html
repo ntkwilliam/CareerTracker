@@ -9,8 +9,8 @@
      Alumnus ID:  {{ currentAlumnus?.alumni?.alumnus_id}}
     </div>
       <div class="buttons">
-        <button class="btn-dark">Edit</button>
-        <button class="btn-light" (click)="this.close.emit()">Close</button>
+        <button class="far fa-edit" style="border: none; background: transparent; color: white; font-size: 1.2em;" (click)="this.invokeEdit.emit()"></button>
+        <button class="far fa-window-close" style="border: none; background: transparent; color: white; font-size: 1.2em;" (click)="this.close.emit()"></button>
       </div>
     </div>
     <div id="main">
@@ -20,9 +20,9 @@
       </div>
       <div class="flex-container">
         <div class="left">
-          {{ currentAlumnus?.alumni?.mailing_address_line_1}}
+          {{ currentAlumnus?.alumni?.mailing_address_line_1}}<br />
           <div *ngIf="currentAlumnus?.alumni?.mailing_address_line_2 != null">
-            {{currentAlumnus?.alumni?.mailing_address_line_2}}</div>
+            {{currentAlumnus?.alumni?.mailing_address_line_2}}<br /></div>
           {{ currentAlumnus?.alumni?.mailing_address_city != null ? currentAlumnus?.alumni?.mailing_address_city + ', ' : '' }}
           {{currentAlumnus?.alumni?.mailing_address_state != null ? currentAlumnus?.alumni?.mailing_address_state  + ' ' : ''}}
           {{currentAlumnus?.alumni?.mailing_address_zipcode}}
@@ -142,7 +142,7 @@
               <td><div class="cell-content">{{comment['comment']}}</div></td>
               <td>{{comment['added_by']}}<br />{{comment['added_datetime'] | date:'L/d/yyyy h:mm a'}}</td>
               <td>{{comment['updated_by']}}<br />{{comment['updated_datetime'] | date:'L/d/yyyy h:mm a'}}</td>
-              <td><button class="btn-dark shadow-none" (click)="toggleViewAllactive()">View</button></td>
+              <td><button class="btn-dark shadow-none" (click)="toggleViewAllactive(comment)">View</button></td>
          
             </tr>
           </table>
@@ -156,4 +156,34 @@
 
     </div>
 
+  </div>
+
+     
+  <div class="detail-form-back" [style.display]="viewAllActive ? 'flex' : 'none'">
+    <div class="detail-box">
+      <div class="header">
+        <div class="header-main">
+              </div>
+              <div class="buttons">
+                
+                <button class="btn-light shadow-none" (click)="toggleViewAllactive()">Close</button>
+              
+              </div>
+              
+            </div>
+            <div class="main">
+              {{ currentCommentDetail?.comment }}
+
+              <div class="audit-data">
+                <div class="left" style="display: flex;">
+                <div style="font-weight: bold;">Added By:<br />Added Date/Time:</div>
+                <div>{{currentCommentDetail?.added_by}}<br />{{currentCommentDetail?.added_datetime | date:'L/d/yyyy h:mm a'}}</div>
+              </div>
+              <div class="right" style="display: flex;">
+                <div style="font-weight: bold;">Last Updated By:<br />Last Updated Date/Time:</div>
+                <div>{{currentCommentDetail?.updated_by}}<br />{{currentCommentDetail?.updated_datetime | date:'L/d/yyyy h:mm a'}}</div>
+              </div>
+              </div>
+            </div>
+    </div>
   </div>

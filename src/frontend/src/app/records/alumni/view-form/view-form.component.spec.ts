@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AlumniViewFormComponent } from './alumni-view-form.component';
+import { AlumniViewFormComponent } from './view-form.component';
 
 describe('AlumniViewFormComponent', () => {
   let component: AlumniViewFormComponent;

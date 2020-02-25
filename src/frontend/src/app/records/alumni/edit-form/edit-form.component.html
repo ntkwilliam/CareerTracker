@@ -3,29 +3,44 @@
       <form [formGroup]="alumniForm">
 <div class="header">
   <div class="header-main">
-<label>
-    Last Name:
-    <input type="text" [formControl]="formControls.last_name" name="last_name" [class.input-error]="validationErrors?.last_name != null">
-</label>
-
-<label>
-    First Name:
-    <input type="text" [formControl]="formControls.first_name" name="first_name" [class.input-error]="validationErrors?.first_name != null">
-</label>
-
 
 </div>
 <div class="buttons">
-        <button class="btn-dark shadow-none" (click)="deleteRecord('alumni',currentAlumnus?.alumni.alumnus_id)">Delete</button>
-        <button class="btn-dark shadow-none" (click)="submitAlumniGeneralData()">Save</button>
-        <button class="btn-light shadow-none" (click)="this.close.emit()">Close</button>
+        <button class="far fa-trash-alt" style="border: none; background: transparent; color: white; font-size: 1.2em;" (click)="deleteRecord('alumni',currentAlumnus?.alumni.alumnus_id)"></button>
+        <button class="far fa-save" style="border: none; background: transparent; color: white; font-size: 1.2em;" (click)="submitAlumniGeneralData()"></button>
+        <button class="far fa-window-close" style="border: none; background: transparent; color: white; font-size: 1.2em;" (click)="closeWindow()"></button>
         
         <div id="record-status" [style.display]="recordStatus == null ? 'none' : 'block'">{{recordStatus}}</div>
       </div>
 </div>
 
 <div class="main">
-    
+  <div class="flex-container">
+  <div class="left">
+  <div class="label-input-group">
+  <label>
+    Last Name:
+  </label>
+  <div class="input-error-message-group">
+
+    <input type="text" [formControl]="formControls.last_name" name="last_name" [class.input-error]="validationErrors?.last_name != null">
+    <div class="error-message">{{validationErrors?.last_name}}</div>
+    </div>
+  </div>
+</div>
+<div class="right">
+<div class="label-input-group">
+<label>
+    First Name:
+  </label>
+  <div class="input-error-message-group">
+
+    <input type="text" [formControl]="formControls.first_name" name="first_name" [class.input-error]="validationErrors?.first_name != null">
+    <div class="error-message">{{validationErrors?.first_name}}</div>
+  </div>
+</div>
+</div>
+</div>
     <div class="section-name">
         <div class="left">Mailing Address</div>
         <div class="right">Telephone Number/Email</div>
@@ -121,16 +136,17 @@
 </div>
 <div class="tab-control" [style.display]="addMode ? 'none' : 'inline-block'">
     <div class="selections">
-
       <div class="navigation-buttons">
       <button class="shadow-none no-select" [class.selected]="currentDetailTab == 'alumni_degrees'" (click)="changeDetailTab('alumni_degrees')">Degrees</button>
       <button class="shadow-none no-select" (click)="changeDetailTab('alumni_employments')" [class.selected]="currentDetailTab == 'alumni_employments'">Employments</button>
       <button class="shadow-none no-select" [class.selected]="currentDetailTab == 'alumni_graduate_schools'" (click)="changeDetailTab('alumni_graduate_schools')">Graduate Schools</button>
       <button class="shadow-none no-select" [class.selected]="currentDetailTab == 'comments'" (click)="changeDetailTab('comments')">Comments</button>
     </div>
+    <div>
+    <button class="fas fa-plus-circle" style="border: none; background: transparent; color: white; font-size: 1em; margin-right: 5px;" (click)="addnewDetailRecord()"></button>
+  </div>
   </div>
   <div class="content-area">
-    <div class="add-new-child-record"><button class="btn-dark shadow-none" style="background-color:  rgb(154,0,0);" (click)="addnewDetailRecord()">Add New</button></div>
       <div id="degrees" [style.display]="currentDetailTab == 'alumni_degrees' ? 'inline-block' : 'none'">
 
 
@@ -152,9 +168,9 @@
             <td>{{degree['added_by']}}<br />{{degree['added_datetime'] | date:'L/d/yyyy h:mm a'}}</td>
             <td>{{degree['updated_by']}}<br />{{degree['updated_datetime'] | date:'L/d/yyyy h:mm a' }}</td>
             <td style="text-align: center;">
-              <button class="btn-dark shadow-none" (click)="displaySubDetail('alumni_degrees',degree['degree_id'])">Edit</button>
-              <button class="btn-dark shadow-none" (click)="deleteRecord('alumni_degrees',degree['degree_id'])">Delete</button>
-            
+              <button class="far fa-trash-alt" style="border: none; background: transparent; color: black; font-size: 1.2em;" (click)="deleteRecord('alumni_degrees',degree['degree_id'])"></button>
+              <button class="fas fa-edit" style="border: none; background: transparent; color: black; font-size: 1.2em" (click)="displaySubDetail('alumni_degrees',degree['degree_id'])"></button>
+              
             
             </td>
 
@@ -192,9 +208,8 @@
             <td>{{employment['added_by']}}<br />{{employment['added_datetime'] | date:'L/d/yyyy h:mm a'}}</td>
             <td>{{employment['updated_by']}}<br />{{employment['updated_datetime'] | date:'L/d/yyyy h:mm a' }}</td>
             <td style="text-align: center;">
-              <button class="btn-dark shadow-none" (click)="displaySubDetail('alumni_employments',employment['employment_id'])">Edit</button>
-              <button class="btn-dark shadow-none" (click)="deleteRecord('alumni_employments',employment['employment_id'])">Delete</button>
-          
+              <button class="far fa-trash-alt" style="border: none; background: transparent; color: black; font-size: 1.2em;" (click)="deleteRecord('alumni_employments',employment['employment_id'])"></button>
+              <button class="fas fa-edit" style="border: none; background: transparent; color: black; font-size: 1.2em" (click)="displaySubDetail('alumni_employments',employment['employment_id'])"></button>
             </td>
           </tr>
         </table>
@@ -216,9 +231,8 @@
             <td>{{graduateSchool['added_by']}}<br />{{graduateSchool['added_datetime'] | date:'L/d/yyyy h:mm a'}}</td>
             <td>{{graduateSchool['updated_by']}}<br />{{graduateSchool['updated_datetime'] | date:'L/d/yyyy h:mm a' }}</td>
             <td style="text-align: center;">
-              <button class="btn-dark shadow-none" (click)="displaySubDetail('alumni_graduate_schools',graduateSchool['alumni_graduate_school_id'])">Edit</button>
-              <button class="btn-dark shadow-none" (click)="deleteRecord('alumni_graduate_schools',graduateSchool['alumni_graduate_school_id'])">Delete</button>
-            
+              <button class="far fa-trash-alt" style="border: none; background: transparent; color: black; font-size: 1.2em;" (click)="deleteRecord('alumni_graduate_schools',graduateSchool['alumni_graduate_school_id'])"></button>
+              <button class="fas fa-edit" style="border: none; background: transparent; color: black; font-size: 1.2em" (click)="displaySubDetail('alumni_graduate_schools',graduateSchool['alumni_graduate_school_id'])"></button>
             </td>
           </tr>
         </table>
@@ -240,9 +254,9 @@
           
           <td>{{comment['updated_by']}}<br />{{comment['updated_datetime'] | date:'L/d/yyyy h:mm a'}}</td>
           <td style="text-align: center;">
-            <button class="btn-dark shadow-none" (click)="displaySubDetail('comments',comment['comment_id'])">Edit</button>
-            <button class="btn-dark shadow-none" (click)="deleteRecord('comments',comment['comment_id'])">Delete</button>
-          
+            <button class="far fa-trash-alt" style="border: none; background: transparent; color: black; font-size: 1.2em;" (click)="deleteRecord('comments',comment['comment_id'])"></button>
+            <button class="fas fa-edit" style="border: none; background: transparent; color: black; font-size: 1.2em" (click)="displaySubDetail('comments',comment['comment_id'])"></button>
+         
 
           </td>
         </tr>
@@ -264,8 +278,9 @@
     <div class="header-main">
           </div>
           <div class="buttons">
-            <button class="btn-dark shaadow-none" (click)="submitAlumniChildData()">Save</button>
-            <button class="btn-light shadow-none" (click)="closeSubDetail()">Close</button>
+            <button class="far fa-save" style="border: none; background: transparent; color: white; font-size: 1.2em;" (click)="submitAlumniChildData()"></button>
+            <button class="far fa-window-close" style="border: none; background: transparent; color: white; font-size: 1.2em;" (click)="closeSubDetail()"></button>
+         
             <div [style.display]="detailForms.recordStatus == null ? 'none' : 'block'">{{detailForms.recordStatus}}</div>
           </div>
           
@@ -279,7 +294,7 @@
 
                   <label>Diploma Description:</label>
                   <div class="input-error-message-group">
-                  <input type="text" [formControl]="detailForms.alumni_degrees.formGroup.controls['diploma_description']" name="diploma_description" style="width: 35ch;" maxlength="100" [class.input-error]="detailForms.alumni_degrees.validationErrors?.diploma_description != null"><br />
+                  <input type="text" [class.input-error]="detailForms.validationErrors?.diploma_description" [formControl]="detailForms.alumni_degrees.formGroup.controls['diploma_description']" name="diploma_description" style="width: 35ch;" maxlength="100" [class.input-error]="detailForms.alumni_degrees.validationErrors?.diploma_description != null"><br />
                   <div class="error-message">{{detailForms.validationErrors?.diploma_description}}</div>
                   
                 </div>
@@ -288,7 +303,7 @@
 
                <label>Graduation Term Code:</label>
                <div class="input-error-message-group">
-               <input type="text" [formControl]="detailForms.alumni_degrees.formGroup.controls['graduation_term_code']" name="graduation_term_code" style="width: 10ch;" maxlength="5" [class.input-error]="detailForms.alumni_degrees.validationErrors?.graduation_term_code != null"><br />
+               <input type="text" [class.input-error]="detailForms.validationErrors?.graduation_term_code" [formControl]="detailForms.alumni_degrees.formGroup.controls['graduation_term_code']" name="graduation_term_code" style="width: 10ch;" maxlength="5" [class.input-error]="detailForms.alumni_degrees.validationErrors?.graduation_term_code != null"><br />
                <div class="error-message">{{detailForms.validationErrors?.graduation_term_code}}</div>
                 
               </div>
@@ -304,7 +319,7 @@
 
                 <label>Employer:</label>
                 <div class="input-error-message-group">
-                <select [formControl]="detailForms.alumni_employments.formGroup.controls['employer_id']" name="employer_id" style="width: 35ch;">
+                <select [formControl]="detailForms.alumni_employments.formGroup.controls['employer_id']" [class.input-error]="detailForms.validationErrors?.employer_id" name="employer_id" style="width: 35ch;">
                   <option value=""></option>
                   <option *ngFor="let optionValue of employerList" value={{optionValue.value}}>{{optionValue.text}}</option>
                 </select>
@@ -315,7 +330,7 @@
               <div class="label-input-group">
                 <label>Role Title</label>
                 <div class="input-error-message-group">
-             <input type="text" [formControl]="detailForms.alumni_employments.formGroup.controls['job_title']" name="job_title" style="width: 35ch;" maxlength="45" [class.input-error]="detailForms.alumni_degrees.validationErrors?.job_title != null"><br />
+             <input type="text" [formControl]="detailForms.alumni_employments.formGroup.controls['job_title']" [class.input-error]="detailForms.validationErrors?.job_title" name="job_title" style="width: 35ch;" maxlength="45" [class.input-error]="detailForms.alumni_degrees.validationErrors?.job_title != null"><br />
              <div class="error-message">{{detailForms.validationErrors?.job_title}}</div>
 </div>
 </div>
@@ -334,12 +349,14 @@
               <div class="label-input-group">
 
                 <label>Graduate School:</label>
-                <select [formControl]="detailForms.alumni_graduate_schools.formGroup.controls['graduate_school_id']" name="graduate_school_id" style="width: 35ch;">
+                
+                <div class="input-error-message-group">
+                <select [formControl]="detailForms.alumni_graduate_schools.formGroup.controls['graduate_school_id']" [class.input-error]="detailForms.validationErrors?.graduate_school_id" name="graduate_school_id" style="width: 35ch;">
                   <option value=""></option>
                   <option *ngFor="let optionValue of graduateSchoolList" value={{optionValue.value}}>{{optionValue.text}}</option>
                 </select>
-               
-              </div>
+                <div class="error-message">{{detailForms.validationErrors?.graduate_school_id}}</div>
+              </div></div>
        
 </div>
 </div>
@@ -350,12 +367,14 @@
     
       <div class="left">
               <div class="label-input-group">
-
+                  
+                <div class="input-error-message-group" style="width: 100%">
                 <label>Comment:</label>
-                <textarea [formControl]="detailForms.comments.formGroup.controls['comment']" name="comment" style="width: 100%;height:200px;" maxlength="1000" [class.input-error]="detailForms.comments.validationErrors?.comment != null"></textarea>
+                <textarea [formControl]="detailForms.comments.formGroup.controls['comment']" name="comment" style="width: 100%;height:200px;" maxlength="1000" [class.input-error]="detailForms.validationErrors?.comment != null"></textarea>
                   <br />
-
-              </div>
+                
+                  <div class="error-message">{{detailForms.validationErrors?.comment}}</div>
+              </div></div>
        
 </div>
 </div>
