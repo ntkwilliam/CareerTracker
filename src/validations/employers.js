@@ -1,10 +1,18 @@
-export class EmployerValidator {
+class EmployerValidator {
 
-    private validationErrors = {
-    
+    validationErrors = {
+    employer_name: null,
+    contact_name: null,
+    address_line_1: null,
+    address_line_2: null,
+    city: null,
+    state: null,
+    zip_code: null,
+    phone_number: null,
+    email_address: null
     }
   
-    private errorsExist = false;
+    errorsExist = false;
   
     isBlankValue(value) {
       if(!value) {
@@ -84,8 +92,7 @@ export class EmployerValidator {
   
     validateChildRecord(recordType, values) {
       switch (recordType) {
-   
-  
+      
            case 'comments':
             this.validateField('entity_id', values['entity_id'], true, /^[0-9]+$/);
             this.validateField('entity_type', values['entity_type'], true, /^E$/);
@@ -105,3 +112,5 @@ export class EmployerValidator {
   
     }
   
+
+    module.exports = EmployerValidator;

@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AlumniComponent } from './records/alumni/alumni.component';
 import { EmployersComponent } from './records/employers/employers.component';
-import { GraduateSchoolsComponent } from './records/graduate-schools/graduate-schools.component';
+import { GraduateSchoolsComponent } from './records/graduateSchools/graduateSchool.component';
 import { ExportsReportsComponent } from './exports-reports/exports-reports.component';
 import { NavigationComponent } from './navigation/navigation.component';
 import { AuthenticationComponent } from './authentication/authentication.component';
@@ -19,7 +19,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EmployerEditFormComponent} from './records/employers/edit-form/edit-form.component';
 import { EmployerViewFormComponent} from './records/employers/view-form/view-form.component';
 import { EmployerService } from './records/employers/employer.service';
-
+import { GraduateSchoolViewFormComponent } from './records/graduateSchools/view-form/view-form.component';
+import { GraduateSchoolEditFormComponent } from './records/graduateSchools/edit-form/edit-form.component';
+import { GraduateSchoolService } from './records/graduateSchools/graduateSchool.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,7 +34,10 @@ import { EmployerService } from './records/employers/employer.service';
     AlumniEditFormComponent,
     AlumniViewFormComponent,
     EmployerEditFormComponent,
-    EmployerViewFormComponent
+    EmployerViewFormComponent,
+    GraduateSchoolEditFormComponent,
+    EmployerViewFormComponent,
+    GraduateSchoolViewFormComponent
     
   ],
   imports: [
@@ -53,7 +58,7 @@ import { EmployerService } from './records/employers/employer.service';
   FormsModule, 
   ReactiveFormsModule
   ],
-  providers: [[AlumniService],[EmployerService]],
+  providers: [[AlumniService],[EmployerService], [GraduateSchoolService]],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

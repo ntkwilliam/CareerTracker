@@ -1,22 +1,22 @@
 import { Component, OnInit, Output, Input, Injectable, ComponentFactoryResolver , Renderer2} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { EventEmitter } from '@angular/core';
-import { EmployerService } from '../employer.service';
-import { EmployerValidator } from '../employer.validator';
+import { GraduateSchoolService } from '../graduateSchool.service';
+import { GraduateSchoolValidator } from '../graduateschool.validator';
 import { $ } from 'protractor';
 @Component({
-  selector: 'EmployerEditFormComponent',
+  selector: 'GraduateSchoolEditFormComponent',
   templateUrl: './edit-form.component.html',
   styleUrls: ['./edit-form.component.css']
 })
 @Injectable()
-export class EmployerEditFormComponent implements OnInit {
+export class GraduateSchoolEditFormComponent implements OnInit {
   @Output() close: EventEmitter<any> = new EventEmitter();
   @Output() refreshData: EventEmitter<any> = new EventEmitter();
-  @Input() currentEmployer;
+  @Input() currentGraduateSchool;
   @Input() addMode;
   private formControls = {
-    employer_name: new FormControl(''),
+    school_name: new FormControl(''),
     contact_name: new FormControl(''),
     address_line_1: new FormControl(''),
     address_line_2: new FormControl(''),
@@ -25,7 +25,7 @@ export class EmployerEditFormComponent implements OnInit {
     zipcode: new FormControl(''),
     phone_number: new FormControl(''),
     email_address: new FormControl(''),
-    employer_id: new FormControl('')
+    graduate_school_id: new FormControl('')
 
   }
 
@@ -57,16 +57,16 @@ currentForm: null
   private recordStatus: string = null;
   private deleteRequest;
   private validationErrors = null;
-  private employerForm = new FormGroup(this.formControls);
+  private graduateschoolForm = new FormGroup(this.formControls);
   private deleteConfirmationVisible: boolean = false;
   private currentDetailTab = "comments";
-  constructor(private service: EmployerService, private renderer: Renderer2) { }
+  constructor(private service: GraduateSchoolService, private renderer: Renderer2) { }
 
   ngOnInit() {
     this.renderer.addClass(document.body, 'no-scroll');
     
-    if (this.currentEmployer.employer != undefined) {
-      this.loadEmployerData();
+    if (this.currentGraduateSchool.graduateSchool != undefined) {
+      this.loadGraduateSchoolData();
     }
     else
     {
@@ -84,9 +84,9 @@ currentForm: null
     this.close.emit();
   }
 
-  loadEmployerData() {
-    console.log(this.currentEmployer);
-    this.employerForm.patchValue(this.currentEmployer.employer);
+  loadGraduateSchoolData() {
+    console.log(this.currentGraduateSchool);
+    this.graduateschoolForm.patchValue(this.currentGraduateSchool.graduateSchool);
 
   }
 
@@ -103,10 +103,10 @@ currentForm: null
     this.deleteConfirmationVisible = false;
     if (this.deleteRequest) {
 
-      this.service.deleteEmployerData(this.deleteRequest['recordType'], this.deleteRequest['recordID']).then(
+      this.service.deleteGraduateSchoolData(this.deleteRequest['recordType'], this.deleteRequest['recordID']).then(
         a => {
 
-          if (this.deleteRequest['recordType'] == 'employers') {
+          if (this.deleteRequest['recordType'] == 'graduate_schools') {
             this.refreshData.emit();
             this.close.emit();
           }
@@ -154,7 +154,7 @@ currentForm: null
         newRecord[a] = null;
       });
 
-      newRecord['entity_id'] = this.currentEmployer.employer['employer_id'];
+      newRecord['entity_id'] = this.currentGraduateSchool.graduateschool['graduate_school_id'];
       newRecord['entity_type'] = 'E';
       this.detailForms.currentRecord = newRecord;
 
@@ -201,8 +201,8 @@ currentForm: null
     }
 
 
-    if (recordType == 'employers') {
-      console.log("entering employers");
+    if (recordType == 'graduate_schools') {
+      console.log("entering graduateschools");
       if (response.validationError) {
 
 
@@ -214,22 +214,22 @@ currentForm: null
 
 
       } else if (this.addMode) {
-        this.currentEmployer = {};
+        this.currentGraduateSchool = {};
         
-        this.currentEmployer.employer = response.data[0];
-        console.log(this.currentEmployer);
-        this.employerForm.patchValue(this.currentEmployer.employer);
+        this.currentGraduateSchool.graduateSchool = response.data[0];
+        console.log(this.currentGraduateSchool);
+        this.graduateschoolForm.patchValue(this.currentGraduateSchool.graduateSchool);
         this.showRecordStatus('The record has been saved successfully.');
-        this.employerForm.markAsPristine();
+        this.graduateschoolForm.markAsPristine();
         this.addMode = false;
 
       }
       else {
         console.log(response);
-        this.currentEmployer.employer = response.data;
-        this.employerForm.patchValue(this.currentEmployer.employer);
+        this.currentGraduateSchool.graduateSchool = response.data;
+        this.graduateschoolForm.patchValue(this.currentGraduateSchool.graduateSchool);
         this.showRecordStatus('The record has been saved successfully.');
-        this.employerForm.markAsPristine();
+        this.graduateschoolForm.markAsPristine();
       }
 
     }
@@ -242,11 +242,11 @@ currentForm: null
 
       }
       else if (this.detailForms.addMode) {
-        if (this.currentEmployer[recordType] == undefined) {
-          this.currentEmployer[recordType] = [];
+        if (this.currentGraduateSchool[recordType] == undefined) {
+          this.currentGraduateSchool[recordType] = [];
         }
       
-        this.currentEmployer[recordType].unshift(response['data'][0]);
+        this.currentGraduateSchool[recordType].unshift(response['data'][0]);
         
         this.detailForms[recordType].formGroup.patchValue(response['data'][0]);
         this.detailForms.addMode = false;   
@@ -256,8 +256,8 @@ currentForm: null
       else {
 
         let keyField = this.detailForms[recordType].keyField;
-        let index = this.currentEmployer[recordType].map(element => element[keyField]).indexOf(this.detailForms.currentRecord[keyField]);
-        this.currentEmployer[recordType].splice(index, 1, response['data']);
+        let index = this.currentGraduateSchool[recordType].map(element => element[keyField]).indexOf(this.detailForms.currentRecord[keyField]);
+        this.currentGraduateSchool[recordType].splice(index, 1, response['data']);
         this.showRecordStatus('The record has been saved successfully.');
         this.detailForms[recordType].formGroup.patchValue(response['data']);
 
@@ -273,28 +273,28 @@ currentForm: null
   }
 
 
-  submitEmployerGeneralData() {
+  submitGraduateSchoolGeneralData() {
 
     this.recordStatus = null;
     
-    if (!this.employerForm.pristine) {
-
+    if (!this.graduateschoolForm.pristine) {
+      console.log(this.graduateschoolForm);
       this.recordStatus = null;
-      let validator: EmployerValidator = new EmployerValidator();
+      let validator: GraduateSchoolValidator = new GraduateSchoolValidator();
       this.validationErrors = null;
-      let [errorsExist, errors] = validator.validateEmployerRecord(this.employerForm.value);
-      
+      let [errorsExist, errors] = validator.validateGraduateSchoolRecord(this.graduateschoolForm.value);
+      console.log(errorsExist);
       if (errorsExist) {
         this.validationErrors = errors;
       }
       else {
         if (this.addMode) {
           
-          this.service.addNewEmployerData('employers', this.employerForm.value).then(result => this.processSaveResponse('employers', result));
+          this.service.addNewGraduateSchoolData('graduate_schools', this.graduateschoolForm.value).then(result => this.processSaveResponse('graduate_schools', result));
         }
         else {
 
-          this.service.updateEmployerData('employers', this.employerForm.value).then(result => this.processSaveResponse('employers', result));
+          this.service.updateGraduateSchoolData('graduate_schools', this.graduateschoolForm.value).then(result => this.processSaveResponse('graduate_schools', result));
         }
       }
 
@@ -308,11 +308,11 @@ currentForm: null
     this.detailForms.detailVisible = false;
   }
 
-  submitEmployerChildData() {
+  submitGraduateSchoolChildData() {
   
     if (!this.detailForms.comments.formGroup.pristine) {
       this.detailForms.recordStatus = null;
-      let validator: EmployerValidator = new EmployerValidator();
+      let validator: GraduateSchoolValidator = new GraduateSchoolValidator();
       this.validationErrors = null;
       let [errorsExist, errors] = validator.validateChildRecord('comments', this.detailForms.comments.formGroup.value);
       if (errorsExist) {
@@ -322,10 +322,10 @@ currentForm: null
       }
       else {
         if (this.detailForms.addMode) {
-          this.service.addNewEmployerData('comments', this.detailForms.comments.formGroup.value).then(result => this.processSaveResponse('comments', result));
+          this.service.addNewGraduateSchoolData('comments', this.detailForms.comments.formGroup.value).then(result => this.processSaveResponse('comments', result));
 
         } else {
-          this.service.updateEmployerData('comments', this.detailForms.comments.formGroup.value).then(result => this.processSaveResponse('comments', result)
+          this.service.updateGraduateSchoolData('comments', this.detailForms.comments.formGroup.value).then(result => this.processSaveResponse('comments', result)
 
           );
         }
