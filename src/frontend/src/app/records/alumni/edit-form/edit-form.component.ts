@@ -12,6 +12,8 @@ import { $ } from 'protractor';
 @Injectable()
 export class AlumniEditFormComponent implements OnInit {
   @Output() close: EventEmitter<any> = new EventEmitter();
+  
+  @Output() refreshData: EventEmitter<any> = new EventEmitter();
   @Input() currentAlumnus;
   @Input() employerList;
   @Input() graduateSchoolList;
@@ -98,8 +100,13 @@ export class AlumniEditFormComponent implements OnInit {
 
   ngOnInit() {
     this.renderer.addClass(document.body, 'no-scroll');
-    if (!this.addMode) {
+    
+    if (this.currentAlumnus.alumni != undefined) {
       this.loadStudentData();
+    }
+    else
+    {
+      this.addMode = true;
     }
   }
 
@@ -112,6 +119,13 @@ export class AlumniEditFormComponent implements OnInit {
     this.alumniForm.patchValue(this.currentAlumnus.alumni);
 
   }
+
+
+  closeWindow() {
+    this.refreshData.emit();
+    this.close.emit();
+  }
+
 
   deleteRecord(recordType, recordID) {
     this.deleteRequest = {
@@ -130,12 +144,13 @@ export class AlumniEditFormComponent implements OnInit {
         a => {
 
           if (this.deleteRequest['recordType'] == 'alumni') {
+            this.refreshData.emit();
             this.close.emit();
           }
           else {
-            let index = this.currentAlumnus[this.deleteRequest['recordType']].map(element => element[this.detailForms[this.deleteRequest['recordType']].keyField]).indexOf(this.deleteRequest['record_id']);
-            this.currentAlumnus[this.deleteRequest['recordType']].splice(index, 1);
-
+            let index = this.currentAlumnus[this.deleteRequest['recordType']].map(element => element[this.detailForms[this.deleteRequest['recordType']].keyField]).indexOf(this.deleteRequest['recordID']);
+          this.currentAlumnus[this.deleteRequest['recordType']].splice(index, 1);
+          
           }
         }, b => console.log(b));
 
@@ -246,7 +261,7 @@ export class AlumniEditFormComponent implements OnInit {
 
 
     if (recordType == 'alumni') {
-      console.log(response);
+      
       if (response.validationError) {
 
 
@@ -288,10 +303,13 @@ export class AlumniEditFormComponent implements OnInit {
         if (this.currentAlumnus[recordType] == undefined) {
           this.currentAlumnus[recordType] = [];
         }
-        console.log(response['data']);
+      
         this.currentAlumnus[recordType].push(response['data'][0]);
-        console.log(this.currentAlumnus);
+        
+        this.detailForms[recordType].formGroup.patchValue(response['data'][0]);
         this.detailForms.addMode = false;   
+        
+        this.showRecordStatus('The record has been saved successfully.');
       }
       else {
 
@@ -351,6 +369,7 @@ export class AlumniEditFormComponent implements OnInit {
   submitAlumniChildData() {
     let currentForm = this.detailForms.currentForm;
     if (!this.detailForms[currentForm].formGroup.pristine) {
+      this.detailForms.validationErrors = null;
       this.detailForms.recordStatus = null;
       let validator: AlumniValidator = new AlumniValidator();
       this.validationErrors = null;
@@ -365,6 +384,8 @@ export class AlumniEditFormComponent implements OnInit {
           this.service.addNewAlumniData(this.detailForms.currentForm, this.detailForms[currentForm].formGroup.value).then(result => this.processSaveResponse(currentForm, result));
 
         } else {
+          console.log(this.detailForms.currentForm);
+          console.log(this.detailForms[currentForm].formGroup.value);
           this.service.updateAlumniData(this.detailForms.currentForm, this.detailForms[currentForm].formGroup.value).then(result => this.processSaveResponse(currentForm, result)
 
           );

@@ -2,56 +2,103 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Injectable } from '@angular/core';
 import { AlumniService } from './alumni.service';
 import { AlumniEditFormComponent } from './edit-form/edit-form.component';
-import { AlumniViewFormComponent} from './alumni-view-form/alumni-view-form.component'
+import { AlumniViewFormComponent} from './view-form/view-form.component'
+import { ObjectUnsubscribedError } from 'rxjs';
+import { trigger, state, transition, style, animation, animate } from '@angular/animations';
 @Component({
   selector: 'app-alumni',
   templateUrl: './alumni.component.html',
   styleUrls: ['./alumni.component.css'],
-  
-})
+  animations: [
+    trigger('fade', [
+      state('void', style({ opacity:0})),
+      transition('void => visible', 
+        animate('0.3s')),
+      state('visible', style ( { opacity: 1})),
+        transition('* => void', animate(500))
+    
+  ]
+)
+]})
 @Injectable()
 export class AlumniComponent implements OnInit {
-
-  readonly ITEMSPERPAGE = 10;
+  
+  readonly ITEMSPERPAGE = 15;
   currentPage: number = 1;
   totalPages: number;
-  public pages;
   detailVisible: boolean = false;
   viewAllActive: boolean = false;
   editMode: boolean = false;
-  public currentDetailTab;
-  public alumniList;
-  public currentAlumnus;
-  public currentResultsQuery;
-  public searchValues = {
+  private alumniList;
+  private currentAlumnus;
+  private currentResultsQuery;
+  private searchDialogActive = false;
+  private searchApplied = false;
+  private searchValues = {
     alumnus_id: null,
-    lastName: null,
-    firstName: null,
-    city: null,
-    state: null,
+    last_name: null,
+    first_name: null,
+    mailing_address_city: null,
+    mailing_address_state: null,
     employer: null,
-    graduateSchool: null
+    graduateSchool: null,
+    noEmployer: false,
+    noGraduateSchool: false,
+    graduation_term_code: null
+
   };
-  public employerList;
-  public graduateSchoolList;
+  private employerList;
+  private graduateSchoolList;
   @ViewChild('editForm', null) editForm;
   @ViewChild('viewForm', null) viewForm;
-  private addMode: boolean = false;
+
   constructor(private service: AlumniService) { }
 
   ngOnInit() {
-    this.getSearchResults(true);
+    this.getSearchResults(true, true);
     this.fillEmployerList();
     this.fillGraduateSchoolList();
+    
   }
 
 
 
 
-  getSearchResults(newQuery: boolean) {
-    
+  removeSearchFilter() {
+    Object.keys(this.searchValues).forEach(a => {
+      this.searchValues[a] = null;
+    });
+    this.getSearchResults(true,true);
+  
+
+  }
+
+
+refreshData() {
+    this.getSearchResults(false,false);
+  }
+
+  getSearchResults(newQuery: boolean, clearQuery: boolean = false) {
+    console.log("running update");
    
     if (newQuery) {
+      if (this.searchApplied && clearQuery) {
+        this.searchApplied = false;
+        
+      }
+      else if (!this.searchApplied && !clearQuery)
+      {
+        let criteriaExist = false;
+        Object.keys(this.searchValues).forEach(a => {
+          if (this.searchValues[a]) {
+            criteriaExist = true;
+          }
+        });
+
+        if (criteriaExist) {
+        this.searchApplied = true;
+        }
+      }
       this.currentPage = 1;
     }
 
@@ -59,8 +106,8 @@ export class AlumniComponent implements OnInit {
     .then(res => {
       this.alumniList = res['alumniList'];
       if (newQuery) {
-      this.pages = res['pages'];
       this.totalPages = res['totalPages'];
+      this.searchDialogActive = false;
       }
     }).catch(error => console.log(error));
     
@@ -68,8 +115,19 @@ export class AlumniComponent implements OnInit {
 
   }
 
-  fillEmployerList() {
+  getPageWindowArray() {
 
+    let beginIndex = Math.floor((this.currentPage - 1.0) / 10.0);
+    let newArray = [];
+    for (let i = beginIndex; i < Math.min(beginIndex + 10, this.totalPages); i++) {
+      newArray.push(i);
+    }
+    console.log(newArray);
+    return newArray;
+  }
+
+  fillEmployerList() {
+    
    this.service.getEmployerList().then(result => {
      
      this.employerList = result;
@@ -90,21 +148,31 @@ export class AlumniComponent implements OnInit {
 
   }
 
-  viewDetail(recordID: number, editMode: boolean) {
-    this.addMode = false;
-    this.currentDetailTab = "degrees";
-    this.service.getDetail(recordID).then(data => {
-      this.currentAlumnus = data;
-      this.editMode = editMode;
-      this.detailVisible = true;
-      
-      
-      
-    });
     
-    
+    viewDetail(recordID, editMode) {
+      
+      this.service.getDetail(recordID).then(
+        (result) => {
+          this.currentAlumnus = result;
+          this.editMode = editMode;
+          this.detailVisible = true;
+          console.log(this.editMode);
 
-  }
+
+
+        }
+
+      )
+
+
+
+
+    }
+
+  
+    invokeEdit() {
+      this.editMode = true;
+    }
 
   gotoPage(i) {
     console.log(i);
@@ -114,30 +182,27 @@ export class AlumniComponent implements OnInit {
   }
 
 
-  toggleViewAllactive() {
-  
-    this.viewAllActive = !this.viewAllActive;
-    
-  }
-  
 addNewAlumni() {
-  this.addMode = true;
+  this.currentAlumnus = {};
   this.editMode = true;
   this.detailVisible = true;
-  this.currentAlumnus = {
-    
-  }
+  
 }
 
 
 
     closeDetail() {
+      
       this.detailVisible = false;
       this.editMode = false;
+      
     }
 
-    changeDetailTab(newTab) {
-      this.currentDetailTab = newTab;
+
+    toggleSearchActive() {
+     
+      this.searchDialogActive = !this.searchDialogActive;
+   
     }
 
 }

@@ -4,28 +4,27 @@
 <div class="records-list">
     <table class="table table-striped">
       <thead class="thead-dark">
-        <th scope="col" class="right-align">Employer ID</th>
-        <th scope="col">Employer Name</th>
+        <th scope="col" class="right-align">Graduate School ID</th>
+        <th scope="col">School Name</th>
         <th scope="col">Location</th>
         <th scope="col">Contact</th>
-        <th scope="col" style="text-align: center;"><button class="fas fa-plus-circle" style="border: none; color: white; background: transparent;" (click)="addNewEmployer()"></button>
+        <th scope="col" style="text-align: center;"><button class="fas fa-plus-circle" style="border: none; color: white; background: transparent;" (click)="addNewGraduateSchool()"></button>
           <button class="fas fa-binoculars" style="border: none; color: white; background: transparent;" (click)="toggleSearchActive()"></button>
           <button class="fas fa-window-close" style="background-color: transparent; color: white; border: none;" *ngIf="searchApplied" (click)="removeSearchFilter()"></button>
   
         </th>
       </thead>
       <tbody>
-        <tr *ngFor="let employer of employerList">
-          <td class="right-align">{{employer["employer_id"]}}</td>
-          <td>{{employer["employer_name"]}}</td>
-          <td>{{employer["address_line_1"] != null ? employer["address_line_1"] + " "  : ""}}
-               {{ employer["address_line_2"] != null ? employer["address_line_2"] + " " : ""}}
-               {{ employer["city"] != null ? employer["city"] + ", " + employer["state"] : ""}}
+        <tr *ngFor="let graduateschool of graduateschoolList">
+          <td class="right-align">{{graduateschool["graduate_school_id"]}}</td>
+          <td>{{graduateschool["school_name"]}}</td>
+          <td>
+               {{ graduateschool["city"] != null ? graduateschool["city"] + ", " + graduateschool["state"] : ""}}
 
           </td>
-          <td>{{employer["contact_name"]}}</td>
-          <td style="text-align: center;"><button class="fas fa-search"  style="color: black; background: transparent; border: none;" (click)="viewDetail(employer['employer_id'], false)"></button>
-            <button class="fas fa-edit" style="color: black; background: transparent; border: none;" (click)="viewDetail(employer['employer_id'], true)"></button>
+          <td>{{graduateschool["contact_name"]}}</td>
+          <td style="text-align: center;"><button class="fas fa-search"  style="color: black; background: transparent; border: none;" (click)="viewDetail(graduateschool['graduate_school_id'], false)"></button>
+            <button class="fas fa-edit" style="color: black; background: transparent; border: none;" (click)="viewDetail(graduateschool['graduate_school_id'], true)"></button>
   
           </td>
   
@@ -33,7 +32,7 @@
       </tbody>
     </table>
   </div>
-  <nav aria-label="Record pages" *ngIf="employerList != undefined && employerList.length > 0">
+  <nav aria-label="Record pages" *ngIf="graduateschoolList != undefined && graduateschoolList.length > 0">
     <ul class="pagination justify-content-end paging-links no-select">
       <li class="page-item disabled" [class.disabled]="currentPage == 1">
         <a class="page-link" href="#" tabindex="-1" aria-disabled="true"
@@ -55,7 +54,7 @@
   
     <div class="detail-form" [style.display]="!editMode ? 'inline-block' : 'none'" (click)="$event.stopPropagation()">
       
-    <EmployerViewFormComponent *ngIf="!editMode" (close)="closeDetail()" (invokeEdit)="invokeEdit()" [currentEmployer]="currentEmployer" #viewForm></EmployerViewFormComponent>
+    <GraduateSchoolViewFormComponent *ngIf="!editMode" (close)="closeDetail()" (invokeEdit)="invokeEdit()" [currentGraduateSchool]="currentGraduateSchool" #viewForm></GraduateSchoolViewFormComponent>
     </div>
   
   
@@ -64,7 +63,7 @@
   
     <div class="edit-form" [style.display]="editMode ? 'inline-block' : 'none'" (click)="$event.stopPropagation()">
       
-        <EmployerEditFormComponent *ngIf="editMode" (close)="closeDetail()" (refreshData) = "refreshData()" [currentEmployer]="currentEmployer" [addMode]="addMode" #editForm></EmployerEditFormComponent>
+        <GraduateSchoolEditFormComponent *ngIf="editMode" (close)="closeDetail()" (refreshData) = "refreshData()" [currentGraduateSchool]="currentGraduateSchool" [addMode]="addMode" #editForm></GraduateSchoolEditFormComponent>
       
       </div>
   
@@ -89,15 +88,15 @@
     
           <table>
             <tr>
-              <td>Employer Name:</td>
-              <td colspan="3"><input type="text" name="employer_name" [(ngModel)]="searchValues.employer_name"></td>
+              <td>Graduate School Name:</td>
+              <td colspan="3"><input type="text" name="school_name" [(ngModel)]="searchValues.school_name"></td>
              
             </tr>
             <tr>
               <td>City:</td>
-              <td><input type="text" [(ngModel)]="searchValues.employer_address_city"></td>
+              <td><input type="text" [(ngModel)]="searchValues.city"></td>
               <td>State:</td>
-              <td><input style="width: 30px;" type="text" [(ngModel)]="searchValues.employer_address_state"></td>
+              <td><input style="width: 30px;" type="text" [(ngModel)]="searchValues.state"></td>
             </tr>
             
           </table>

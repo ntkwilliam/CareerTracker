@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { EmployerViewFormComponent} from './view-form/view-form.component';
-import { EmployerEditFormComponent} from './edit-form/edit-form.component';
+import { GraduateSchoolViewFormComponent} from './view-form/view-form.component';
+import { GraduateSchoolEditFormComponent} from './edit-form/edit-form.component';
 import { trigger, state, transition, style, animation, animate } from '@angular/animations';
-import { EmployerService } from './employer.service';
+import { GraduateSchoolService } from './graduateSchool.service';
 
 @Component({
-  selector: 'app-employers',
-  templateUrl: './employers.component.html',
-  styleUrls: ['./employers.component.css'],
+  selector: 'app-graduateschools',
+  templateUrl: './graduateSchool.component.html',
+  styleUrls: ['./graduateSchool.component.css'],
   animations: [
     trigger('fade', [
       state('void', style({ opacity:0})),
@@ -20,7 +20,7 @@ import { EmployerService } from './employer.service';
 )
 ]
 })
-export class EmployersComponent implements OnInit {
+export class GraduateSchoolsComponent implements OnInit {
 
   
   readonly ITEMSPERPAGE = 15;
@@ -29,17 +29,17 @@ export class EmployersComponent implements OnInit {
   detailVisible: boolean = false;
   viewAllActive: boolean = false;
   editMode: boolean = false;
-  private currentEmployer = {};
+  private currentGraduateSchool = {};
   private searchDialogActive = false;
   private searchApplied = false;
   private searchValues = {
-    employer_name: null,
+    school_name: null,
     city: null,
     state: null
 
   };
-  employerList;
-  constructor(private service: EmployerService) { }
+  graduateschoolList;
+  constructor(private service: GraduateSchoolService) { }
 
   ngOnInit() {
     
@@ -93,7 +93,7 @@ export class EmployersComponent implements OnInit {
 
     this.service.getSearchResults(this.searchValues, this.ITEMSPERPAGE, this.currentPage)
     .then(res => {
-      this.employerList = res['employerList'];
+      this.graduateschoolList = res['graduateschoolList'];
       if (newQuery) {
       this.totalPages = res['totalPages'];
       this.searchDialogActive = false;
@@ -115,24 +115,26 @@ export class EmployersComponent implements OnInit {
     return newArray;
   }
 
-  fillEmployerList() {
+  fillGraduateSchoolList() {
     
-   this.service.getEmployerList().then(result => {
+   this.service.getGraduateSchoolList().then(result => {
      
-     this.employerList = result;
+     this.graduateschoolList = result;
    });
 
   }
 
 
    viewDetail(recordID, editMode) {
-      
+     
     this.service.getDetail(recordID).then(
       (result) => {
-        this.currentEmployer = result;
+        
+        this.currentGraduateSchool = result;
+        console.log(this.currentGraduateSchool);
         this.editMode = editMode;
         this.detailVisible = true;
-        
+      
 
 
 
@@ -158,8 +160,8 @@ gotoPage(i) {
 }
 
 
-addNewEmployer() {
-this.currentEmployer = {};
+addNewGraduateSchool() {
+this.currentGraduateSchool = {};
 this.editMode = true;
 this.detailVisible = true;
 
