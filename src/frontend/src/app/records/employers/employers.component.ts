@@ -33,6 +33,7 @@ export class EmployersComponent implements OnInit {
   private searchDialogActive = false;
   private searchApplied = false;
   private searchValues = {
+    employer_id: null,
     employer_name: null,
     city: null,
     state: null

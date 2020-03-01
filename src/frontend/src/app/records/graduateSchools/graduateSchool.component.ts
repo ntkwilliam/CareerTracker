@@ -33,6 +33,7 @@ export class GraduateSchoolsComponent implements OnInit {
   private searchDialogActive = false;
   private searchApplied = false;
   private searchValues = {
+    graduate_school_id: null,
     school_name: null,
     city: null,
     state: null

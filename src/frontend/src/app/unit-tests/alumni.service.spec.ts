@@ -83,7 +83,7 @@ export class AlumniSearchTest {
         }
         ,
         {
-            alumnus_id: 8,
+            alumnus_id: 9,
             lastName: 'Smith',
             firstName: 'Matt',
             city: 'Charlestown',
@@ -93,7 +93,7 @@ export class AlumniSearchTest {
         }
         ,
         {
-            alumnus_id: 9,
+            alumnus_id: 10,
             lastName: 'Myers',
             firstName: 'Jane',
             city: 'Sellersburg',
@@ -174,8 +174,8 @@ export class AlumniSearchTest {
 }
 
 
-describe('alumni general data validation', () => {
-    it('Test last_name null', () => {
+describe('alumni service testing - search', () => {
+    it('Test all fields null', () => {
         let searchTest = new AlumniSearchTest();
         let searchValues = {
             alumnus_id: null,
@@ -190,6 +190,344 @@ describe('alumni general data validation', () => {
         let results = searchTest.getSearchResults(searchValues, 20, 1);
         expect(results.alumniList.length).toBe(10);
     });
+
+
+
+    it('Test alumnus id', () => {
+        let searchTest = new AlumniSearchTest();
+        let searchValues = {
+            alumnus_id: 3,
+            lastName: null,
+            firstName: null,
+            city: null,
+            state: null,
+            employer: null,
+            graduateSchool: null
+        }
+
+        let results = searchTest.getSearchResults(searchValues, 20, 1);
+        expect(results.alumniList.length).toBe(1);
+    });
+
+    it('Test last name - exists', () => {
+        let searchTest = new AlumniSearchTest();
+        let searchValues = {
+            alumnus_id: null,
+            lastName: 'Smith',
+            firstName: null,
+            city: null,
+            state: null,
+            employer: null,
+            graduateSchool: null
+        }
+
+        let results = searchTest.getSearchResults(searchValues, 20, 1);
+        expect(results.alumniList.length).toBe(3);
+    });
+
+    it('Test last name - does not exist', () => {
+        let searchTest = new AlumniSearchTest();
+        let searchValues = {
+            alumnus_id: null,
+            lastName: 'Test',
+            firstName: null,
+            city: null,
+            state: null,
+            employer: null,
+            graduateSchool: null
+        }
+
+        let results = searchTest.getSearchResults(searchValues, 20, 1);
+        expect(results.alumniList.length).toBe(0);
+    });
+
+    it('Test first name - exists', () => {
+        let searchTest = new AlumniSearchTest();
+        let searchValues = {
+            alumnus_id: null,
+            lastName: null,
+            firstName: 'Adam',
+            city: null,
+            state: null,
+            employer: null,
+            graduateSchool: null
+        }
+
+        let results = searchTest.getSearchResults(searchValues, 20, 1);
+        expect(results.alumniList.length).toBe(1);
+    });
+
+    it('Test first name - does not exist', () => {
+        let searchTest = new AlumniSearchTest();
+        let searchValues = {
+            alumnus_id: null,
+            lastName: null,
+            firstName: 'Tori',
+            city: null,
+            state: null,
+            employer: null,
+            graduateSchool: null
+        }
+
+        let results = searchTest.getSearchResults(searchValues, 20, 1);
+        expect(results.alumniList.length).toBe(0);
+    });
+
+    it('Test city name - exists', () => {
+        let searchTest = new AlumniSearchTest();
+        let searchValues = {
+            alumnus_id: null,
+            lastName: null,
+            firstName: null,
+            city: 'Clarksville',
+            state: null,
+            employer: null,
+            graduateSchool: null
+        }
+
+        let results = searchTest.getSearchResults(searchValues, 20, 1);
+        expect(results.alumniList.length).toBe(1);
+    });
+
+
+    it('Test city name - does not exist', () => {
+        let searchTest = new AlumniSearchTest();
+        let searchValues = {
+            alumnus_id: null,
+            lastName: null,
+            firstName: null,
+            city: 'Marengo',
+            state: null,
+            employer: null,
+            graduateSchool: null
+        }
+
+        let results = searchTest.getSearchResults(searchValues, 20, 1);
+        expect(results.alumniList.length).toBe(0);
+    });
+
+    it('Test state - does not exist', () => {
+        let searchTest = new AlumniSearchTest();
+        let searchValues = {
+            alumnus_id: null,
+            lastName: null,
+            firstName: null,
+            city: null,
+            state: 'NM',
+            employer: null,
+            graduateSchool: null
+        }
+
+        let results = searchTest.getSearchResults(searchValues, 20, 1);
+        expect(results.alumniList.length).toBe(0);
+    });
+
+    
+    it('Test state - exists', () => {
+        let searchTest = new AlumniSearchTest();
+        let searchValues = {
+            alumnus_id: null,
+            lastName: null,
+            firstName: null,
+            city: null,
+            state: 'IN',
+            employer: null,
+            graduateSchool: null
+        }
+
+        let results = searchTest.getSearchResults(searchValues, 20, 1);
+        expect(results.alumniList.length).toBe(6);
+    });
+
+    it('Test employer - does not exist', () => {
+        let searchTest = new AlumniSearchTest();
+        let searchValues = {
+            alumnus_id: null,
+            lastName: null,
+            firstName: null,
+            city: null,
+            state: null,
+            employer: 'Bank of America',
+            graduateSchool: null
+        }
+
+        let results = searchTest.getSearchResults(searchValues, 20, 1);
+        expect(results.alumniList.length).toBe(0);
+    });
+
+    
+    it('Test employer - exists', () => {
+        let searchTest = new AlumniSearchTest();
+        let searchValues = {
+            alumnus_id: null,
+            lastName: null,
+            firstName: null,
+            city: null,
+            state: null,
+            employer: 'Humana',
+            graduateSchool: null
+        }
+
+        let results = searchTest.getSearchResults(searchValues, 20, 1);
+        expect(results.alumniList.length).toBe(2);
+    });
+
+    it('Test graduate school - does not exist', () => {
+        let searchTest = new AlumniSearchTest();
+        let searchValues = {
+            alumnus_id: null,
+            lastName: null,
+            firstName: null,
+            city: null,
+            state: null,
+            employer: null,
+            graduateSchool: 'Purdue University'
+        }
+
+        let results = searchTest.getSearchResults(searchValues, 20, 1);
+        expect(results.alumniList.length).toBe(0);
+    });
+
+    
+    it('Test graduate school - exists', () => {
+        let searchTest = new AlumniSearchTest();
+        let searchValues = {
+            alumnus_id: null,
+            lastName: null,
+            firstName: null,
+            city: null,
+            state: null,
+            employer: null,
+            graduateSchool: 'University of Louisville'
+        }
+
+        let results = searchTest.getSearchResults(searchValues, 20, 1);
+        expect(results.alumniList.length).toBe(2);
+    });
+
+
+
+    it('Test combination fields - test 1', () => {
+        let searchTest = new AlumniSearchTest();
+        let searchValues = {
+            alumnus_id: null,
+            lastName: null,
+            firstName: 'Zeke',
+            city: null,
+            state: null,
+            employer: null,
+            graduateSchool: 'University of Louisville'
+        }
+
+        let results = searchTest.getSearchResults(searchValues, 20, 1);
+        expect(results.alumniList.length).toBe(1);
+    });
+
+
+    it('Test combination fields - test 2', () => {
+        let searchTest = new AlumniSearchTest();
+        let searchValues = {
+            alumnus_id: null,
+            lastName:  'Smith',
+            firstName: 'Zeke',
+            city: null,
+            state: null,
+            employer: null,
+            graduateSchool: null
+        }
+
+        let results = searchTest.getSearchResults(searchValues, 20, 1);
+        expect(results.alumniList.length).toBe(0);
+    });
+
+
+    it('Test combination fields - test 3', () => {
+        let searchTest = new AlumniSearchTest();
+        let searchValues = {
+            alumnus_id: 3,
+            lastName:  null,
+            firstName: 'Lisa',
+            city: null,
+            state: 'IN',
+            employer: null,
+            graduateSchool: null
+        }
+
+        let results = searchTest.getSearchResults(searchValues, 20, 1);
+        expect(results.alumniList.length).toBe(1);
+    });
+
+
+
+    it('Test combination fields - test 4', () => {
+        let searchTest = new AlumniSearchTest();
+        let searchValues = {
+            alumnus_id: null,
+            lastName:  null,
+            firstName: null,
+            city: 'Clarksville',
+            state: 'IN',
+            employer: null,
+            graduateSchool: null
+        }
+
+        let results = searchTest.getSearchResults(searchValues, 20, 1);
+        expect(results.alumniList.length).toBe(1);
+    });
+
+    it('Test paging - test 1', () => {
+        let searchTest = new AlumniSearchTest();
+        let searchValues = {
+            alumnus_id: null,
+            lastName:  null,
+            firstName: null,
+            city: null,
+            state: null,
+            employer: null,
+            graduateSchool: null
+        }
+
+        let results = searchTest.getSearchResults(searchValues, 5, 1);
+        expect(results.totalPages).toBe(2);
+    });
+
+
+    it('Test paging - test 2', () => {
+        let searchTest = new AlumniSearchTest();
+        let searchValues = {
+            alumnus_id: null,
+            lastName:  null,
+            firstName: null,
+            city: null,
+            state: 'KY',
+            employer: null,
+            graduateSchool: null
+        }
+
+        let results = searchTest.getSearchResults(searchValues, 3, 1);
+        expect(results.totalPages).toBe(2);
+    });
+
+
+    it('Test paging - test 3', () => {
+        let searchTest = new AlumniSearchTest();
+        let searchValues = {
+            alumnus_id: null,
+            lastName:  null,
+            firstName: 'Zeke',
+            city: null,
+            state: null,
+            employer: null,
+            graduateSchool: null
+        }
+
+        let results = searchTest.getSearchResults(searchValues, 3, 1);
+        expect(results.totalPages).toBe(1);
+    });
+
+
+
+
 
 
 });
