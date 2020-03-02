@@ -84,28 +84,11 @@ export class EmployerValidator {
   
     validateChildRecord(recordType, values) {
       switch (recordType) {
-        case 'employer_degrees':
-          this.validateField('alumnus_id', values['alumnus_id'], true, /^[0-9]+$/);
-          this.validateField('diploma_description', values['diploma_description'], true, /^[A-Za-z-',. ]{1,100}$/);
-          this.validateField('graduation_term_code', values['graduation_term_code'], true, /^[0-9]{4,5}$/);
-           break;
-
-
-           case 'employer_employments':
-            this.validateField('alumnus_id', values['alumnus_id'], true, /^[0-9]+$/);
-            this.validateField('employer_id', values['employer_id'], true, /^[0-9]+$/);
-            this.validateField('job_title', values['job_title'], false, /^[A-za-z-'0-9, ]{0,45}$/);
-           break;
-  
-           case 'employer_graduate_schools':
-            this.validateField('alumnus_id', values['alumnus_id'], true, /^[0-9]+$/);
-            this.validateField('graduate_school_id', values['graduate_school_id'], true, /^[0-9]+$/);
-          
-           break;
+   
   
            case 'comments':
             this.validateField('entity_id', values['entity_id'], true, /^[0-9]+$/);
-            this.validateField('entity_type', values['entity_type'], true, /^[A-Z]{1}$/);
+            this.validateField('entity_type', values['entity_type'], true, /^E$/);
             this.validateField('comment', values['comment'], true, /^[\s\S]{1,1000}$/);
            break;
 

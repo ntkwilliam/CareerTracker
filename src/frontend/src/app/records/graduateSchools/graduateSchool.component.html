@@ -1,0 +1,113 @@
+
+
+
+<div class="records-list">
+    <table class="table table-striped">
+      <thead class="thead-dark">
+        <th scope="col" class="right-align">Graduate School ID</th>
+        <th scope="col">School Name</th>
+        <th scope="col">Location</th>
+        <th scope="col">Contact</th>
+        <th scope="col" style="text-align: center;"><button class="fas fa-plus-circle" style="border: none; color: white; background: transparent;" (click)="addNewGraduateSchool()"></button>
+          <button class="fas fa-binoculars" style="border: none; color: white; background: transparent;" (click)="toggleSearchActive()"></button>
+          <button class="fas fa-window-close" style="background-color: transparent; color: white; border: none;" *ngIf="searchApplied" (click)="removeSearchFilter()"></button>
+  
+        </th>
+      </thead>
+      <tbody>
+        <tr *ngFor="let graduateschool of graduateschoolList">
+          <td class="right-align">{{graduateschool["graduate_school_id"]}}</td>
+          <td>{{graduateschool["school_name"]}}</td>
+          <td>
+               {{ graduateschool["city"] != null ? graduateschool["city"] + ", " + graduateschool["state"] : ""}}
+
+          </td>
+          <td>{{graduateschool["contact_name"]}}</td>
+          <td style="text-align: center;"><button class="fas fa-search"  style="color: black; background: transparent; border: none;" (click)="viewDetail(graduateschool['graduate_school_id'], false)"></button>
+            <button class="fas fa-edit" style="color: black; background: transparent; border: none;" (click)="viewDetail(graduateschool['graduate_school_id'], true)"></button>
+  
+          </td>
+  
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <nav aria-label="Record pages" *ngIf="graduateschoolList != undefined && graduateschoolList.length > 0">
+    <ul class="pagination justify-content-end paging-links no-select">
+      <li class="page-item disabled" [class.disabled]="currentPage == 1">
+        <a class="page-link" href="#" tabindex="-1" aria-disabled="true"
+          (click)="gotoPage(this.currentPage - 1 )">Previous</a>
+      </li>
+      <li *ngFor="let item of getPageWindowArray()" class="page-item" [class.paging-links-active]="currentPage == i + 1">
+        <a (click)="gotoPage(item+1)" class="page-link" [class.paging-links-active]="currentPage == (item+1)">{{item + 1}}</a></li>
+      <li class="page-item" [class.disabled]="currentPage >= totalPages">
+        <a class="page-link" href="#" (click)="gotoPage(this.currentPage + 1 )">Next</a>
+      </li>
+    </ul>
+  </nav>
+  
+  
+  
+  
+  
+  <div class="detail-form-back" [style.display]="detailVisible ? 'flex' : 'none'" [@fade]="detailVisible ? 'visible' : 'void'">
+  
+    <div class="detail-form" [style.display]="!editMode ? 'inline-block' : 'none'" (click)="$event.stopPropagation()">
+      
+    <GraduateSchoolViewFormComponent *ngIf="!editMode" (close)="closeDetail()" (invokeEdit)="invokeEdit()" [currentGraduateSchool]="currentGraduateSchool" #viewForm></GraduateSchoolViewFormComponent>
+    </div>
+  
+  
+  
+  
+  
+    <div class="edit-form" [style.display]="editMode ? 'inline-block' : 'none'" (click)="$event.stopPropagation()">
+      
+        <GraduateSchoolEditFormComponent *ngIf="editMode" (close)="closeDetail()" (refreshData) = "refreshData()" [currentGraduateSchool]="currentGraduateSchool" [addMode]="addMode" #editForm></GraduateSchoolEditFormComponent>
+      
+      </div>
+  
+  
+  
+  </div>
+  
+  <div class="detail-form-back" [@fade]="searchDialogActive ? 'visible' : 'void'"  [style.display]="searchDialogActive ? 'flex' : 'none'">
+    
+      <div id="search-box">
+        
+        <div id="header">
+        <div id="header-title">Search</div>
+        <div id="header-buttons">
+          <button class="far fa-window-close" style="border: none; background: transparent; color: white; font-size: 1.3em;" (click)="toggleSearchActive()"></button>
+  
+          
+        </div>
+      </div>
+        <div id="body">
+    
+    
+          <table>
+            <tr>
+              <td>Graduate School Name:</td>
+              <td colspan="3"><input type="text" name="school_name" [(ngModel)]="searchValues.school_name"></td>
+             
+            </tr>
+            <tr>
+              <td>City:</td>
+              <td><input type="text" [(ngModel)]="searchValues.city"></td>
+              <td>State:</td>
+              <td><input style="width: 30px;" type="text" [(ngModel)]="searchValues.state"></td>
+            </tr>
+            
+          </table>
+          <div id="search-button">
+            <button class="btn-dark" (click)="getSearchResults(true)">Search</button>
+          </div>
+    
+    
+        </div>
+      
+      
+    </div>
+    
+  </div>

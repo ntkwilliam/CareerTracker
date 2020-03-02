@@ -246,7 +246,7 @@ currentForm: null
           this.currentEmployer[recordType] = [];
         }
       
-        this.currentEmployer[recordType].push(response['data'][0]);
+        this.currentEmployer[recordType].unshift(response['data'][0]);
         
         this.detailForms[recordType].formGroup.patchValue(response['data'][0]);
         this.detailForms.addMode = false;   

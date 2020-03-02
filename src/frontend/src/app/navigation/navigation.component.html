@@ -6,11 +6,11 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       
          <div class="dropdown" style="background-color: rgb(154,0,0);">
-        <button class="btn btn-secondary dropdown-toggle shadow-none"  style="background-color: rgb(154,0,0); border: 0" routerLink="records" routerLinkActive="active-nav" button id="recordDropDownButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Records</button>
+        <button class="btn btn-secondary dropdown-toggle shadow-none"  style="background-color: rgb(154,0,0); border: 0" button id="recordDropDownButton" data-toggle="dropdown" [class.active-nav]="router.url.startsWith('/records')"    aria-haspopup="true" aria-expanded="false">Records</button>
           <div class="dropdown-menu" aria-labelledby="recordDropDownButton">
             <div class="drop-down-item"><a routerLink="records/alumni">Alumni</a></div>
             <div class="drop-down-item"><a routerLink="records/employers">Employers</a></div>
-            <div class="drop-down-item"><a routerLink="records/graduateSchools">Graduate Schools</a></div>
+            <div class="drop-down-item"><a routerLink="records/graduate-schools">Graduate Schools</a></div>
           </div>
       </div>
       <button class="btn btn-secondary shadow-none"  style="background-color: rgb(154,0,0); border: 0" routerLinkActive="active-nav" routerLink="imports" aria-haspopup="true" aria-expanded="false">Import Data</button>
@@ -20,6 +20,7 @@
       
     </div>
     <div class="ml-auto mr-1">
+    
       <div class="nav-link">Logout</div>
   
     </div>

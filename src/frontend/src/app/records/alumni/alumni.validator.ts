@@ -105,7 +105,7 @@ export class AlumniValidator {
   
            case 'comments':
             this.validateField('entity_id', values['entity_id'], true, /^[0-9]+$/);
-            this.validateField('entity_type', values['entity_type'], true, /^[A-Z]{1}$/);
+            this.validateField('entity_type', values['entity_type'], true, /^A$/);
             this.validateField('comment', values['comment'], true, /^[\s\S]{1,1000}$/);
            break;
 
