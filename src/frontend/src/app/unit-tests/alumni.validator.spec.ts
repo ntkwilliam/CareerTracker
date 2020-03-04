@@ -155,26 +155,6 @@ describe('alumni general data validation', () => {
         
     });
 
-    it('Test address line 1 null when city supplied', () => {
-        let validator = new AlumniValidator();
-        let alumniRecord = {
-            last_name: null,
-            first_name: null,
-            mailing_address_line_1: null,
-            mailing_address_line_2: null,
-            mailing_address_city: 'Test',
-            mailing_address_state: null,
-            mailing_address_zipcode: null,
-            phone_number: null,
-            email_address: null
-        }
-
-        let result = validator.validateAlumniRecord(alumniRecord);
-        expect(result[0]).toBe(true);
-        expect(result[1]['mailing_address_line_1']).toBe('A value is required.');
-        
-        
-    });
 
     it('Test state null when city supplied', () => {
         let validator = new AlumniValidator();
@@ -197,48 +177,9 @@ describe('alumni general data validation', () => {
         
     });
 
-    it('Test zipcode null when city supplied', () => {
-        let validator = new AlumniValidator();
-        let alumniRecord = {
-            last_name: null,
-            first_name: null,
-            mailing_address_line_1: null,
-            mailing_address_line_2: null,
-            mailing_address_city: 'Test',
-            mailing_address_state: null,
-            mailing_address_zipcode: null,
-            phone_number: null,
-            email_address: null
-        }
-
-        let result = validator.validateAlumniRecord(alumniRecord);
-        expect(result[0]).toBe(true);
-        expect(result[1]['mailing_address_zipcode']).toBe('A value is required.');
-        
-        
-    });
+   
 
 
-    it('Test address line 1 null when state supplied', () => {
-        let validator = new AlumniValidator();
-        let alumniRecord = {
-            last_name: null,
-            first_name: null,
-            mailing_address_line_1: null,
-            mailing_address_line_2: null,
-            mailing_address_city: null,
-            mailing_address_state: 'IN',
-            mailing_address_zipcode: null,
-            phone_number: null,
-            email_address: null
-        }
-
-        let result = validator.validateAlumniRecord(alumniRecord);
-        expect(result[0]).toBe(true);
-        expect(result[1]['mailing_address_line_1']).toBe('A value is required.');
-        
-        
-    });
 
     it('Test city null when state supplied', () => {
         let validator = new AlumniValidator();
@@ -261,26 +202,6 @@ describe('alumni general data validation', () => {
         
     });
 
-    it('Test zipcode null when state supplied', () => {
-        let validator = new AlumniValidator();
-        let alumniRecord = {
-            last_name: null,
-            first_name: null,
-            mailing_address_line_1: null,
-            mailing_address_line_2: null,
-            mailing_address_city: null,
-            mailing_address_state: 'IN',
-            mailing_address_zipcode: null,
-            phone_number: null,
-            email_address: null
-        }
-
-        let result = validator.validateAlumniRecord(alumniRecord);
-        expect(result[0]).toBe(true);
-        expect(result[1]['mailing_address_zipcode']).toBe('A value is required.');
-        
-        
-    });
 
     it('Test address line 1 null when zipcode supplied', () => {
         let validator = new AlumniValidator();
@@ -298,7 +219,7 @@ describe('alumni general data validation', () => {
 
         let result = validator.validateAlumniRecord(alumniRecord);
         expect(result[0]).toBe(true);
-        expect(result[1]['mailing_address_line_1']).toBe('A value is required.');
+        expect(result[1]['mailing_address_line_1']).toBe(undefined);
         
         
     });

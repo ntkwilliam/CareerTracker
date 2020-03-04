@@ -942,12 +942,12 @@ app.delete("/data/employers", (req, res) => {
         let errors;
     
     
-        if (recordType == 'graduate_schools') {
+        if (recordType == 'graduate_school') {
     
             [errorsExist, errors] = validator.validateGraduateSchoolRecord(data);
         }
         else {
-         [errorsExist, errors] = validator.validateGraduateSchoolRecord(recordType, data);
+         [errorsExist, errors] = validator.validateChildRecord(recordType, data);
         }
     
         if (errorsExist) {

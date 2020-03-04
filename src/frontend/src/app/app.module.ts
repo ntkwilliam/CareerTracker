@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, Component } from '@angular/core';
-import { RouterModule} from '@angular/router';
+import { RouterModule, Routes} from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AlumniComponent } from './records/alumni/alumni.component';
@@ -22,6 +22,7 @@ import { EmployerService } from './records/employers/employer.service';
 import { GraduateSchoolViewFormComponent } from './records/graduateSchools/view-form/view-form.component';
 import { GraduateSchoolEditFormComponent } from './records/graduateSchools/edit-form/edit-form.component';
 import { GraduateSchoolService } from './records/graduateSchools/graduateSchool.service';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -49,11 +50,12 @@ import { GraduateSchoolService } from './records/graduateSchools/graduateSchool.
        { path: 'records/employers', component: EmployersComponent},
        { path: 'records/graduate-schools', component: GraduateSchoolsComponent},
        { path: 'records/alumni', component: AlumniComponent},
-       { path: 'exports-reports', component: ExportsReportsComponent}
+       { path: 'exports-reports', component: ExportsReportsComponent},
+        { path: '', component: NavigationComponent } ])
   
   
   
-  ])
+  
   ,HttpClientModule,
   FormsModule, 
   ReactiveFormsModule
