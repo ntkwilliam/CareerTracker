@@ -334,12 +334,12 @@ export class AlumniEditFormComponent implements OnInit {
   submitAlumniGeneralData() {
 
     this.recordStatus = null;
-    
+    this.validationErrors = null;
     if (!this.alumniForm.pristine) {
 
       this.recordStatus = null;
       let validator: AlumniValidator = new AlumniValidator();
-      this.validationErrors = null;
+      
       let [errorsExist, errors] = validator.validateAlumniRecord(this.alumniForm.value);
       
       if (errorsExist) {
@@ -364,6 +364,7 @@ export class AlumniEditFormComponent implements OnInit {
 
   closeSubDetail() {
     this.detailForms.detailVisible = false;
+    this.detailForms.validationErrors = null;
   }
 
   submitAlumniChildData() {

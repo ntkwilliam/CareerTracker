@@ -89,15 +89,20 @@
     
           <table>
             <tr>
+              <td >Employer ID:</td>
+              <td colspan="3"><input type="text" style="width: 45px;" name="employer_id" [(ngModel)]="searchValues.employer_id"></td>
+             
+            </tr>
+            <tr>
               <td>Employer Name:</td>
               <td colspan="3"><input type="text" name="employer_name" [(ngModel)]="searchValues.employer_name"></td>
              
             </tr>
             <tr>
               <td>City:</td>
-              <td><input type="text" [(ngModel)]="searchValues.employer_address_city"></td>
+              <td><input type="text" [(ngModel)]="searchValues.city"></td>
               <td>State:</td>
-              <td><input style="width: 30px;" type="text" [(ngModel)]="searchValues.employer_address_state"></td>
+              <td><input style="width: 30px;" type="text" [(ngModel)]="searchValues.state"></td>
             </tr>
             
           </table>

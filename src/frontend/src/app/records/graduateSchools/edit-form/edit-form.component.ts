@@ -102,16 +102,17 @@ currentForm: null
   finalizeDelete() {
     this.deleteConfirmationVisible = false;
     if (this.deleteRequest) {
-
+      console.log(this.deleteRequest);
       this.service.deleteGraduateSchoolData(this.deleteRequest['recordType'], this.deleteRequest['recordID']).then(
         a => {
 
-          if (this.deleteRequest['recordType'] == 'graduate_schools') {
+          if (this.deleteRequest['recordType'] == 'graduate_school') {
             this.refreshData.emit();
             this.close.emit();
           }
           else {
-          
+            let index = this.currentGraduateSchool[this.deleteRequest['recordType']].map(element => element[this.detailForms[this.deleteRequest['recordType']].keyField]).indexOf(this.deleteRequest['recordID']);
+            this.currentGraduateSchool[this.deleteRequest['recordType']].splice(index, 1);
           }
         }, b => console.log(b));
 
@@ -154,8 +155,8 @@ currentForm: null
         newRecord[a] = null;
       });
 
-      newRecord['entity_id'] = this.currentGraduateSchool.graduateschool['graduate_school_id'];
-      newRecord['entity_type'] = 'E';
+      newRecord['entity_id'] = this.currentGraduateSchool.graduateSchool['graduate_school_id'];
+      newRecord['entity_type'] = 'G';
       this.detailForms.currentRecord = newRecord;
 
       this.detailForms[detailType].formGroup.patchValue(newRecord);
@@ -276,12 +277,12 @@ currentForm: null
   submitGraduateSchoolGeneralData() {
 
     this.recordStatus = null;
-    
+    this.validationErrors = null;
     if (!this.graduateschoolForm.pristine) {
       console.log(this.graduateschoolForm);
       this.recordStatus = null;
       let validator: GraduateSchoolValidator = new GraduateSchoolValidator();
-      this.validationErrors = null;
+     
       let [errorsExist, errors] = validator.validateGraduateSchoolRecord(this.graduateschoolForm.value);
       console.log(errorsExist);
       if (errorsExist) {
@@ -306,6 +307,7 @@ currentForm: null
 
   closeSubDetail() {
     this.detailForms.detailVisible = false;
+    this.detailForms.validationErrors = null;
   }
 
   submitGraduateSchoolChildData() {
@@ -315,6 +317,7 @@ currentForm: null
       let validator: GraduateSchoolValidator = new GraduateSchoolValidator();
       this.validationErrors = null;
       let [errorsExist, errors] = validator.validateChildRecord('comments', this.detailForms.comments.formGroup.value);
+     console.log(errorsExist);
       if (errorsExist) {
         this.detailForms.validationErrors = errors;
         console.log(this.detailForms.validationErrors);

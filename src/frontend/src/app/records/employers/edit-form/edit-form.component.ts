@@ -112,6 +112,8 @@ currentForm: null
           }
           else {
           
+            let index = this.currentEmployer[this.deleteRequest['recordType']].map(element => element[this.detailForms[this.deleteRequest['recordType']].keyField]).indexOf(this.deleteRequest['recordID']);
+          this.currentEmployer[this.deleteRequest['recordType']].splice(index, 1);
           }
         }, b => console.log(b));
 
@@ -306,12 +308,14 @@ currentForm: null
 
   closeSubDetail() {
     this.detailForms.detailVisible = false;
+    this.detailForms.validationErrors = null;
   }
 
   submitEmployerChildData() {
   
     if (!this.detailForms.comments.formGroup.pristine) {
       this.detailForms.recordStatus = null;
+      this.detailForms.validationErrors = null;
       let validator: EmployerValidator = new EmployerValidator();
       this.validationErrors = null;
       let [errorsExist, errors] = validator.validateChildRecord('comments', this.detailForms.comments.formGroup.value);
