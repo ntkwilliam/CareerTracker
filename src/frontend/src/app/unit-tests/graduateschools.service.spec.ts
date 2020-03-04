@@ -154,7 +154,7 @@ export class GraduateschoolSearchTest {
 }
 
 
-describe('graduat eschool service testing - search', () => {
+describe('graduate eschool service testing - search', () => {
     it('Test all fields null', () => {
         let searchTest = new GraduateschoolSearchTest();
         let searchValues = {
