@@ -8,7 +8,6 @@ import { EmployersComponent } from './records/employers/employers.component';
 import { GraduateSchoolsComponent } from './records/graduateSchools/graduateSchool.component';
 import { ExportsReportsComponent } from './exports-reports/exports-reports.component';
 import { NavigationComponent } from './navigation/navigation.component';
-import { AuthenticationComponent } from './authentication/authentication.component';
 import { HttpClientModule} from '@angular/common/http'
 import { FormsModule} from '@angular/forms';
 import { AlumniService } from './records/alumni/alumni.service';
@@ -31,7 +30,6 @@ import { GraduateSchoolService } from './records/graduateSchools/graduateSchool.
     GraduateSchoolsComponent,
     ExportsReportsComponent,
     NavigationComponent,
-    AuthenticationComponent,
     AlumniEditFormComponent,
     AlumniViewFormComponent,
     EmployerEditFormComponent,
