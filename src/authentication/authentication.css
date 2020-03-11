@@ -1,0 +1,94 @@
+
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+
+
+.login-back {
+    position: fixed;
+    top: 0%;
+    left: 0%;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0,0,0, 0.8);
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    
+  }
+
+  .login-box {
+    background-color: whitesmoke;
+    
+    font-family: 'Roboto', sans-serif;
+    
+  }
+
+  .login-box .header {
+    height: 30%;
+    display: flex;
+    background-color:  rgb(154,0,0);
+    padding: 10px 0 10px 0;
+    color: white;
+    width: 100%;
+    align-items: center;
+    justify-content: flex-start;
+    justify-items: center;
+    align-items: center;
+  }
+  
+  .login-box .header .application-name {
+    text-align: center;
+    font-size: 1.7rem;
+    width: 70%;
+ 
+    letter-spacing: 1.4px;
+    padding-right: 15px;
+  }
+
+  .login-box .main {
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+
+
+  }
+
+  .login-box .main .login {
+    text-align: center;
+ 
+
+
+  }
+
+
+
+  
+
+
+  .login-box .main .left {
+      display: block;
+      text-align: left;
+  }
+
+  .login-box .main .entry-group {
+      display: flex;
+  }
+
+  .login-box .main .entry-element {
+      margin-top: 5px;
+  }
+  
+  label {
+      font-weight: bold;
+      margin-right: 10px;
+  }
+
+  input {
+      border: 1px solid black;
+  }
+
+  button {
+      margin-top: 5px;
+      font-weight: bold;
+  }
