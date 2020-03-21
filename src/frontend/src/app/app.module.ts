@@ -21,6 +21,8 @@ import { EmployerService } from './records/employers/employer.service';
 import { GraduateSchoolViewFormComponent } from './records/graduateSchools/view-form/view-form.component';
 import { GraduateSchoolEditFormComponent } from './records/graduateSchools/edit-form/edit-form.component';
 import { GraduateSchoolService } from './records/graduateSchools/graduateSchool.service';
+import { ImportsComponent } from './imports/imports.component';
+import { ImportsService } from './imports/imports.service';
 
 @NgModule({
   declarations: [
@@ -36,29 +38,20 @@ import { GraduateSchoolService } from './records/graduateSchools/graduateSchool.
     EmployerViewFormComponent,
     GraduateSchoolEditFormComponent,
     EmployerViewFormComponent,
-    GraduateSchoolViewFormComponent
+    GraduateSchoolViewFormComponent,
+    ImportsComponent
     
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    RouterModule.forRoot([
-       { path: '', redirectTo: 'records/alumni', pathMatch: 'full' },
-       { path: 'records/employers', component: EmployersComponent},
-       { path: 'records/graduate-schools', component: GraduateSchoolsComponent},
-       { path: 'records/alumni', component: AlumniComponent},
-       { path: 'exports-reports', component: ExportsReportsComponent},
-        { path: '', component: NavigationComponent } ])
-  
-  
-  
-  
-  ,HttpClientModule,
+    RouterModule, 
+    HttpClientModule,
   FormsModule, 
   ReactiveFormsModule
   ],
-  providers: [[AlumniService],[EmployerService], [GraduateSchoolService]],
+  providers: [[AlumniService],[EmployerService], [GraduateSchoolService], [ImportsService]],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

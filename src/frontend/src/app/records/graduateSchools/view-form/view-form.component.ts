@@ -11,13 +11,13 @@ export class GraduateSchoolViewFormComponent implements OnInit {
   @Output() invokeEdit: EventEmitter<any> = new EventEmitter();
   @Input() currentGraduateSchool;
   
-  viewAllActive: boolean = false;
-  currentDetailTab = "comments";
+  public viewAllActive: boolean = false;
+  public currentDetailTab = "comments";
   constructor(private renderer: Renderer2) { }
-  private currentCommentDetail = {};
+  public currentCommentDetail: any;
   
   ngOnInit() {
-    console.log('Test');
+    
   }
 
   

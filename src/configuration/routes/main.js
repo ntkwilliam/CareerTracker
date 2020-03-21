@@ -1,51 +1,42 @@
-detectChanges = function(existingRecord, updatedRecord)  {
-
-    changesFound = false;
-
-    changedFieldValues = {};
-    queryString = '';
-    for (let prop in updatedRecord) {
-        if (Object.prototype.hasOwnProperty.call(updatedRecord, prop)) {
-            if (!existingRecord && updatedRecord[prop] != '' || existingRecord &&  existingRecord[prop] != updatedRecord[prop]) {
-                changesFound = true;
-                changedFieldValues[prop] = updatedRecord[prop];
-            }
-
-        }
-
-    }
-   
-
-   return [changesFound, changedFieldValues]
 
 
 
+module.exports = function (app, express, passport) {
 
+    require('./records-alumni')(app);
+    require('./records-employers')(app);
+    require('./records-graduateSchools')(app);
+    require('./imports')(app);
 
-}
-
-
-modules.export = function (app) {
-
-    require('./records-alumni')(app, detectChanges);
-
-
- 
-
-    app.use('/', express.static('authentication'));
-
-    app.use('/main', express.static('frontend/src'))
-    
     
     app.post('/login', passport.authenticate(
         'local', { 
-            successRedirect: '/main',
-            failureRedirect: '/',
+            successRedirect: '/',
+            failureRedirect: '/login'
+
          
         }
     ) );
     
+    app.use('/login',express.static('authentication'));
+  
+    
 
+        
+    app.use('/', function(req, res, next)  {
+        if (req.user == null) {
+            res.redirect('/login');
+        } else {
+           next();
+        }
+
+    });
+    
+    app.use('/',express.static('frontend/dist/career-tracker'));
+
+        app.all('/*', function(req, res) {
+            res.sendFile('index.html', { root: 'frontend/dist/career-tracker'});
+        });
 
 
 

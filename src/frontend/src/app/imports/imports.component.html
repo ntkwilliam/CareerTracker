@@ -1,13 +1,25 @@
-<!--Build out CSV import submission form HTML elements-->
-<div class="container">
-    <input type="file" (change)="onFileChange($event)"/>
+
+<div class="main">
+    <h2>Import Data</h2>
+    <div style="background-color: rgb(252, 225, 230); display: inline-block" *ngIf="errorVisible">
+        <div><b>The following error(s) has/have occurred:</b><br />
+        {{errorMessages}} <br /><br />
+        Please review the file and try again.<br />
+        
+        </div>
+    </div>
+    <form *ngIf="statusVisible == false" action="/upload" method="POST" enctype="multipart/form-data">
+        To import alumni data into the application, please select a <b>.xlsx</b> file containing data in the registrar format and click the <b>Upload</b> button.<br />
+        <br /><b>Note:&nbsp;&nbsp;</b>The worksheet to be processed must be named <b>Upload</b>.
+
+        <br />
+        <br />
+
+
+<input type="file" name="upload_file" id="upload_file" accept=".xlsx">
+<button (click)="uploadFile($event.target.form.elements[0].files)">Upload</button>
+</form>
+<div *ngIf="statusVisible">
+    <br />The file submitted is currently being processed.  Please wait.
 </div>
-<table class="table">
-    <tbody>
-        <tr *ngFor="let row of data">
-            <td *ngFor="let val of row">
-                {{val}}
-            </td>
-        </tr>
-    </tbody>
-</table>
+</div>

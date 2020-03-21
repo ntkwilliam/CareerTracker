@@ -15,7 +15,7 @@ export class EmployerEditFormComponent implements OnInit {
   @Output() refreshData: EventEmitter<any> = new EventEmitter();
   @Input() currentEmployer;
   @Input() addMode;
-  private formControls = {
+  public formControls = {
     employer_name: new FormControl(''),
     contact_name: new FormControl(''),
     address_line_1: new FormControl(''),
@@ -30,7 +30,7 @@ export class EmployerEditFormComponent implements OnInit {
   }
 
 
-private detailForms = {
+  public detailForms = {
 
 comments: {
     formGroup: new FormGroup ({
@@ -42,7 +42,7 @@ comments: {
    
 },
 currentRecord: {},
-validationErrors: {},
+validationErrors: null,
 addMode: false,
 detailVisible: false,
 recordStatus: null,
@@ -54,12 +54,12 @@ currentForm: null
  
 
   
-  private recordStatus: string = null;
-  private deleteRequest;
-  private validationErrors = null;
-  private employerForm = new FormGroup(this.formControls);
-  private deleteConfirmationVisible: boolean = false;
-  private currentDetailTab = "comments";
+public recordStatus: string = null;
+public deleteRequest;
+public validationErrors = null;
+public employerForm = new FormGroup(this.formControls);
+public deleteConfirmationVisible: boolean = false;
+public currentDetailTab = "comments";
   constructor(private service: EmployerService, private renderer: Renderer2) { }
 
   ngOnInit() {

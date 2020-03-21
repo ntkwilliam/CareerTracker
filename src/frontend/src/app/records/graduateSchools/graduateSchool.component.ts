@@ -24,15 +24,15 @@ export class GraduateSchoolsComponent implements OnInit {
 
   
   readonly ITEMSPERPAGE = 15;
-  currentPage: number = 1;
-  totalPages: number;
-  detailVisible: boolean = false;
-  viewAllActive: boolean = false;
-  editMode: boolean = false;
-  private currentGraduateSchool = {};
-  private searchDialogActive = false;
-  private searchApplied = false;
-  private searchValues = {
+  public currentPage: number = 1;
+  public totalPages: number;
+  public detailVisible: boolean = false;
+  public viewAllActive: boolean = false;
+  public editMode: boolean = false;
+  public currentGraduateSchool = {};
+  public searchDialogActive = false;
+  public searchApplied = false;
+  public searchValues = {
     graduate_school_id: null,
     school_name: null,
     city: null,

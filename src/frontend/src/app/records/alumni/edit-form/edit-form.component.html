@@ -72,7 +72,7 @@
                 <label>State:</label>
                 <div class="input-error-message-group">
                   
-                  <input type="text" [formControl]="formControls.mailing_address_state" name="mailing_address_state" style="width: 3ch;" maxlength="2" [class.input-error]="validationErrors?.mailing_address_state != null"><br />
+                  <input type="text" [formControl]="formControls.mailing_address_state" name="mailing_address_state" style="width: 5ch;" maxlength="2" [class.input-error]="validationErrors?.mailing_address_state != null"><br />
                   <div class="error-message">{{validationErrors?.mailing_address_state}}</div>
                 </div>
               </div>
@@ -294,7 +294,7 @@
 
                   <label>Diploma Description:</label>
                   <div class="input-error-message-group">
-                  <input type="text" [class.input-error]="detailForms.validationErrors?.diploma_description" [formControl]="detailForms.alumni_degrees.formGroup.controls['diploma_description']" name="diploma_description" style="width: 35ch;" maxlength="100" [class.input-error]="detailForms.alumni_degrees.validationErrors?.diploma_description != null"><br />
+                  <input type="text" [class.input-error]="detailForms.validationErrors?.diploma_description" [formControl]="detailForms.alumni_degrees.formGroup.controls['diploma_description']" name="diploma_description" style="width: 35ch;" maxlength="100" [class.input-error]="detailForms.validationErrors?.diploma_description != null"><br />
                   <div class="error-message">{{detailForms.validationErrors?.diploma_description}}</div>
                   
                 </div>
@@ -303,7 +303,7 @@
 
                <label>Graduation Term Code:</label>
                <div class="input-error-message-group">
-               <input type="text" [class.input-error]="detailForms.validationErrors?.graduation_term_code" [formControl]="detailForms.alumni_degrees.formGroup.controls['graduation_term_code']" name="graduation_term_code" style="width: 10ch;" maxlength="5" [class.input-error]="detailForms.alumni_degrees.validationErrors?.graduation_term_code != null"><br />
+               <input type="text" [class.input-error]="detailForms.validationErrors?.graduation_term_code" [formControl]="detailForms.alumni_degrees.formGroup.controls['graduation_term_code']" name="graduation_term_code" style="width: 10ch;" maxlength="5" [class.input-error]="detailForms.validationErrors?.graduation_term_code != null"><br />
                <div class="error-message">{{detailForms.validationErrors?.graduation_term_code}}</div>
                 
               </div>
@@ -330,7 +330,7 @@
               <div class="label-input-group">
                 <label>Role Title</label>
                 <div class="input-error-message-group">
-             <input type="text" [formControl]="detailForms.alumni_employments.formGroup.controls['job_title']" [class.input-error]="detailForms.validationErrors?.job_title" name="job_title" style="width: 35ch;" maxlength="45" [class.input-error]="detailForms.alumni_degrees.validationErrors?.job_title != null"><br />
+             <input type="text" [formControl]="detailForms.alumni_employments.formGroup.controls['job_title']" [class.input-error]="detailForms.validationErrors?.job_title" name="job_title" style="width: 35ch;" maxlength="45" [class.input-error]="detailForms.validationErrors?.job_title != null"><br />
              <div class="error-message">{{detailForms.validationErrors?.job_title}}</div>
 </div>
 </div>

@@ -24,22 +24,22 @@ export class EmployersComponent implements OnInit {
 
   
   readonly ITEMSPERPAGE = 15;
-  currentPage: number = 1;
-  totalPages: number;
-  detailVisible: boolean = false;
-  viewAllActive: boolean = false;
-  editMode: boolean = false;
-  private currentEmployer = {};
-  private searchDialogActive = false;
-  private searchApplied = false;
-  private searchValues = {
+  public currentPage: number = 1;
+  public totalPages: number;
+  public detailVisible: boolean = false;
+  public viewAllActive: boolean = false;
+  public editMode: boolean = false;
+  public currentEmployer = {};
+  public searchDialogActive = false;
+  public searchApplied = false;
+  public searchValues = {
     employer_id: null,
     employer_name: null,
     city: null,
     state: null
 
   };
-  employerList;
+  public employerList;
   constructor(private service: EmployerService) { }
 
   ngOnInit() {

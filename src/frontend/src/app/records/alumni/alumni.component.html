@@ -1,6 +1,3 @@
-<app-navigation></app-navigation>
-
-
 <div class="records-list">
   <table class="table table-striped">
     <thead class="thead-dark">
@@ -41,7 +38,7 @@
       <a class="page-link" href="#" tabindex="-1" aria-disabled="true"
         (click)="gotoPage(this.currentPage - 1 )">Previous</a>
     </li>
-    <li *ngFor="let item of getPageWindowArray()" class="page-item" [class.paging-links-active]="currentPage == i + 1">
+    <li *ngFor="let item of getPageWindowArray(); index as i" class="page-item" [class.paging-links-active]="currentPage == i + 1">
       <a (click)="gotoPage(item+1)" class="page-link" [class.paging-links-active]="currentPage == (item+1)">{{item + 1}}</a></li>
     <li class="page-item" [class.disabled]="currentPage >= totalPages">
       <a class="page-link" href="#" (click)="gotoPage(this.currentPage + 1 )">Next</a>
@@ -66,7 +63,7 @@
 
   <div class="edit-form" [style.display]="editMode ? 'inline-block' : 'none'" (click)="$event.stopPropagation()">
     
-      <AlumniEditFormComponent *ngIf="editMode" (close)="closeDetail()" (refreshData) = "refreshData()" [currentAlumnus]="currentAlumnus" [employerList]="employerList" [graduateSchoolList]="graduateSchoolList" [addMode]="addMode" #editForm></AlumniEditFormComponent>
+      <AlumniEditFormComponent *ngIf="editMode" (close)="closeDetail()" (refreshData) = "refreshData()" [currentAlumnus]="currentAlumnus" [employerList]="employerList" [graduateSchoolList]="graduateSchoolList"  #editForm></AlumniEditFormComponent>
     
     </div>
 
