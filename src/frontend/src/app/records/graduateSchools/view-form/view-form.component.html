@@ -118,7 +118,7 @@
               </div>
               <div class="buttons">
                 
-                <button class="btn-light shadow-none" (click)="toggleViewAllactive()">Close</button>
+                <button class="btn-light shadow-none" (click)="toggleViewAllactive(null)">Close</button>
               
               </div>
               
@@ -129,11 +129,11 @@
               <div class="audit-data">
                 <div class="left" style="display: flex;">
                 <div style="font-weight: bold;">Added By:<br />Added Date/Time:</div>
-                <div>{{currentCommentDetail?.added_by}}<br />{{currentCommentDetail?.added_datetime | date:'L/d/yyyy h:mm a'}}</div>
+                <div>{{currentCommentDetail?.added_by == undefined ? null : currentCommentDetail?.added_by}}<br />{{ currentCommentDetail?.added_datetime == undefined ? null : currentCommentDetail?.added_datetime | date:'L/d/yyyy h:mm a'}}</div>
               </div>
               <div class="right" style="display: flex;">
                 <div style="font-weight: bold;">Last Updated By:<br />Last Updated Date/Time:</div>
-                <div>{{currentCommentDetail?.updated_by}}<br />{{currentCommentDetail?.updated_datetime | date:'L/d/yyyy h:mm a'}}</div>
+                <div>{{currentCommentDetail?.updated_by == undefined ? null : currentCommentDetail?.updated_by}}<br />{{currentCommentDetail?.updated_datetime == undefined ? null : currentCommentDetail?.updated_datetime | date:'L/d/yyyy h:mm a'}}</div>
               </div>
               </div>
             </div>

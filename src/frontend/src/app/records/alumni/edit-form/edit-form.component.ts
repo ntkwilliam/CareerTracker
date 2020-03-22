@@ -18,7 +18,7 @@ export class AlumniEditFormComponent implements OnInit {
   @Input() employerList;
   @Input() graduateSchoolList;
   @Input() addMode;
-  private formControls = {
+  public formControls = {
     last_name: new FormControl(''),
     first_name: new FormControl(''),
     mailing_address_line_1: new FormControl(''),
@@ -32,7 +32,7 @@ export class AlumniEditFormComponent implements OnInit {
 
   }
 
-  private detailForms = {
+  public detailForms = {
     alumni_degrees: {
       keyField: 'degree_id',
       formGroup: new FormGroup(
@@ -88,12 +88,12 @@ export class AlumniEditFormComponent implements OnInit {
     addMode: false
 
   }
-  private recordStatus: string = null;
-  private deleteRequest;
-  private validationErrors = null;
-  private alumniForm = new FormGroup(this.formControls);
-  private currentDetailTab = 'alumni_degrees';
-  private deleteConfirmationVisible: boolean = false;
+  public recordStatus: string = null;
+  public deleteRequest;
+  public validationErrors = null;
+  public alumniForm = new FormGroup(this.formControls);
+  public currentDetailTab = 'alumni_degrees';
+  public deleteConfirmationVisible: boolean = false;
 
 
   constructor(private service: AlumniService, private renderer: Renderer2) { }
@@ -253,6 +253,7 @@ export class AlumniEditFormComponent implements OnInit {
   }
 
   processSaveResponse(recordType, response) {
+    console.log('save respone');
     console.log(response);
     if (response.noChange) {
       this.showRecordStatus('No changes have been made.');
@@ -351,6 +352,7 @@ export class AlumniEditFormComponent implements OnInit {
           this.service.addNewAlumniData('alumni', this.alumniForm.value).then(result => this.processSaveResponse('alumni', result));
         }
         else {
+          console.log('updating');
 
           this.service.updateAlumniData('alumni', this.alumniForm.value).then(result => this.processSaveResponse('alumni', result));
         }

@@ -24,17 +24,17 @@ import { trigger, state, transition, style, animation, animate } from '@angular/
 export class AlumniComponent implements OnInit {
   
   readonly ITEMSPERPAGE = 15;
-  currentPage: number = 1;
-  totalPages: number;
-  detailVisible: boolean = false;
-  viewAllActive: boolean = false;
-  editMode: boolean = false;
-  private alumniList;
-  private currentAlumnus;
+  public currentPage: number = 1;
+  public totalPages: number;
+  public detailVisible: boolean = false;
+  public viewAllActive: boolean = false;
+  public editMode: boolean = false;
+  public alumniList;
+  public currentAlumnus;
   private currentResultsQuery;
-  private searchDialogActive = false;
-  private searchApplied = false;
-  private searchValues = {
+  public searchDialogActive = false;
+  public searchApplied = false;
+  public searchValues = {
     alumnus_id: null,
     last_name: null,
     first_name: null,
@@ -47,8 +47,8 @@ export class AlumniComponent implements OnInit {
     graduation_term_code: null
 
   };
-  private employerList;
-  private graduateSchoolList;
+  public employerList;
+  public graduateSchoolList;
   @ViewChild('editForm', null) editForm;
   @ViewChild('viewForm', null) viewForm;
 

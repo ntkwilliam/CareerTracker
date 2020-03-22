@@ -1,20 +1,21 @@
+
 <nav class="navbar navbar-expand-sm justify-content-end main-navbar">
     <div class="navbar-brand"><img src="assets/iuslogo.jpg" height="65px" width="100px">
-      <div class="application-name">Career Tracker</div>
+      <div class="application-name no-select">Career Tracker</div>
   
     </div>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       
          <div class="dropdown" style="background-color: rgb(154,0,0);">
-        <button class="btn btn-secondary dropdown-toggle shadow-none"  style="background-color: rgb(154,0,0); border: 0" button id="recordDropDownButton" data-toggle="dropdown" [class.active-nav]="router.url.startsWith('/records')"    aria-haspopup="true" aria-expanded="false">Records</button>
+        <button class="btn btn-secondary dropdown-toggle shadow-none no-select"  style="background-color: rgb(154,0,0); border: 0" button id="recordDropDownButton" data-toggle="dropdown" [class.active-nav]="router.url.startsWith('/records')"    aria-haspopup="true" aria-expanded="false">Records</button>
           <div class="dropdown-menu" aria-labelledby="recordDropDownButton">
-            <div class="drop-down-item"><a routerLink="records/alumni">Alumni</a></div>
-            <div class="drop-down-item"><a routerLink="records/employers">Employers</a></div>
-            <div class="drop-down-item"><a routerLink="records/graduate-schools">Graduate Schools</a></div>
+            <div class="drop-down-item no-select"><a routerLink="/records/alumni">Alumni</a></div>
+            <div class="drop-down-item no-select"><a routerLink="/records/employers">Employers</a></div>
+            <div class="drop-down-item no-select"><a routerLink="/records/graduate-schools">Graduate Schools</a></div>
           </div>
       </div>
-      <button class="btn btn-secondary shadow-none"  style="background-color: rgb(154,0,0); border: 0" routerLinkActive="active-nav" routerLink="imports" aria-haspopup="true" aria-expanded="false">Import Data</button>
-      <button class="btn btn-secondary shadow-none"  style="background-color: rgb(154,0,0); border: 0" routerLinkActive="active-nav" routerLink="exports-reports" aria-haspopup="true" aria-expanded="false">Reports/Exports</button>
+      <button class="btn btn-secondary shadow-none no-select"  style="background-color: rgb(154,0,0); border: 0" routerLinkActive="active-nav" routerLink="/imports" aria-haspopup="true" aria-expanded="false">Import Data</button>
+      <button class="btn btn-secondary shadow-none no-select"  style="background-color: rgb(154,0,0); border: 0" routerLinkActive="active-nav" routerLink="exports-reports" aria-haspopup="true" aria-expanded="false">Reports/Exports</button>
 
 
       
