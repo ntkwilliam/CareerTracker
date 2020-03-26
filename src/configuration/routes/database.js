@@ -1,17 +1,19 @@
 const mysql = require('mysql');
-var connectionAttributes;
+let connectionAttributes = require('../globals').connectionAttributes;
 
-
+getConnection = () => {
+    return mysql.createConnection({
+        host: connectionAttributes.DB_HOSTNAME,
+        port: connectionAttributes.DB_PORT,
+        user: connectionAttributes.DB_USERNAME,
+        password: connectionAttributes.DB_PASSWORD,
+        database: connectionAttributes.DB_DATABASE_NAME
+    });
+}
 
 executeQuery = function(query, values) {
     return new Promise((resolve, reject) => { 
-var connection = mysql.createConnection({
-    host: this.connectionAttributes.DB_HOSTNAME,
-    port: this.connectionAttributes.DB_PORT,
-    user: this.connectionAttributes.DB_USERNAME,
-    password: this.connectionAttributes.DB_PASSWORD,
-    database: this.connectionAttributes.DB_DATABASE_NAME
-});
+let connection = getConnection();
 
 
 
@@ -58,7 +60,7 @@ initialize =  function(connectionObject) {
 
 
 module.exports = {
-    executeQuery, initialize
+    executeQuery, initialize, getConnection
 
 
 

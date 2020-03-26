@@ -13,3 +13,20 @@ font-family: 'Roboto', sans-serif;
     margin-top: 20px;
 }
 
+table {
+    table-layout: fixed;
+}
+
+th, td { 
+    padding-right: 25px;
+}
+
+th {
+    background-color: black;
+    
+}
+.right-align {
+    text-align: right;
+    width: 170px;
+    padding-right: 70px;
+  }

@@ -69,7 +69,7 @@
                 <label>Zip Code:</label>
                 <div class="input-error-message-group">
                   
-                  <input type="text" [formControl]="formControls.zipcode" name="zipcode" style="width: 6ch;" maxlength="5" [class.input-error]="validationErrors?.zipcode != null"><br />
+                  <input type="text" [formControl]="formControls.zipcode" name="zipcode" (input)="processZipCode($event)" style="width: 14ch;" maxlength="10" [class.input-error]="validationErrors?.zipcode != null"><br />
                   <div class="error-message">{{validationErrors?.zipcode}}</div>
                 </div>
               </div>

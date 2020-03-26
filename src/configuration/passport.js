@@ -25,9 +25,12 @@ module.exports = function (passport, app) {
            
 
             common.database.executeQuery('SELECT password_hash from users WHERE user_id = ?', username).then(results => {
-                var hashCompareResult = bcrypt.compareSync(password, results[0].password_hash);
+               if (results.length == 0) {
+                done(null, false, { message : "The user ID or password entered is not valid.  Please check your credentials and try again."});
+               }
+                 var hashCompareResult = bcrypt.compareSync(password, results[0].password_hash);
                  
-                console.log(hashCompareResult);
+               
                  if (hashCompareResult == false) {
                 
                      done(null, false, { message : "The user ID or password entered is not valid.  Please check your credentials and try again."});
@@ -56,9 +59,9 @@ module.exports = function (passport, app) {
         });
         
         passport.deserializeUser(function(id, done) {
-         
+       
            return done (null,  { 
-               username: id.username
+               username: id
            })
             
             });

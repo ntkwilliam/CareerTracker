@@ -232,3 +232,45 @@ button {
   .detail-box input[type=text] {
     margin-left: 0;
   }
+
+  .error-box {
+
+    padding: 15px 15px 15px 15px;
+    border-color: solid rgb(114,0,0.1);
+    color: white;
+    max-width: 40%;
+    
+    
+  }
+
+.error-box .header .windowTitle {
+  font-weight: bold;
+}
+
+  .error-box .header {
+    background-color: rgb(154,0,0);
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 5px 5px 5px
+  }
+
+  .error-box .main {
+    background-color: white;
+    color: black;
+    padding: 15px 15px 15px 15px;
+  }
+  
+.error-box-back {
+  position: fixed;
+  top: 0%;
+  left: 0%;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0,0,0, 0.7);
+  z-index: 25;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  
+}

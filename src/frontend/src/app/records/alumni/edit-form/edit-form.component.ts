@@ -234,7 +234,13 @@ export class AlumniEditFormComponent implements OnInit {
 
 
 
+  processZipCode(event) {
+    let parsedValue = event.target.value.replace(/\D/g, '').match(/(\d{0,5})-?(\d{0,4})/);
 
+
+    this.formControls.mailing_address_zipcode.patchValue(!parsedValue[2] ? parsedValue[1] : parsedValue[1] + '-' + parsedValue[2]);
+
+  }
 
 
 

@@ -3,7 +3,7 @@ const common = require('./common');
 
 
 
-module.exports = function (app, common = commonz) {
+module.exports = function (app) {
 
 
 
