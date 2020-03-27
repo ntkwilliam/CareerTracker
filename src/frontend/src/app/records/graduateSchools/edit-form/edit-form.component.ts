@@ -178,7 +178,13 @@ currentForm: null
   }
 
 
+ processZipCode(event) {
+    let parsedValue = event.target.value.replace(/\D/g, '').match(/(\d{0,5})-?(\d{0,4})/);
 
+
+    this.formControls.zipcode.patchValue(!parsedValue[2] ? parsedValue[1] : parsedValue[1] + '-' + parsedValue[2]);
+
+  }
 
 
 

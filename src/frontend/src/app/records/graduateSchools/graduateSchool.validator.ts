@@ -54,19 +54,19 @@ export class GraduateSchoolValidator {
         this.validateField('address_line_2', values['address_line_2'], false, /^[0-9A-Za-z-'., #]{1,32}$/);
         this.validateField('city', values['city'], true, /^[A-Za-z-' .]{1,25}$/);
         this.validateField('state', values['state'], true, /^[A-Z]{2}$/);
-        this.validateField('zipcode', values['zipcode'], true, /^[0-9]{5}$/);
+        this.validateField('zipcode', values['zipcode'], true, /^[0-9]{5}$|^[0-9]{5}-[0-9]{4}$/);
       }   
       else if (this.validateField(['city'], values['city'], false, /^[A-Za-z-' .]{1,25}$/)[0]) {
         this.validateField('address_line_1', values['address_line_1'], false, /^[0-9A-Za-z-'., #]{1,32}$/);
         this.validateField('state', values['state'], true, /^[A-Z]{2}$/);
-        this.validateField('zipcode', values['zipcode'], false, /^[0-9]{5}$/);
+        this.validateField('zipcode', values['zipcode'], false, /^[0-9]{5}$|^[0-9]{5}-[0-9]{4}$/);
       }
       else if (this.validateField(['state'], values['state'], false, /^[A-Za-z-' ]{2}$/)[0]) {
         this.validateField('address_line_1', values['address_line_1'], false, /^[0-9A-Za-z-'., #]{1,32}$/);
         this.validateField('city', values['city'], true, /^[A-Za-z-' .]{1,25}$/);
-        this.validateField('zipcode', values['zipcode'], false, /^[0-9]{5}$/);
+        this.validateField('zipcode', values['zipcode'], false, /^[0-9]{5}$|^[0-9]{5}-[0-9]{4}$/);
       }
-      else if (this.validateField(['zipcode'], values['zipcode'], false, /^[0-9]{5}$/)[0]) {
+      else if (this.validateField(['zipcode'], values['zipcode'], false, /^[0-9]{5}$|^[0-9]{5}-[0-9]{4}$/)[0]) {
         this.validateField('address_line_1', values['address_line_1'], false, /^[0-9A-Za-z-'., #]{1,32}$/);
         this.validateField('city', values['city'], true, /^[A-Za-z-' .]{1,25}$/);
         this.validateField('state', values['state'], true, /^[A-Z]{2}$/);

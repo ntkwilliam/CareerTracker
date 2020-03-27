@@ -152,3 +152,21 @@
   </div>
   
 </div>
+<div class="error-box-back" *ngIf="unexpectedErrorVisible">
+  <div class="error-box">
+    <div class="header">
+      <div class="windowTitle">
+Unexpected Error
+      </div>
+<div class="buttons">
+   <button class="far fa-window-close" style="border: none; background: transparent; color: white; font-size: 1.2em;" (click)="toggleUnexpectedError(null)"></button>
+</div>
+    </div>
+    <div class="main">
+      The following unexpected error has occurred.  Please try again.  If this issue persists, please contact a system administrator
+      <br />
+      <br />
+      {{this.unexpectedError}}
+    </div>
+  </div>
+</div>

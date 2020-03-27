@@ -107,7 +107,7 @@ export class EmployersComponent implements OnInit {
 
   getPageWindowArray() {
 
-    let beginIndex = Math.floor((this.currentPage - 1.0) / 10.0);
+    let beginIndex = Math.floor((this.currentPage - 1.0) / 10.0)*10;
     let newArray = [];
     for (let i = beginIndex; i < Math.min(beginIndex + 10, this.totalPages); i++) {
       newArray.push(i);

@@ -55,19 +55,19 @@ export class AlumniValidator {
         this.validateField('mailing_address_line_2', values['mailing_address_line_2'], false, /^[0-9A-Za-z-'., #]{1,32}$/);
         this.validateField('mailing_address_city', values['mailing_address_city'], true, /^[A-Za-z-' .]{1,25}$/);
         this.validateField('mailing_address_state', values['mailing_address_state'], true, /^[A-Z]{2}$/);
-        this.validateField('mailing_address_zipcode', values['mailing_address_zipcode'], true, /^[0-9]{5}$/);
+        this.validateField('mailing_address_zipcode', values['mailing_address_zipcode'], true, /^[0-9]{5}$|^[0-9]{5}-[0-9]{4}$/);
       }   
       else if (this.validateField(['mailing_address_city'], values['mailing_address_city'], false, /^[A-Za-z-' .]{1,25}$/)[0]) {
         this.validateField('mailing_address_line_1', values['mailing_address_line_1'], false, /^[0-9A-Za-z-'., #]{1,32}$/);
         this.validateField('mailing_address_state', values['mailing_address_state'], true, /^[A-Z]{2}$/);
-        this.validateField('mailing_address_zipcode', values['mailing_address_zipcode'], false, /^[0-9]{5}$/);
+        this.validateField('mailing_address_zipcode', values['mailing_address_zipcode'], false, /^[0-9]{5}$|^[0-9]{5}-[0-9]{4}$/);
       }
       else if (this.validateField(['mailing_address_state'], values['mailing_address_state'], false, /^[A-Za-z-' ]{2}$/)[0]) {
         this.validateField('mailing_address_line_1', values['mailing_address_line_1'], false, /^[0-9A-Za-z-'., #]{1,32}$/);
         this.validateField('mailing_address_city', values['mailing_address_city'], true, /^[A-Za-z-' .]{1,25}$/);
-        this.validateField('mailing_address_zipcode', values['mailing_address_zipcode'], false, /^[0-9]{5}$/);
+        this.validateField('mailing_address_zipcode', values['mailing_address_zipcode'], false, /^[0-9]{5}$|^[0-9]{5}-[0-9]{4}$/);
       }
-      else if (this.validateField(['mailing_address_zipcode'], values['mailing_address_zipcode'], false, /^[0-9]{5}$/)[0]) {
+      else if (this.validateField(['mailing_address_zipcode'], values['mailing_address_zipcode'], false, /^[0-9]{5}$|^[0-9]{5}-[0-9]{4}$/)[0]) {
         this.validateField('mailing_address_line_1', values['mailing_address_line_1'], false, /^[0-9A-Za-z-'., #]{1,32}$/);
         this.validateField('mailing_address_city', values['mailing_address_city'], true, /^[A-Za-z-' .]{1,25}$/);
         this.validateField('mailing_address_state', values['mailing_address_state'], true, /^[A-Z]{2}$/);

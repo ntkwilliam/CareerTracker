@@ -29,9 +29,11 @@ export class AlumniComponent implements OnInit {
   public detailVisible: boolean = false;
   public viewAllActive: boolean = false;
   public editMode: boolean = false;
+  public unexpectedErrorVisible: boolean = false;
   public alumniList;
   public currentAlumnus;
-  private currentResultsQuery;
+  public unexpectedError;
+  public currentResultsQuery;
   public searchDialogActive = false;
   public searchApplied = false;
   public searchValues = {
@@ -117,7 +119,7 @@ refreshData() {
 
   getPageWindowArray() {
 
-    let beginIndex = Math.floor((this.currentPage - 1.0) / 10.0);
+    let beginIndex = Math.floor((this.currentPage - 1.0) / 10.0)*10;
     let newArray = [];
     for (let i = beginIndex; i < Math.min(beginIndex + 10, this.totalPages); i++) {
       newArray.push(i);
@@ -203,6 +205,11 @@ addNewAlumni() {
      
       this.searchDialogActive = !this.searchDialogActive;
    
+    }
+
+    toggleUnexpectedError(message) {
+      this.unexpectedErrorVisible = !this.unexpectedErrorVisible;
+      this.unexpectedError = message;
     }
 
 }

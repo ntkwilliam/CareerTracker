@@ -107,12 +107,12 @@ export class GraduateSchoolsComponent implements OnInit {
 
   getPageWindowArray() {
 
-    let beginIndex = Math.floor((this.currentPage - 1.0) / 10.0);
+    let beginIndex = Math.floor((this.currentPage - 1.0) / 10.0)*10;
     let newArray = [];
     for (let i = beginIndex; i < Math.min(beginIndex + 10, this.totalPages); i++) {
       newArray.push(i);
     }
-    console.log(newArray);
+
     return newArray;
   }
 
@@ -132,7 +132,7 @@ export class GraduateSchoolsComponent implements OnInit {
       (result) => {
         
         this.currentGraduateSchool = result;
-        console.log(this.currentGraduateSchool);
+     
         this.editMode = editMode;
         this.detailVisible = true;
       
@@ -154,7 +154,7 @@ export class GraduateSchoolsComponent implements OnInit {
   }
 
 gotoPage(i) {
-  console.log(i);
+ 
   this.currentPage = i;
   this.getSearchResults(false);
   return false;

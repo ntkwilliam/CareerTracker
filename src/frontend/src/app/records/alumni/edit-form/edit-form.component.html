@@ -80,7 +80,7 @@
                 <label>Zip Code:</label>
                 <div class="input-error-message-group">
                   
-                  <input type="text" [formControl]="formControls.mailing_address_zipcode" name="mailing_address_zipcode" style="width: 6ch;" maxlength="5" [class.input-error]="validationErrors?.mailing_address_zipcode != null"><br />
+                  <input type="text" [formControl]="formControls.mailing_address_zipcode" name="mailing_address_zipcode" style="width: 14ch;" maxlength="10" (input)="processZipCode($event)" [class.input-error]="validationErrors?.mailing_address_zipcode != null"><br />
                   <div class="error-message">{{validationErrors?.mailing_address_zipcode}}</div>
                 </div>
               </div>
