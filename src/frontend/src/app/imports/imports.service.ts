@@ -10,7 +10,7 @@ export class ImportsService {
 
 
   public uploadFile(formData) {
-    return this.httpClient.post("http://localhost:8080/upload", formData).toPromise();
+    return this.httpClient.post('http://localhost:8080/upload', formData).toPromise();
     
   }
 

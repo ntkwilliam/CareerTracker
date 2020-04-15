@@ -2,7 +2,8 @@ import { Component, OnInit, Output, Input, Injectable, ComponentFactoryResolver 
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { EventEmitter } from '@angular/core';
 import { AlumniService } from '../alumni.service';
-import { AlumniValidator } from '../alumni.validator';
+const AlumniValidator = require('../../../../../../validations/alumni')
+//import { AlumniValidator } from '../alumni.validator';
 import { $ } from 'protractor';
 @Component({
   selector: 'AlumniEditFormComponent',
@@ -178,7 +179,7 @@ export class AlumniEditFormComponent implements OnInit {
   }
 
   addnewDetailRecord() {
-    console.log(this.currentDetailTab)
+ 
     this.detailForms.currentForm = this.currentDetailTab;
     this.detailForms.addMode = true;
     let newRecord = {};
@@ -187,7 +188,7 @@ export class AlumniEditFormComponent implements OnInit {
     });
 
     this.detailForms.currentRecord = newRecord;
-    if (this.currentDetailTab == "comments") {
+    if (this.currentDetailTab == 'comments') {
       newRecord['entity_id'] = this.currentAlumnus.alumni['alumnus_id'];
       newRecord['entity_type'] =  'A';
     }
@@ -213,10 +214,10 @@ export class AlumniEditFormComponent implements OnInit {
       });
 
       newRecord['alumnus_id'] = this.currentAlumnus['alumnus_id'];
-      console.log('Current : ' + this.currentAlumnus['alumnus_id']);
+    
       this.detailForms.currentRecord = newRecord;
       this.detailForms[detailType].formGroup.patchValue(newRecord);
-      console.log(newRecord);
+    
     }
     else {
 
@@ -259,8 +260,7 @@ export class AlumniEditFormComponent implements OnInit {
   }
 
   processSaveResponse(recordType, response) {
-    console.log('save respone');
-    console.log(response);
+
     if (response.noChange) {
       this.showRecordStatus('No changes have been made.');
       return;
@@ -345,7 +345,7 @@ export class AlumniEditFormComponent implements OnInit {
     if (!this.alumniForm.pristine) {
 
       this.recordStatus = null;
-      let validator: AlumniValidator = new AlumniValidator();
+      let validator = new AlumniValidator();
       
       let [errorsExist, errors] = validator.validateAlumniRecord(this.alumniForm.value);
       
@@ -358,7 +358,7 @@ export class AlumniEditFormComponent implements OnInit {
           this.service.addNewAlumniData('alumni', this.alumniForm.value).then(result => this.processSaveResponse('alumni', result));
         }
         else {
-          console.log('updating');
+        
 
           this.service.updateAlumniData('alumni', this.alumniForm.value).then(result => this.processSaveResponse('alumni', result));
         }
@@ -380,12 +380,12 @@ export class AlumniEditFormComponent implements OnInit {
     if (!this.detailForms[currentForm].formGroup.pristine) {
       this.detailForms.validationErrors = null;
       this.detailForms.recordStatus = null;
-      let validator: AlumniValidator = new AlumniValidator();
+      let validator = new AlumniValidator();
       this.validationErrors = null;
       let [errorsExist, errors] = validator.validateChildRecord(currentForm, this.detailForms[currentForm].formGroup.value);
       if (errorsExist) {
         this.detailForms.validationErrors = errors;
-        console.log(this.detailForms.validationErrors);
+ 
         
       }
       else {
@@ -393,8 +393,7 @@ export class AlumniEditFormComponent implements OnInit {
           this.service.addNewAlumniData(this.detailForms.currentForm, this.detailForms[currentForm].formGroup.value).then(result => this.processSaveResponse(currentForm, result));
 
         } else {
-          console.log(this.detailForms.currentForm);
-          console.log(this.detailForms[currentForm].formGroup.value);
+      
           this.service.updateAlumniData(this.detailForms.currentForm, this.detailForms[currentForm].formGroup.value).then(result => this.processSaveResponse(currentForm, result)
 
           );

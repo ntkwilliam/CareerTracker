@@ -8,15 +8,16 @@ module.exports = function (app) {
 
 
 
-    app.get("/data/employers/selectionList", (req, res) => {
+    app.get('/data/employers/selectionList', (req, res) => {
 
         if (req.user == null) {
-            common.sendErrorResponse(res, 401, "Unauthorized use not permitted");
+            common.sendErrorResponse(res, 401, 'Unauthorized use not permitted');
             return;
         }
 
         let query = "SELECT employer_id value, CASE WHEN city IS NULL THEN employer_name ELSE CONCAT(employer_name," +
-            "', ',city ,', ',state) END text from employers WHERE deleted = 0 ORDER BY employer_name, state, city";
+        "', ',city ,', ',state) END text from employers WHERE deleted = 0 ORDER BY employer_name, state, city";
+       
 
             common.database.executeQuery(query).then(result => res.send(result)).
             catch(error => common.sendErrorResponse(res,400, error.message));
@@ -32,7 +33,7 @@ module.exports = function (app) {
     app.get('/data/employers/search', (req, res) => {
 
         if (req.user == null) {
-            common.sendErrorResponse(res, 401, "Unauthorized use not permitted");
+            common.sendErrorResponse(res, 401, 'Unauthorized use not permitted');
             return;
         }
 
@@ -55,7 +56,7 @@ module.exports = function (app) {
     app.get('/data/employers/search/pageCount', (req, res) => {
 
         if (req.user == null) {
-             common.sendErrorResponse(res, 401, "Unauthorized use not permitted");
+             common.sendErrorResponse(res, 401, 'Unauthorized use not permitted');
              return;
         }
 
@@ -72,7 +73,7 @@ module.exports = function (app) {
     app.get('/data/employers/byid/:id', (req, res) => {
 
         if (req.user == null) {
-             common.sendErrorResponse(res, 401, "Unauthorized use not permitted");
+             common.sendErrorResponse(res, 401, 'Unauthorized use not permitted');
              return;
         }
 
@@ -113,10 +114,10 @@ module.exports = function (app) {
 
 
 
-    app.get("/data/employers/childData", (req, res) => {
+    app.get('/data/employers/childData', (req, res) => {
 
         if (req.user == null) {
-             common.sendErrorResponse(res, 401, "Unauthorized use not permitted");
+             common.sendErrorResponse(res, 401, 'Unauthorized use not permitted');
              return;
         }
         
@@ -145,11 +146,11 @@ module.exports = function (app) {
 
 
 
-    app.post("/data/employers", (req, res) => {
+    app.post('/data/employers', (req, res) => {
 
 
         if (req.user == null) {
-             common.sendErrorResponse(res, 401, "Unauthorized use not permitted");
+             common.sendErrorResponse(res, 401, 'Unauthorized use not permitted');
              return;
         }
 
@@ -217,10 +218,10 @@ module.exports = function (app) {
     });
 
 
-    app.put("/data/employers", (req, res) => {
+    app.put('/data/employers', (req, res) => {
 
         if (req.user == null) {
-             common.sendErrorResponse(res, 401, "Unauthorized use not permitted");
+             common.sendErrorResponse(res, 401, 'Unauthorized use not permitted');
              return;
         }
 
@@ -310,9 +311,9 @@ module.exports = function (app) {
 
 
 
-    app.delete("/data/employers", (req, res) => {
+    app.delete('/data/employers', (req, res) => {
         if (req.user == null) {
-            common.sendErrorResponse(res, 401, "Unauthorized use not permitted");
+            common.sendErrorResponse(res, 401, 'Unauthorized use not permitted');
             return;
         }
 

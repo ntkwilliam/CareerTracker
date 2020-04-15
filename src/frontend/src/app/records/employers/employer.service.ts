@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { resolve } from 'url';
+import {  HTTP_ROOT, APPLICATION_PORT } from '../../../../../configuration/globals';
 
 
 
@@ -28,7 +29,7 @@ export class EmployerService {
     searchCriterions['itemsPerPage'] = itemsPerPage.toString();
     searchCriterions['page'] = page;
     return new Promise((resolve, reject) => {
-      this.httpClient.get("http://localhost:8080/data/employers/search",
+      this.httpClient.get(`${HTTP_ROOT}:${APPLICATION_PORT}/data/employers/search`,
         {
           params: searchCriterions
         }).toPromise().then(res => {
@@ -36,7 +37,7 @@ export class EmployerService {
           console.log(results);
 
           if (page == 1) {
-            this.httpClient.get("http://localhost:8080/data/employers/search/pageCount",
+            this.httpClient.get(`${HTTP_ROOT}:${APPLICATION_PORT}/data/employers/search/pageCount`,
               {
                 params: searchCriterions
               }).toPromise().then(res => {
@@ -56,7 +57,7 @@ export class EmployerService {
 
   getEmployerList() {
 
-    return this.httpClient.get("http://localhost:8080/data/employers/selectionList").
+    return this.httpClient.get(`${HTTP_ROOT}:${APPLICATION_PORT}/data/employers/selectionList`).
       toPromise();
     
 
@@ -68,7 +69,7 @@ export class EmployerService {
 
   getDetail(recordID) {
 
-    return this.httpClient.get("http://localhost:8080/data/employers/byid/" + recordID).toPromise();
+    return this.httpClient.get(`${HTTP_ROOT}:${APPLICATION_PORT}/data/employers/byid/` + recordID).toPromise();
 
 
   }
@@ -84,7 +85,7 @@ export class EmployerService {
     }
 
     
-    return this.httpClient.put("http://localhost:8080/data/employers/", request).toPromise();
+    return this.httpClient.put(`${HTTP_ROOT}:${APPLICATION_PORT}/data/employers/`, request).toPromise();
     
 
   }
@@ -99,7 +100,7 @@ export class EmployerService {
     }
 
 
-    return this.httpClient.post("http://localhost:8080/data/employers/", request).toPromise();
+    return this.httpClient.post(`${HTTP_ROOT}:${APPLICATION_PORT}/data/employers/`, request).toPromise();
     
 
 
@@ -110,7 +111,7 @@ export class EmployerService {
   deleteEmployerData(recordType,recordID) {
     
 
-    return this.httpClient.delete("http://localhost:8080/data/employers/", {params: { record_type: recordType, record_id: recordID}}).toPromise();
+    return this.httpClient.delete(`${HTTP_ROOT}:${APPLICATION_PORT}/data/employers/`, {params: { record_type: recordType, record_id: recordID}}).toPromise();
     
 
   }
@@ -124,7 +125,7 @@ export class EmployerService {
 
   getChildDetail(recordType, recordID) {
    
-    return this.httpClient.get("http://localhost:8080/data/employers/childData",{params: { record_type: recordType, record_id: recordID}}).toPromise();
+    return this.httpClient.get(`${HTTP_ROOT}:${APPLICATION_PORT}/data/employers/childData`,{params: { record_type: recordType, record_id: recordID}}).toPromise();
 
   }
 

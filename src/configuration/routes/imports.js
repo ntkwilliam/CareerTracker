@@ -237,7 +237,7 @@ module.exports = function (app) {
     app.post('/upload', function(req, res) {
 
         if (req.user == null) {
-            common.sendErrorResponse(res, 401, "Unauthorized use not permitted");
+            common.sendErrorResponse(res, 401, 'Unauthorized use not permitted');
             return;
         }
      
@@ -265,17 +265,17 @@ module.exports = function (app) {
        if (excelJson.Upload == undefined) {
         result.error = true;
         result.errorType = 'other';
-        result.errorMessage = "No worksheet named 'Upload' exists in file.";
+        result.errorMessage = 'No worksheet named \'Upload\' exists in file.';
         res.send(result);
        } else if (excelJson.Upload.length == 0) {
         result.error = true;
         result.errorType = 'other';
-        result.errorMessage = "No data found in worksheet.";
+        result.errorMessage = 'No data found in worksheet.';
         res.send(result);
        }  else if  (mapFields(excelJson.Upload[0]) == false) {
         result.error = true;
         result.errorType = 'fields';
-        result.errorMessage = "Required columns were not found in the worksheet:";
+        result.errorMessage = 'Required columns were not found in the worksheet:';
         let missingFields = [];
         mappedFields.forEach(item => {
            
@@ -384,12 +384,6 @@ module.exports = function (app) {
     }
     
 
-
-
-
-    
-  
-   
 
 
 

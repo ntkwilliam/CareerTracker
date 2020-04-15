@@ -14,7 +14,7 @@ getQueryValues = (queryValues, entityName) => {
         let specialQuery = specialQueryStrings[entityName][propName];
         if (queryValues.hasOwnProperty(propName) && propName != 'page' && propName != 'itemsPerPage') {
           if  (specialQuery == undefined || specialQuery.includeParameter) {
-            if (propName.endsWith("_id")) {
+            if (propName.endsWith('_id')) {
 
                 let intID = parseInt(queryValues[propName]);
                 if (intID == NaN) {
@@ -54,20 +54,20 @@ const specialQueryStrings = {
     alumni: {
         employer: {
             includeParameter: boolean = true,
-          queryString: string =  "alumni.alumnus_id IN (SELECT alumnus_id from alumni_employments WHERE employer_id = ? AND active = 1 and deleted = 0)"
+          queryString: string =  'alumni.alumnus_id IN (SELECT alumnus_id from alumni_employments WHERE employer_id = ? AND active = 1 and deleted = 0)'
         },
         graduateSchool:
     {
             includeParameter:boolean = true,
-         queryString: string = "alumni.alumnus_id IN (SELECT alumnus_id from alumni_graduate_schools WHERE graduate_school_id = ? and deleted = 0)",
+         queryString: string = 'alumni.alumnus_id IN (SELECT alumnus_id from alumni_graduate_schools WHERE graduate_school_id = ? and deleted = 0)',
         },
         noEmployer: {
             includeParameter: boolean = false,
-            queryString: string = "alumni_employments.employer_id IS NULL"
+            queryString: string = 'alumni_employments.employer_id IS NULL'
         },
         noGraduateSchool: {
             includeParameter: boolean = false,
-            queryString: string = "alumni_graduate_schools.graduate_school_id IS NULL"
+            queryString: string = 'alumni_graduate_schools.graduate_school_id IS NULL'
         }       
         
     },
@@ -115,7 +115,7 @@ const tableData = {
         recordQueryString: string = 'SELECT * FROM employers WHERE employer_id = ?'
     },
     graduate_schools: {
-        keyField: string = "graduate_school_id",
+        keyField: string = 'graduate_school_id',
         recordQueryString: string = 'SELECT * from graduate_schools WHERE graduate_school_id = ?'
     }
 

@@ -7,6 +7,7 @@ module.exports = function (app, express, passport) {
     require('./records-employers')(app);
     require('./records-graduateSchools')(app);
     require('./imports')(app);
+    require('./admin')(app);
 
     
     app.post('/login', passport.authenticate(
@@ -18,10 +19,20 @@ module.exports = function (app, express, passport) {
         }
     ) );
     
-    app.use('/login',express.static('authentication'));
+
   
     
+    app.use('/login',express.static('authentication'));
 
+    app.get('/logout', function(req, res)  { 
+        req.logout();
+        res.redirect('/');
+
+    });
+
+    app.get('/currentUser',(req,res) => {
+        res.send(req.user);
+    });
         
     app.use('/', function(req, res, next)  {
         if (req.user == null) {

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { resolve } from 'url';
-
+import {  HTTP_ROOT, APPLICATION_PORT } from '../../../../../configuration/globals';
 
 
 @Injectable()
@@ -28,15 +28,15 @@ export class GraduateSchoolService {
     searchCriterions['itemsPerPage'] = itemsPerPage.toString();
     searchCriterions['page'] = page;
     return new Promise((resolve, reject) => {
-      this.httpClient.get("http://localhost:8080/data/graduateSchools/search",
+      this.httpClient.get(`${HTTP_ROOT}:${APPLICATION_PORT}/data/graduateSchools/search`,
         {
           params: searchCriterions
         }).toPromise().then(res => {
           results.graduateschoolList = res;
-          console.log(results);
+        
 
           if (page == 1) {
-            this.httpClient.get("http://localhost:8080/data/graduateSchools/search/pageCount",
+            this.httpClient.get(`${HTTP_ROOT}:${APPLICATION_PORT}/data/graduateSchools/search/pageCount`,
               {
                 params: searchCriterions
               }).toPromise().then(res => {
@@ -56,7 +56,7 @@ export class GraduateSchoolService {
 
   getGraduateSchoolList() {
 
-    return this.httpClient.get("http://localhost:8080/data/graduateSchools/selectionList").
+    return this.httpClient.get(`${HTTP_ROOT}:${APPLICATION_PORT}/data/graduateSchools/selectionList`).
       toPromise();
     
 
@@ -68,7 +68,7 @@ export class GraduateSchoolService {
 
   getDetail(recordID) {
 
-    return this.httpClient.get("http://localhost:8080/data/graduateSchools/byid/" + recordID).toPromise();
+    return this.httpClient.get(`${HTTP_ROOT}:${APPLICATION_PORT}/data/graduateSchools/byid/` + recordID).toPromise();
 
 
   }
@@ -84,7 +84,7 @@ export class GraduateSchoolService {
     }
 
     
-    return this.httpClient.put("http://localhost:8080/data/graduateSchools/", request).toPromise();
+    return this.httpClient.put(`${HTTP_ROOT}:${APPLICATION_PORT}/graduateSchools/`, request).toPromise();
     
 
   }
@@ -99,7 +99,7 @@ export class GraduateSchoolService {
     }
 
 
-    return this.httpClient.post("http://localhost:8080/data/graduateSchools/", request).toPromise();
+    return this.httpClient.post(`${HTTP_ROOT}:${APPLICATION_PORT}/data/graduateSchools/`, request).toPromise();
     
 
 
@@ -110,7 +110,7 @@ export class GraduateSchoolService {
   deleteGraduateSchoolData(recordType,recordID) {
     
 
-    return this.httpClient.delete("http://localhost:8080/data/graduateSchools/", {params: { record_type: recordType, record_id: recordID}}).toPromise();
+    return this.httpClient.delete(`${HTTP_ROOT}:${APPLICATION_PORT}/data/graduateSchools/`, {params: { record_type: recordType, record_id: recordID}}).toPromise();
     
 
   }
@@ -124,7 +124,7 @@ export class GraduateSchoolService {
 
   getChildDetail(recordType, recordID) {
    
-    return this.httpClient.get("http://localhost:8080/data/graduateSchools/childData",{params: { record_type: recordType, record_id: recordID}}).toPromise();
+    return this.httpClient.get(`${HTTP_ROOT}:${APPLICATION_PORT}/data/graduateSchools/childData`,{params: { record_type: recordType, record_id: recordID}}).toPromise();
 
   }
 

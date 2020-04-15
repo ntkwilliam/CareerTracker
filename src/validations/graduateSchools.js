@@ -1,18 +1,5 @@
 class GraduateSchoolValidator {
 
-    validationErrors = {
-    school_name: null,
-    contact_name: null,
-    address_line_1: null,
-    address_line_2: null,
-    city: null,
-    state: null,
-    zip_code: null,
-    phone_number: null,
-    email_address: null
-    }
-  
-    errorsExist = false;
   
     isBlankValue(value) {
       if(!value) {
@@ -54,6 +41,23 @@ class GraduateSchoolValidator {
     }
   
     validateGraduateSchoolRecord(values) {
+
+
+      this.validationErrors = {
+        school_name: null,
+        contact_name: null,
+        address_line_1: null,
+        address_line_2: null,
+        city: null,
+        state: null,
+        zip_code: null,
+        phone_number: null,
+        email_address: null
+        }
+      
+        this.errorsExist = false;
+
+
       this.validateField('school_name', values['school_name'], true, /^[A-Za-z-' ]+$/);
       if (this.validateField('address_line_1', values['address_line_1'], false, /^[0-9A-Za-z-'., #]{1,32}$/)[0]
       || this.validateField('address_line_2', values['address_line_2'], false, /^[0-9A-Za-z-'., #]{1,32}$/)[0]) 
@@ -91,6 +95,21 @@ class GraduateSchoolValidator {
     }
   
     validateChildRecord(recordType, values) {
+      
+      this.validationErrors = {
+        school_name: null,
+        contact_name: null,
+        address_line_1: null,
+        address_line_2: null,
+        city: null,
+        state: null,
+        zip_code: null,
+        phone_number: null,
+        email_address: null
+        }
+      
+        this.errorsExist = false;
+
       switch (recordType) {
      
   

@@ -8,7 +8,7 @@ module.exports = function (app) {
     app.get('/data/graduateSchools/search', (req, res) => {
 
         if (req.user == null) {
-            common.sendErrorResponse(res, 401, "Unauthorized use not permitted");
+            common.sendErrorResponse(res, 401, 'Unauthorized use not permitted');
             return;
         }
 
@@ -30,7 +30,7 @@ module.exports = function (app) {
     app.get('/data/graduateSchools/search/pageCount', (req, res) => {
 
         if (req.user == null) {
-            common.sendErrorResponse(res, 401, "Unauthorized use not permitted");
+            common.sendErrorResponse(res, 401, 'Unauthorized use not permitted');
             return;
         }
 
@@ -52,7 +52,7 @@ module.exports = function (app) {
     app.get('/data/graduateSchools/byid/:id', (req, res) => {
 
         if (req.user == null) {
-            common.sendErrorResponse(res, 401, "Unauthorized use not permitted");
+            common.sendErrorResponse(res, 401, 'Unauthorized use not permitted');
             return;
         }
 
@@ -91,10 +91,10 @@ module.exports = function (app) {
 
 
 
-    app.get("/data/graduateSchools/childData", (req, res) => {
+    app.get('/data/graduateSchools/childData', (req, res) => {
 
         if (req.user == null) {
-            common.sendErrorResponse(res, 401, "Unauthorized use not permitted");
+            common.sendErrorResponse(res, 401, 'Unauthorized use not permitted');
             return;
         }
 
@@ -122,10 +122,10 @@ module.exports = function (app) {
 
 
 
-    app.post("/data/graduateSchools", (req, res) => {
+    app.post('/data/graduateSchools', (req, res) => {
 
         if (req.user == null) {
-            common.sendErrorResponse(res, 401, "Unauthorized use not permitted");
+            common.sendErrorResponse(res, 401, 'Unauthorized use not permitted');
             return;
         }
 
@@ -201,10 +201,10 @@ module.exports = function (app) {
     });
 
 
-    app.put("/data/graduateSchools", (req, res) => {
+    app.put('/data/graduateSchools', (req, res) => {
 
         if (req.user == null) {
-            common.sendErrorResponse(res, 401, "Unauthorized use not permitted");
+            common.sendErrorResponse(res, 401, 'Unauthorized use not permitted');
             return;
         }
 
@@ -296,12 +296,12 @@ module.exports = function (app) {
 
 
 
-    app.delete("/data/graduateSchools", (req, res) => {
+    app.delete('/data/graduateSchools', (req, res) => {
 
 
 
         if (req.user == null) {
-            common.sendErrorResponse(res, 401, "Unauthorized use not permitted");
+            common.sendErrorResponse(res, 401, 'Unauthorized use not permitted');
             return;
         }
 
@@ -346,16 +346,16 @@ module.exports = function (app) {
 
 
 
-    app.get("/data/graduate-schools/selectionList", (req, res) => {
+    app.get('/data/graduate-schools/selectionList', (req, res) => {
 
         if (req.user == null) {
-            common.sendErrorResponse(res, 401, "Unauthorized use not permitted");
+            common.sendErrorResponse(res, 401, 'Unauthorized use not permitted');
             return;
         }
 
-
         let query = "SELECT graduate_school_id value, CASE WHEN city IS NULL THEN school_name ELSE CONCAT(school_name," +
-            "', ',city ,', ',state) END text from graduate_schools WHERE deleted = 0 ORDER BY school_name, state, city";
+        "', ',city ,', ',state) END text from graduate_schools WHERE deleted = 0 ORDER BY school_name, state, city";
+        
 
         common.database.executeQuery(query).then(result => {
            res.send(result);
