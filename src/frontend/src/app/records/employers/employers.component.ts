@@ -112,7 +112,7 @@ export class EmployersComponent implements OnInit {
     for (let i = beginIndex; i < Math.min(beginIndex + 10, this.totalPages); i++) {
       newArray.push(i);
     }
-    console.log(newArray);
+    
     return newArray;
   }
 
@@ -152,7 +152,7 @@ export class EmployersComponent implements OnInit {
   }
 
 gotoPage(i) {
-  console.log(i);
+ 
   this.currentPage = i;
   this.getSearchResults(false);
   return false;

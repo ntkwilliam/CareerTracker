@@ -23,7 +23,10 @@ import { GraduateSchoolEditFormComponent } from './records/graduateSchools/edit-
 import { GraduateSchoolService } from './records/graduateSchools/graduateSchool.service';
 import { ImportsComponent } from './imports/imports.component';
 import { ImportsService } from './imports/imports.service';
-
+import { AdminComponent } from './admin/admin.component';
+import { MainContentComponent } from './main-content/main-content.component';
+import { AuthService } from './auth.service'
+import { AdminService } from './admin/admin.service'
 @NgModule({
   declarations: [
     AppComponent,
@@ -39,7 +42,9 @@ import { ImportsService } from './imports/imports.service';
     GraduateSchoolEditFormComponent,
     EmployerViewFormComponent,
     GraduateSchoolViewFormComponent,
-    ImportsComponent
+    ImportsComponent,
+    AdminComponent,
+    MainContentComponent
     
   ],
   imports: [
@@ -51,7 +56,7 @@ import { ImportsService } from './imports/imports.service';
   FormsModule, 
   ReactiveFormsModule
   ],
-  providers: [[AlumniService],[EmployerService], [GraduateSchoolService], [ImportsService]],
+  providers: [[AlumniService],[EmployerService], [GraduateSchoolService], [ImportsService], [AuthService], [AdminService]],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

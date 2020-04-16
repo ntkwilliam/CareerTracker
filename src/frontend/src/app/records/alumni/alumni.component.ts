@@ -60,6 +60,7 @@ export class AlumniComponent implements OnInit {
     this.getSearchResults(true, true);
     this.fillEmployerList();
     this.fillGraduateSchoolList();
+      
     
   }
 
@@ -81,7 +82,7 @@ refreshData() {
   }
 
   getSearchResults(newQuery: boolean, clearQuery: boolean = false) {
-    console.log("running update");
+
    
     if (newQuery) {
       if (this.searchApplied && clearQuery) {
@@ -124,7 +125,7 @@ refreshData() {
     for (let i = beginIndex; i < Math.min(beginIndex + 10, this.totalPages); i++) {
       newArray.push(i);
     }
-    console.log(newArray);
+  
     return newArray;
   }
 
@@ -142,7 +143,7 @@ refreshData() {
 
     this.service.getGraduateSchoolList().then(result => {
       this.graduateSchoolList = result;
-    }).catch(error => console.log('caught'));
+    }).catch(error => console.log(error));
  
    }
 
@@ -158,7 +159,7 @@ refreshData() {
           this.currentAlumnus = result;
           this.editMode = editMode;
           this.detailVisible = true;
-          console.log(this.editMode);
+   
 
 
 
@@ -177,7 +178,7 @@ refreshData() {
     }
 
   gotoPage(i) {
-    console.log(i);
+  
     this.currentPage = i;
     this.getSearchResults(false);
     return false;

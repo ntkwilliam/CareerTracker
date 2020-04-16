@@ -2,7 +2,8 @@ import { Component, OnInit, Output, Input, Injectable, ComponentFactoryResolver 
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { EventEmitter } from '@angular/core';
 import { EmployerService } from '../employer.service';
-import { EmployerValidator } from '../employer.validator';
+const EmployerValidator = require('../../../../../../validations/employers');
+
 import { $ } from 'protractor';
 @Component({
   selector: 'EmployerEditFormComponent',
@@ -59,7 +60,7 @@ public deleteRequest;
 public validationErrors = null;
 public employerForm = new FormGroup(this.formControls);
 public deleteConfirmationVisible: boolean = false;
-public currentDetailTab = "comments";
+public currentDetailTab = 'comments';
   constructor(private service: EmployerService, private renderer: Renderer2) { }
 
   ngOnInit() {
@@ -85,7 +86,7 @@ public currentDetailTab = "comments";
   }
 
   loadEmployerData() {
-    console.log(this.currentEmployer);
+   
     this.employerForm.patchValue(this.currentEmployer.employer);
 
   }
@@ -166,7 +167,7 @@ public currentDetailTab = "comments";
     else {
 
       this.service.getChildDetail(detailType, recordID).then(result => {
-        console.log(result);
+      
         this.detailForms.currentRecord = result['data'];
 
         this.detailForms[detailType].formGroup.patchValue(result['data']);
@@ -211,7 +212,7 @@ public currentDetailTab = "comments";
 
 
     if (recordType == 'employers') {
-      console.log("entering employers");
+  
       if (response.validationError) {
 
 
@@ -226,7 +227,7 @@ public currentDetailTab = "comments";
         this.currentEmployer = {};
         
         this.currentEmployer.employer = response.data[0];
-        console.log(this.currentEmployer);
+
         this.employerForm.patchValue(this.currentEmployer.employer);
         this.showRecordStatus('The record has been saved successfully.');
         this.employerForm.markAsPristine();
@@ -234,7 +235,7 @@ public currentDetailTab = "comments";
 
       }
       else {
-        console.log(response);
+      
         this.currentEmployer.employer = response.data;
         this.employerForm.patchValue(this.currentEmployer.employer);
         this.showRecordStatus('The record has been saved successfully.');
@@ -289,7 +290,7 @@ public currentDetailTab = "comments";
     if (!this.employerForm.pristine) {
 
       this.recordStatus = null;
-      let validator: EmployerValidator = new EmployerValidator();
+      let validator = new EmployerValidator();
       this.validationErrors = null;
       let [errorsExist, errors] = validator.validateEmployerRecord(this.employerForm.value);
       
@@ -323,12 +324,12 @@ public currentDetailTab = "comments";
     if (!this.detailForms.comments.formGroup.pristine) {
       this.detailForms.recordStatus = null;
       this.detailForms.validationErrors = null;
-      let validator: EmployerValidator = new EmployerValidator();
+      let validator = new EmployerValidator();
       this.validationErrors = null;
       let [errorsExist, errors] = validator.validateChildRecord('comments', this.detailForms.comments.formGroup.value);
       if (errorsExist) {
         this.detailForms.validationErrors = errors;
-        console.log(this.detailForms.validationErrors);
+
         
       }
       else {

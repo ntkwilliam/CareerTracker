@@ -1,10 +1,9 @@
  class AlumniValidator {
 
-     validationErrors = {
-     
-    }
+    
+   
   
-     errorsExist = false;
+     
   
     isBlankValue(value) {
       if(!value) {
@@ -46,6 +45,8 @@
     }
   
     validateAlumniRecord(values) {
+      this.validationErrors = {};
+      this.errorsExist = false;
       this.validateField('last_name', values['last_name'], true, /^[A-Za-z-' ]+$/);
       this.validateField('first_name', values['first_name'], true, /^[A-Za-z-' ]+$/);
       if (this.validateField('mailing_address_line_1', values['mailing_address_line_1'], false, /^[0-9A-Za-z-'., #]{1,32}$/)[0]
@@ -80,6 +81,8 @@
   
   
     validateChildRecord(recordType, values) {
+      this.validationErrors = {};
+      this.errorsExist = false;
       switch (recordType) {
         
 

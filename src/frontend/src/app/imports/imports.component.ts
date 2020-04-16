@@ -31,7 +31,7 @@ export class ImportsComponent implements OnInit {
     let formData = new FormData();
     formData.append('file', files.item(0), files.item(0).name);
     this.service.uploadFile(formData).then(res => {
-      console.log(res);
+     
       if (res['error']) {
        
         this.error = res;

@@ -20,10 +20,11 @@ let connection = getConnection();
     try { 
     connection.query(query, values, (error, results, fields) => {
         if (error) {
+           
             reject(error);
         }
         else {
-        
+            
             resolve(results);
         }
     });

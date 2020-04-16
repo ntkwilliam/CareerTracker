@@ -18,24 +18,24 @@
   <div class="flex-container">
   <div class="left">
   <div class="label-input-group">
-  <label>
+  <label for="last_name">
     Last Name:
   </label>
   <div class="input-error-message-group">
 
-    <input type="text" [formControl]="formControls.last_name" name="last_name" [class.input-error]="validationErrors?.last_name != null">
+    <input type="text" [formControl]="formControls.last_name" name="last_name" id="last_name" [class.input-error]="validationErrors?.last_name != null">
     <div class="error-message">{{validationErrors?.last_name}}</div>
     </div>
   </div>
 </div>
 <div class="right">
 <div class="label-input-group">
-<label>
+<label for="first_name">
     First Name:
   </label>
   <div class="input-error-message-group">
 
-    <input type="text" [formControl]="formControls.first_name" name="first_name" [class.input-error]="validationErrors?.first_name != null">
+    <input type="text" [formControl]="formControls.first_name" name="first_name" id="first_name" [class.input-error]="validationErrors?.first_name != null">
     <div class="error-message">{{validationErrors?.first_name}}</div>
   </div>
 </div>
@@ -48,39 +48,39 @@
       <div class="flex-container">
         <div class="left">
             <div class="label-input-group">
-               <label>Street Address:</label>
+               <label for="mailing_address_line_1">Street Address:</label>
                <div class="input-error-message-group">
-                 <input type="text" [formControl]="formControls.mailing_address_line_1" name="mailing_address_line_1" style="width: 25ch;" maxlength="32" [class.input-error]="validationErrors?.mailing_address_line_1 != null"><br />
+                 <input type="text" [formControl]="formControls.mailing_address_line_1" name="mailing_address_line_1" id="mailing_address_line_1" style="width: 25ch;" maxlength="32" [class.input-error]="validationErrors?.mailing_address_line_1 != null"><br />
                  <div class="error-message">{{validationErrors?.mailing_address_line_1}}</div>
                 </div>
               </div>
               <div class="label-input-group">
                <label></label>
                <div class="input-error-message-group">
-                 <input type="text" [formControl]="formControls.mailing_address_line_2" name="mailing_address_line_2" style="width: 25ch;" maxlength="32" [class.input-error]="validationErrors?.mailing_address_line_2 != null"><br />
+                 <input type="text" [formControl]="formControls.mailing_address_line_2" name="mailing_address_line_2" id="mailing_address_line_2" style="width: 25ch;" maxlength="32" [class.input-error]="validationErrors?.mailing_address_line_2 != null"><br />
                  <div class="error-message">{{validationErrors?.mailing_address_line_2}}</div>
                 </div>
               </div>
               <div class="label-input-group">
-                <label>City:</label>
+                <label for="mailing_address_city">City:</label>
                 <div class="input-error-message-group">
-                  <input type="text" [formControl]="formControls.mailing_address_city" name="mailing_address_city" style="width: 20ch;" [class.input-error]="validationErrors?.mailing_address_city != null"><br />
+                  <input type="text" [formControl]="formControls.mailing_address_city" name="mailing_address_city" id="mailing_address_city" style="width: 20ch;" [class.input-error]="validationErrors?.mailing_address_city != null"><br />
                   <div class="error-message">{{validationErrors?.mailing_address_city}}</div>
                 </div>
               </div>
               <div class="label-input-group">
-                <label>State:</label>
+                <label for="mailing_address_state">State:</label>
                 <div class="input-error-message-group">
                   
-                  <input type="text" [formControl]="formControls.mailing_address_state" name="mailing_address_state" style="width: 5ch;" maxlength="2" [class.input-error]="validationErrors?.mailing_address_state != null"><br />
+                  <input type="text" [formControl]="formControls.mailing_address_state" name="mailing_address_state" id="mailing_address_state" style="width: 5ch;" maxlength="2" [class.input-error]="validationErrors?.mailing_address_state != null"><br />
                   <div class="error-message">{{validationErrors?.mailing_address_state}}</div>
                 </div>
               </div>
               <div class="label-input-group">
-                <label>Zip Code:</label>
+                <label for="mailing_address_zipcode">Zip Code:</label>
                 <div class="input-error-message-group">
                   
-                  <input type="text" [formControl]="formControls.mailing_address_zipcode" name="mailing_address_zipcode" style="width: 14ch;" maxlength="10" (input)="processZipCode($event)" [class.input-error]="validationErrors?.mailing_address_zipcode != null"><br />
+                  <input type="text" [formControl]="formControls.mailing_address_zipcode" name="mailing_address_zipcode" id="mailing_address_zipcode" style="width: 14ch;" maxlength="10" (input)="processZipCode($event)" [class.input-error]="validationErrors?.mailing_address_zipcode != null"><br />
                   <div class="error-message">{{validationErrors?.mailing_address_zipcode}}</div>
                 </div>
               </div>
@@ -96,16 +96,16 @@
 
             <div class="right">
               <div class="label-input-group">
-                <label>Telephone Number:</label>
+                <label for="phone_number">Telephone Number:</label>
                 <div class="input-error-message-group">
-                <input type="text" [formControl]="formControls.phone_number" style="width: 14ch;" maxlength="14" (input)="processPhone($event)" [class.input-error]="validationErrors?.phone_number != null">
+                <input type="text" [formControl]="formControls.phone_number" name="phone_number" id="phone_number" style="width: 14ch;" maxlength="14" (input)="processPhone($event)" [class.input-error]="validationErrors?.phone_number != null">
                 <div class="error-message">{{validationErrors?.phone_number}}</div>
                 </div>
               </div>
               <div class="label-input-group">
-                <label>E-mail Address:</label>
+                <label for="email_address">E-mail Address:</label>
                 <div class="input-error-message-group">
-                <input type="text" [formControl]="formControls.email_address" name="email_address" style="width: 30ch;" maxlength="50" [class.input-error]="validationErrors?.email_address != null">
+                <input type="text" [formControl]="formControls.email_address" name="email_address" id="email_address" style="width: 30ch;" maxlength="50" [class.input-error]="validationErrors?.email_address != null">
                 <div class="error-message">{{validationErrors?.email_address}}</div>
               </div></div>
 
@@ -292,18 +292,18 @@
         <div class="left">
                 <div class="label-input-group">
 
-                  <label>Diploma Description:</label>
+                  <label for="diploma_description">Diploma Description:</label>
                   <div class="input-error-message-group">
-                  <input type="text" [class.input-error]="detailForms.validationErrors?.diploma_description" [formControl]="detailForms.alumni_degrees.formGroup.controls['diploma_description']" name="diploma_description" style="width: 35ch;" maxlength="100" [class.input-error]="detailForms.validationErrors?.diploma_description != null"><br />
+                  <input type="text" [class.input-error]="detailForms.validationErrors?.diploma_description" [formControl]="detailForms.alumni_degrees.formGroup.controls['diploma_description']" name="diploma_description" id="diploma_description" style="width: 35ch;" maxlength="100" [class.input-error]="detailForms.validationErrors?.diploma_description != null"><br />
                   <div class="error-message">{{detailForms.validationErrors?.diploma_description}}</div>
                   
                 </div>
                 </div>
                 <div class="label-input-group">
 
-               <label>Graduation Term Code:</label>
+               <label for="graduation_term_code">Graduation Term Code:</label>
                <div class="input-error-message-group">
-               <input type="text" [class.input-error]="detailForms.validationErrors?.graduation_term_code" [formControl]="detailForms.alumni_degrees.formGroup.controls['graduation_term_code']" name="graduation_term_code" style="width: 10ch;" maxlength="5" [class.input-error]="detailForms.validationErrors?.graduation_term_code != null"><br />
+               <input type="text" [class.input-error]="detailForms.validationErrors?.graduation_term_code" [formControl]="detailForms.alumni_degrees.formGroup.controls['graduation_term_code']" name="graduation_term_code" id="graduation_term_code" style="width: 10ch;" maxlength="5" [class.input-error]="detailForms.validationErrors?.graduation_term_code != null"><br />
                <div class="error-message">{{detailForms.validationErrors?.graduation_term_code}}</div>
                 
               </div>
@@ -317,9 +317,9 @@
       <div class="left">
               <div class="label-input-group">
 
-                <label>Employer:</label>
+                <label for="employer_id">Employer:</label>
                 <div class="input-error-message-group">
-                <select [formControl]="detailForms.alumni_employments.formGroup.controls['employer_id']" [class.input-error]="detailForms.validationErrors?.employer_id" name="employer_id" style="width: 35ch;">
+                <select [formControl]="detailForms.alumni_employments.formGroup.controls['employer_id']" [class.input-error]="detailForms.validationErrors?.employer_id" name="employer_id" id="employer_id" style="width: 35ch;">
                   <option value=""></option>
                   <option *ngFor="let optionValue of employerList" value={{optionValue.value}}>{{optionValue.text}}</option>
                 </select>
@@ -328,15 +328,15 @@
               </div>
               </div>
               <div class="label-input-group">
-                <label>Role Title</label>
+                <label for="job_title">Role Title</label>
                 <div class="input-error-message-group">
-             <input type="text" [formControl]="detailForms.alumni_employments.formGroup.controls['job_title']" [class.input-error]="detailForms.validationErrors?.job_title" name="job_title" style="width: 35ch;" maxlength="45" [class.input-error]="detailForms.validationErrors?.job_title != null"><br />
+             <input type="text" [formControl]="detailForms.alumni_employments.formGroup.controls['job_title']" [class.input-error]="detailForms.validationErrors?.job_title" name="job_title" id="job_title" style="width: 35ch;" maxlength="45" [class.input-error]="detailForms.validationErrors?.job_title != null"><br />
              <div class="error-message">{{detailForms.validationErrors?.job_title}}</div>
 </div>
 </div>
 <div class="label-input-group">
-  <label>Active Employment:</label>
-<input type="checkbox" [formControl]="detailForms.alumni_employments.formGroup.controls['active']" name="active">
+  <label for="active">Active Employment:</label>
+<input type="checkbox" [formControl]="detailForms.alumni_employments.formGroup.controls['active']" name="active" id="active">
 </div>          
 </div>
 </div>
@@ -348,10 +348,10 @@
       <div class="left">
               <div class="label-input-group">
 
-                <label>Graduate School:</label>
+                <label for="graduate_school_id">Graduate School:</label>
                 
                 <div class="input-error-message-group">
-                <select [formControl]="detailForms.alumni_graduate_schools.formGroup.controls['graduate_school_id']" [class.input-error]="detailForms.validationErrors?.graduate_school_id" name="graduate_school_id" style="width: 35ch;">
+                <select [formControl]="detailForms.alumni_graduate_schools.formGroup.controls['graduate_school_id']" [class.input-error]="detailForms.validationErrors?.graduate_school_id" id="graduate_school_id" name="graduate_school_id" style="width: 35ch;">
                   <option value=""></option>
                   <option *ngFor="let optionValue of graduateSchoolList" value={{optionValue.value}}>{{optionValue.text}}</option>
                 </select>
@@ -369,8 +369,8 @@
               <div class="label-input-group">
                   
                 <div class="input-error-message-group" style="width: 100%">
-                <label>Comment:</label>
-                <textarea [formControl]="detailForms.comments.formGroup.controls['comment']" name="comment" style="width: 100%;height:200px;" maxlength="1000" [class.input-error]="detailForms.validationErrors?.comment != null"></textarea>
+                <label for="comment">Comment:</label>
+                <textarea [formControl]="detailForms.comments.formGroup.controls['comment']" name="comment" id="comment" style="width: 100%;height:200px;" maxlength="1000" [class.input-error]="detailForms.validationErrors?.comment != null"></textarea>
                   <br />
                 
                   <div class="error-message">{{detailForms.validationErrors?.comment}}</div>

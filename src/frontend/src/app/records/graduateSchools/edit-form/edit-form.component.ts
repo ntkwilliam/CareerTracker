@@ -2,7 +2,8 @@ import { Component, OnInit, Output, Input, Injectable, ComponentFactoryResolver 
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { EventEmitter } from '@angular/core';
 import { GraduateSchoolService } from '../graduateSchool.service';
-import { GraduateSchoolValidator } from '../graduateschool.validator';
+const GraduateSchoolValidator = require('../../../../../../validations/graduateSchools')
+
 import { $ } from 'protractor';
 @Component({
   selector: 'GraduateSchoolEditFormComponent',
@@ -59,7 +60,7 @@ currentForm: null
   public validationErrors = null;
   public graduateschoolForm = new FormGroup(this.formControls);
   public deleteConfirmationVisible: boolean = false;
-  public currentDetailTab = "comments";
+  public currentDetailTab = 'comments';
   constructor(private service: GraduateSchoolService, private renderer: Renderer2) { }
 
   ngOnInit() {
@@ -85,7 +86,7 @@ currentForm: null
   }
 
   loadGraduateSchoolData() {
-    console.log(this.currentGraduateSchool);
+   
     this.graduateschoolForm.patchValue(this.currentGraduateSchool.graduateSchool);
 
   }
@@ -102,7 +103,7 @@ currentForm: null
   finalizeDelete() {
     this.deleteConfirmationVisible = false;
     if (this.deleteRequest) {
-      console.log(this.deleteRequest);
+     
       this.service.deleteGraduateSchoolData(this.deleteRequest['recordType'], this.deleteRequest['recordID']).then(
         a => {
 
@@ -165,7 +166,7 @@ currentForm: null
     else {
 
       this.service.getChildDetail(detailType, recordID).then(result => {
-        console.log(result);
+ 
         this.detailForms.currentRecord = result['data'];
 
         this.detailForms[detailType].formGroup.patchValue(result['data']);
@@ -209,7 +210,7 @@ currentForm: null
 
 
     if (recordType == 'graduate_schools') {
-      console.log("entering graduateschools");
+     
       if (response.validationError) {
 
 
@@ -224,7 +225,7 @@ currentForm: null
         this.currentGraduateSchool = {};
         
         this.currentGraduateSchool.graduateSchool = response.data[0];
-        console.log(this.currentGraduateSchool);
+       
         this.graduateschoolForm.patchValue(this.currentGraduateSchool.graduateSchool);
         this.showRecordStatus('The record has been saved successfully.');
         this.graduateschoolForm.markAsPristine();
@@ -232,7 +233,7 @@ currentForm: null
 
       }
       else {
-        console.log(response);
+    
         this.currentGraduateSchool.graduateSchool = response.data;
         this.graduateschoolForm.patchValue(this.currentGraduateSchool.graduateSchool);
         this.showRecordStatus('The record has been saved successfully.');
@@ -285,12 +286,12 @@ currentForm: null
     this.recordStatus = null;
     this.validationErrors = null;
     if (!this.graduateschoolForm.pristine) {
-      console.log(this.graduateschoolForm);
+    
       this.recordStatus = null;
-      let validator: GraduateSchoolValidator = new GraduateSchoolValidator();
+      let validator = new GraduateSchoolValidator();
      
       let [errorsExist, errors] = validator.validateGraduateSchoolRecord(this.graduateschoolForm.value);
-      console.log(errorsExist);
+     
       if (errorsExist) {
         this.validationErrors = errors;
       }
@@ -320,13 +321,13 @@ currentForm: null
   
     if (!this.detailForms.comments.formGroup.pristine) {
       this.detailForms.recordStatus = null;
-      let validator: GraduateSchoolValidator = new GraduateSchoolValidator();
+      let validator = new GraduateSchoolValidator();
       this.validationErrors = null;
       let [errorsExist, errors] = validator.validateChildRecord('comments', this.detailForms.comments.formGroup.value);
-     console.log(errorsExist);
+    
       if (errorsExist) {
         this.detailForms.validationErrors = errors;
-        console.log(this.detailForms.validationErrors);
+    
         
       }
       else {

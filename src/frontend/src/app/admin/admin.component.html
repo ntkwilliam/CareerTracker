@@ -1,0 +1,165 @@
+<nav class="navbar navbar-expand-sm justify-content-end main-navbar">
+    <div class="navbar-brand"><img src="assets/iuslogo.jpg" height="65px" width="100px">
+        <div class="application-name no-select">Career Tracker
+            <div class="sub-application-name">Administration Panel</div>
+        </div>
+
+    </div>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+        <div class="dropdown" style="background-color: rgb(154,0,0);">
+            <button class="btn btn-secondary dropdown-toggle shadow-none no-select"
+                style="background-color: rgb(154,0,0); border: 0" button id="recordDropDownButton"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Records</button>
+         
+        </div>
+       
+
+
+
+    </div>
+    <div class="ml-auto mr-1">
+
+        <div class="nav-link"><a href="/logout">Logout</a></div>
+
+    </div>
+</nav>
+
+<div class="main-content">
+
+
+    <div *ngIf="currentSection == 'UserMaintenance'" class="user-maintenance">
+        <div class="section-header">User Maintenance</div>
+        <table class="table table-striped">
+            <thead class="thead-dark">
+                <th>User ID</th>
+                <th>Last Name</th>
+                <th>First Name</th>
+                <th>Role</th>
+                <th>Status</th>
+                <th>Actions</th>
+                <th scope="col" style="text-align: center;"><button class="fas fa-plus-circle" style="border: none; color: white; background: transparent;" (click)="newRecord()"></button>
+                 
+                  </th>
+            </thead>
+            <tbody>
+                <tr *ngFor="let user of userList">
+                    <td>{{user['user_id']}}</td>
+                    <td>{{user['last_name']}}</td>
+                    <td>{{user['first_name']}}</td>
+                    <td>{{user['role'] == "A" ? "Administrator" : "User"}}</td>
+                    <td>{{user['active'].data == 1 ? 'Active' : 'Disabled'}}</td>
+                    <td><span *ngIf="user['active'].data == 1"><button class="btn btn-dark btn-sm"
+                                (click)="disableUser(user['user_id'])">Disable</button><button
+                                class="btn btn-dark btn-sm"
+                                (click)="launchDetailForm('changePassword',user['user_id'])">Change
+                                Password</button></span><span *ngIf="user['active'].data == 0"><button
+                                class="btn btn-dark btn-sm"
+                                (click)="enableUser(user['user_id'])">Enable</button></span><button
+                            class="btn btn-dark btn-sm" (click)="editRecord(user['user_id'])">Edit</button><button
+                            class="btn btn-danger btn-sm">Delete</button></td>
+                            <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+
+</div>
+
+
+<div class="inactive-detail-back" *ngIf="detailFormActive">
+
+    <div class="detail-box">
+        <div class="header">
+            <div class="header-main">
+            </div>
+            <div class="buttons">
+                <button class="far fa-save"
+                    style="border: none; background: transparent; color: white; font-size: 1.2em;"
+                    (click)="processCurrentRecord()"></button>
+                <button class="far fa-window-close"
+                    style="border: none; background: transparent; color: white; font-size: 1.2em;"
+                    (click)="closeDetailForm()"></button>
+
+                <div [style.display]="recordStatus == null ? 'none' : 'block'">{{recordStatus}}</div>
+            </div>
+
+        </div>
+        <div class="main">
+            <div *ngIf="detailForm == 'changePassword'">
+                <div style="display: flex;">
+                    <div>
+                        <label for="password">New Password:</label><br />
+                        <label for="password_confirmation">Confirm:</label>
+                    </div>
+                    <div style="margin-left: 10px;">
+                        <input type="password" maxlength="15" name="password" id="password"
+                            [formControl]="formGroups.changePassword.controls.password"
+                            [class.input-error]="validation_errors.changePassword.password"><br />
+                        <div *ngIf="validation_errors.changePassword.password != null">
+                            {{validation_errors.changePassword.password}}</div>
+                        <input type="password" maxlength="15" name="password_confirmation" id="password_confirmation"
+                            [formControl]="formGroups.changePassword.controls.password_confirmation"
+                            [class.input-error]="validation_errors.changePassword.password_confirmation">
+                        <div *ngIf="validation_errors.changePassword.password_confirmation != null">
+                            {{validation_errors.changePassword.password_confirmation}}</div>
+                    </div>
+                </div>
+                <br />
+                <b>Password Requirements:</b><br />
+                Password must be 8-15 characters in length<br />
+                Password must contain at least one upper case character<br />
+                Password must contain at least one lower case character<br />
+                Password must contain at least one number<br />
+            </div>
+            <div *ngIf="detailForm == 'addEdit'">
+                <div style="display: flex;">
+                    <div>
+                        <label for="user_id">User ID:</label><br />
+                        <label for="last_name">Last Name:</label><br />
+                        <label for="first_name">First Name:</label><br />
+                        <label for="role">Role</label>
+                        
+                    </div>
+                    <div style="margin-left: 10px;">
+                        <input type="text" maxlength="35" name="user_id" id="user_id"
+                        [formControl]="formGroups.addEdit.controls.user_id"
+                        [class.input-error]="validation_errors.addEdit.user_id"><br />
+                        <div *ngIf="validation_errors.addEdit.user_id != null">
+                            {{validation_errors.addEdit.user_id}}</div>
+                        <input type="text" maxlength="35" name="last_name" id="last_name"
+                            [formControl]="formGroups.addEdit.controls.last_name"
+                            [class.input-error]="validation_errors.addEdit.last_name"><br />
+                        <div *ngIf="validation_errors.addEdit.last_name != null">
+                            {{validation_errors.addEdit.last_name}}</div>
+                        <input type="text" maxlength="35" name="first_name" id="first_name"
+                            [formControl]="formGroups.addEdit.controls.first_name"
+                            [class.input-error]="validation_errors.addEdit.first_name"><br />
+                        <div *ngIf="validation_errors.addEdit.first_name != null">
+                            {{validation_errors.addEdit.first_name}}</div>
+                            <select [formControl]="formGroups.addEdit.controls.role" [class.input-error]="validation_errors.addEdit.role" name="role" id="role" style="width: 15ch;">
+                                <option value=""></option>
+                                <option value="U">User</option>
+                                <option value="A">Administrator</option>
+
+                              </select>
+                              <div *ngIf="validation_errors.addEdit.role != null">
+                                {{validation_errors.addEdit.role}}</div>
+                    </div>
+                </div>
+               
+            </div>
+
+
+        </div>
+
+
+
+
+    </div>
+
+
+
+</div>

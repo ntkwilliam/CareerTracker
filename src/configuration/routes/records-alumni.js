@@ -11,8 +11,9 @@ module.exports = function (app) {
 
 
     app.get('/data/alumni/search', (req, res) => {
+   
         if (req.user == null) {
-            common.sendErrorResponse(res, 401, "Unauthorized use not permitted");
+            common.sendErrorResponse(res, 401, 'Unauthorized use not permitted');
             return;
         }
         let baseQuery = 'SELECT alumni.alumnus_id, last_name, first_name, middle_name, CONCAT(mailing_address_city,\', \', mailing_address_state) location, GROUP_CONCAT(DISTINCT graduation_term_code SEPARATOR \', \')' +
@@ -42,7 +43,7 @@ module.exports = function (app) {
     app.get('/data/alumni/search/pageCount', (req, res) => {
 
         if (req.user == null) {
-            common.sendErrorResponse(res, 401, "Unauthorized use not permitted");
+            common.sendErrorResponse(res, 401, 'Unauthorized use not permitted');
             return;
         }
 
@@ -74,7 +75,7 @@ module.exports = function (app) {
     app.get('/data/alumni/byid/:id', (req, res) => {
 
         if (req.user == null) {
-            common.sendErrorResponse(res, 401, "Unauthorized use not permitted");
+            common.sendErrorResponse(res, 401, 'Unauthorized use not permitted');
             return;
         }
 
@@ -130,11 +131,11 @@ module.exports = function (app) {
 
 
 
-    app.get("/data/alumni/childData", (req, res) => {
+    app.get('/data/alumni/childData', (req, res) => {
 
 
         if (req.user == null) {
-            common.sendErrorResponse(res, 401, "Unauthorized use not permitted");
+            common.sendErrorResponse(res, 401, 'Unauthorized use not permitted');
             return;
         }
 
@@ -163,10 +164,10 @@ module.exports = function (app) {
 
 
 
-    app.delete("/data/alumni", (req, res) => {
+    app.delete('/data/alumni', (req, res) => {
 
         if (req.user == null) {
-            common.sendErrorResponse(res, 401, "Unauthorized use not permitted");
+            common.sendErrorResponse(res, 401, 'Unauthorized use not permitted');
             return;
         }
 
@@ -188,7 +189,7 @@ module.exports = function (app) {
 
 
             common.database.executeQuery('UPDATE ?? SET deleted = 1, updated_datetime = NOW() WHERE ?? = ?', [req.query['record_type'], keyField, req.query['record_id']])
-                .then(result => common.send("Request has been processed")).
+                .then(result => res.send(null)).
                 catch(error => common.sendErrorResponse(res, 400, error.message));
 
 
@@ -201,9 +202,9 @@ module.exports = function (app) {
 
 
 
-    app.post("/data/alumni", (req, res) => {
+    app.post('/data/alumni', (req, res) => {
         if (req.user == null) {
-            common.sendErrorResponse(res, 401, "Unauthorized use not permitted");
+            common.sendErrorResponse(res, 401, 'Unauthorized use not permitted');
             return;
         }
 
@@ -215,14 +216,14 @@ module.exports = function (app) {
             data: null
         };
         alumniData = req.body;
-
+  
         if (!alumniData['recordType'] || !common.tableData[alumniData['recordType']]) {
             common.sendErrorResponse(res, 400, 'The record type specified is not valid for this operation.');
 
         }
         else {
             let recordType = alumniData['recordType'];
-            let keyField = common.tableData[alumniData['recordType']].keyField;
+         
             let data = alumniData['data'];
             const validator = new alumniValidator();
             let errorsExist;
@@ -243,10 +244,10 @@ module.exports = function (app) {
                 res.send(result);
             }
             else {
-
-                let newData = common.detectChanges(null, data);
+              
+                let [changesFound, newData]= common.detectChanges(null, data);
                 newData['added_by'] = newData['updated_by'] = 'CURRENTUSER';
-
+              
 
                 common.database.executeQuery('INSERT INTO ?? SET ?, added_datetime = NOW(), updated_datetime = NOW()', [recordType, newData]).then(results => {
 
@@ -265,10 +266,10 @@ module.exports = function (app) {
     });
 
 
-    app.put("/data/alumni", (req, res) => {
+    app.put('/data/alumni', (req, res) => {
 
         if (req.user == null) {
-            common.sendErrorResponse(res, 401, "Unauthorized use not permitted");
+            common.sendErrorResponse(res, 401, 'Unauthorized use not permitted');
             return;
         }
 
@@ -345,18 +346,9 @@ module.exports = function (app) {
                     }
                 }).catch(error => common.sendErrorResponse(res, 400, error.message));
 
-
-
             }
 
-
-
-
-
         }
-
-
-
 
 
 
