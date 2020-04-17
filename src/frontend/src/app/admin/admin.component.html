@@ -7,12 +7,7 @@
     </div>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
-        <div class="dropdown" style="background-color: rgb(154,0,0);">
-            <button class="btn btn-secondary dropdown-toggle shadow-none no-select"
-                style="background-color: rgb(154,0,0); border: 0" button id="recordDropDownButton"
-                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Records</button>
-         
-        </div>
+     
        
 
 
@@ -57,7 +52,7 @@
                                 class="btn btn-dark btn-sm"
                                 (click)="enableUser(user['user_id'])">Enable</button></span><button
                             class="btn btn-dark btn-sm" (click)="editRecord(user['user_id'])">Edit</button><button
-                            class="btn btn-danger btn-sm">Delete</button></td>
+                            class="btn btn-danger btn-sm" (click)="requestDelete(user['user_id'])">Delete</button></td>
                             <td></td>
                 </tr>
             </tbody>
@@ -163,3 +158,18 @@
 
 
 </div>
+
+<div class="inactive-detail-back" [style.display]="deleteConfirmationVisible == true ? 'flex' : 'none'">
+    <div class="delete-confirmation">
+      <div style="display: block;">
+    <div style="margin-bottom: 5px;">Are you sure you wish<br />to delete this record?</div>
+    <div style="text-align: center;">
+      <button class="btn-dark shadow-none" style="background-color: rgb(154,0,0);" (click)="deleteRecord()">Yes</button>
+      <button class="btn-dark shadow-none" (click)="cancelDelete()">No</button>
+    </div>
+      </div>
+    </div>
+    
+    
+    
+    </div>

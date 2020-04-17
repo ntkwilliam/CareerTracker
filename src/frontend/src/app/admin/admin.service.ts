@@ -16,10 +16,11 @@ export class AdminService {
   }
 
   public disableUser(username: string) {
+   
     if (username != null) {
       return this.httpClient.post(`${HTTP_ROOT}:${APPLICATION_PORT}/admin/disableUser`, {
         params: {
-          username: username
+          user_id: username
         }
       }).toPromise();
 
@@ -31,7 +32,7 @@ export class AdminService {
     if (username != null) {
       return this.httpClient.post(`${HTTP_ROOT}:${APPLICATION_PORT}/admin/enableUser`, {
         params: {
-          username: username
+          user_id: username
         }
       }).toPromise();
 
@@ -104,8 +105,16 @@ export class AdminService {
 
 
 
+  public deleteUser(username: string) {
+    return this.httpClient.delete(`${HTTP_ROOT}:${APPLICATION_PORT}/admin/userData`, { 
+      params: { 
+      user_id: username
+      }
+    }).toPromise();
+  }
 
 
+ 
 
   public changePassword(username: string, password: string, password_confirmation: string) {
     return new Promise((resolve,reject) => {
@@ -132,12 +141,7 @@ export class AdminService {
 
     }
   
-    
 
-
-
-   
-  
 
 
 });

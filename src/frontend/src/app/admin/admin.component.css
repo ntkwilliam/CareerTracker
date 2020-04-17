@@ -108,6 +108,19 @@ button {
     
   }
   
+  .delete-confirmation {
+ 
+    background-color: white;
+    border: solid 2px rgb(154,0,0);
+    font-size: 18px;
+    font-weight: bold;
+    color:  rgb(154,0,0);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 20px 20px 20px;
+  }
+  
   
   .detail-box .main {
     margin-top: 20px;

@@ -84,7 +84,7 @@ export class GraduateSchoolService {
     }
 
     
-    return this.httpClient.put(`${HTTP_ROOT}:${APPLICATION_PORT}/graduateSchools/`, request).toPromise();
+    return this.httpClient.put(`${HTTP_ROOT}:${APPLICATION_PORT}/data/graduateSchools/`, request).toPromise();
     
 
   }

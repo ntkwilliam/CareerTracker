@@ -28,7 +28,7 @@ export class AlumniViewFormComponent implements OnInit {
   
 
   changeDetailTab(newTab) {
-    
+    console.log(this.currentAlumnus);
     this.currentDetailTab = newTab;
   }
 
