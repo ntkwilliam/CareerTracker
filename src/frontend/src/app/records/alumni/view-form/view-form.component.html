@@ -117,7 +117,7 @@
               <th>Added By<br />Date/Time</th>
               <th>Last Updated By<br />Date/Time</th>
               </tr>
-              <tr *ngFor="let graduateSchool of currentAlumnus?.alumni_graduate_schools">
+              <tr *ngFor="let graduateSchool of currentAlumnus?.graduateSchools">
                 <td>{{graduateSchool['school_name']}}</td>
                 <td>{{graduateSchool['city']}} , {{graduateSchool['state']}}</td>
                 <td>{{graduateSchool['added_by']}}<br />{{graduateSchool['added_datetime'] | date:'L/d/yyyy h:mm a'}}</td>
@@ -177,7 +177,7 @@
               <div class="audit-data">
                 <div class="left" style="display: flex;">
                 <div style="font-weight: bold;">Added By:<br />Added Date/Time:</div>
-                <div>{{currentCommentDetail?.added_by == undefined ? null : currentCommentDetail?.added_by}<br />{{currentCommentDetail?.added_datetime == undefined ? null : (currentCommentDetail?.added_datetime | date:'L/d/yyyy h:mm a')}}</div>
+                <div>{{currentCommentDetail?.added_by == undefined ? null : currentCommentDetail?.added_by}}<br />{{currentCommentDetail?.added_datetime == undefined ? null : (currentCommentDetail?.added_datetime | date:'L/d/yyyy h:mm a')}}</div>
               </div>
               <div class="right" style="display: flex;">
                 <div style="font-weight: bold;">Last Updated By:<br />Last Updated Date/Time:</div>

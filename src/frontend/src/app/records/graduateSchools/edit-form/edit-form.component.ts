@@ -297,12 +297,12 @@ currentForm: null
       }
       else {
         if (this.addMode) {
-          
-          this.service.addNewGraduateSchoolData('graduate_schools', this.graduateschoolForm.value).then(result => this.processSaveResponse('graduate_schools', result));
+    
+          this.service.addNewGraduateSchoolData('graduate_schools', this.graduateschoolForm.value).then(result => this.processSaveResponse('graduate_schools', result)).catch(error => console.log(error));
         }
         else {
-
-          this.service.updateGraduateSchoolData('graduate_schools', this.graduateschoolForm.value).then(result => this.processSaveResponse('graduate_schools', result));
+        
+          this.service.updateGraduateSchoolData('graduate_schools', this.graduateschoolForm.value).then(result => this.processSaveResponse('graduate_schools', result)).catch(error => console.log(error));
         }
       }
 
@@ -332,12 +332,10 @@ currentForm: null
       }
       else {
         if (this.detailForms.addMode) {
-          this.service.addNewGraduateSchoolData('comments', this.detailForms.comments.formGroup.value).then(result => this.processSaveResponse('comments', result));
+          this.service.addNewGraduateSchoolData('comments', this.detailForms.comments.formGroup.value).then(result => this.processSaveResponse('comments', result)).catch(error => console.log(error));
 
         } else {
-          this.service.updateGraduateSchoolData('comments', this.detailForms.comments.formGroup.value).then(result => this.processSaveResponse('comments', result)
-
-          );
+          this.service.updateGraduateSchoolData('comments', this.detailForms.comments.formGroup.value).then(result => this.processSaveResponse('comments', result)).catch(error => console.log(error));
         }
       }
 

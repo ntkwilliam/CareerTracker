@@ -15,7 +15,7 @@ export class AdminComponent implements OnInit {
   ngOnInit() {
     this.refreshUserList();
   }
-
+  public deleteConfirmationVisible = false;
   public currentSection: string = 'UserMaintenance';
   public userList: any;
   public detailFormActive = false;
@@ -87,7 +87,7 @@ export class AdminComponent implements OnInit {
     } else {
       this.addRecord();
     }
-
+  
 
 
   }
@@ -97,6 +97,7 @@ export class AdminComponent implements OnInit {
       user_id: this.selecteduser_id,
       user: this.formGroups.addEdit.value
     }).then(b => {
+      this.refreshUserList();
       this.showRecordStatus('The record was saved successfully.');
     }).catch(error => {
       
@@ -111,6 +112,7 @@ export class AdminComponent implements OnInit {
       this.formGroups.addEdit.value
     ).then(b => {
       this.showRecordStatus('The record was saved successfully.');
+      this.refreshUserList();
     }).catch(error => {
       
       if (error.last_name != null || error.first_name != null || error.user_id != null || error.role != null) {
@@ -156,6 +158,26 @@ processPasswordChange() {
 
 
 
+}
+
+public cancelDelete() {
+    this.selecteduser_id = null;
+    this.deleteConfirmationVisible = false;
+}
+
+
+requestDelete(user_id: string) {
+  this.selecteduser_id =  user_id;
+  this.deleteConfirmationVisible = true; 
+}
+
+deleteRecord() {
+  this.adminService.deleteUser(this.selecteduser_id).then(result => { 
+    this.refreshUserList();
+    this.selecteduser_id = null;
+    this.deleteConfirmationVisible = false;
+    
+  }).catch(error => console.log(error));
 }
 
 showRecordStatus(status) {
