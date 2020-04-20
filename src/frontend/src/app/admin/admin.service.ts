@@ -122,13 +122,13 @@ export class AdminService {
        
     let passwordValidator  = new validator();
     let result = passwordValidator.validatePassword(password, password_confirmation);
-   
+     
     if (result != true) {
       reject(result);
     } else {
       this.httpClient.post(`${HTTP_ROOT}:${APPLICATION_PORT}/admin/changePassword`, {
         params: {
-          username: username,
+          user_id: username,
           password: password,
           password_confirmation: password_confirmation
         }
