@@ -153,8 +153,7 @@ module.exports = function (app) {
 
 
             common.database.executeQuery('SELECT COUNT(*) CNT FROM users WHERE user_id = ?', req.body.params['user_id']).then(result => {
-                console.log(result);
-                console.log(result[0].CNT);
+             
                 if (result[0].CNT == 0) {
                     common.sendErrorResponse(res, 400, 'The user_id specified is not valid.')
                     return;
@@ -176,15 +175,6 @@ module.exports = function (app) {
 
 
             }).catch(error => common.sendErrorResponse(res, 400, error));
-
-
-
-
-
-
-
-
-
 
 
 
