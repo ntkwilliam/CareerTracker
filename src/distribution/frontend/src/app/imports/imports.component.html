@@ -1,0 +1,83 @@
+
+<div class="main">
+    <h2>Import Data</h2>
+  
+    <form *ngIf="submitVisible" action="/upload" method="POST" enctype="multipart/form-data">
+        To import alumni data into the application, please select a <b>.xlsx</b> file containing data in the registrar format and click the <b>Upload</b> button.<br />
+        <br /><b>Note:&nbsp;&nbsp;</b>The worksheet to be processed must be named <b>Upload</b>.
+
+        <br />
+        <br />
+
+
+<input type="file" name="upload_file" id="upload_file" accept=".xlsx">
+<button (click)="uploadFile($event.target.form.elements[0].files)">Upload</button>
+</form>
+<div *ngIf="statusVisible">
+    <br />The file submitted is currently being processed.  Please wait.
+</div>
+<div style="display: inline-block" *ngIf="errorVisible">
+    <div style="background-color: rgb(252, 225, 230);"><b>The file could not be processed due to the following error(s).</b><br />
+    </div>
+    Please review and correct the file and then try again.
+    <div>
+        <br />
+    <b>{{error.errorMessage}}</b>
+    <div *ngIf="this.error?.errorType=='fields'">
+        <table>
+            <tr *ngFor="let item of this.error?.data">
+                <td>
+                    {{item}}
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div *ngIf="this.error?.errorType=='data'">
+        <table class="table table-striped">
+            <thead class="thead-dark">
+                <th>Last Name</th>
+                <th>First Name</th>
+                <th class="right-align">Row ID</th>
+                <th>Error(s)</th>
+            </thead>
+            <tr *ngFor="let item of this.error?.data">
+                <td>
+                    {{item.last_name}}
+                </td>
+                <td>
+                    {{item.first_name}}
+                </td>
+                <td class="right-align">{{item.row_id}}</td>
+                <td>
+                    <div *ngFor="let error of item.validationErrors">
+                        <b>{{error.field}}</b>&nbsp;-&nbsp;{{ error.message}}
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+   </div>
+    <br />
+<button (click)="resetForm()">Re-submit</button>    
+</div>
+<div *ngIf="successVisible">
+
+    <div style="background-color: rgb(225, 252, 235);"><b>The file was processed successfully.</b><br />
+    </div>
+    <b>Records processed:</b>&nbsp;{{recordsProcessed}} 
+<br />
+<br />
+<button (click)="resetForm()">Submit New File</button> 
+</div>
+
+
+
+
+
+
+
+
+
+
+
+</div>

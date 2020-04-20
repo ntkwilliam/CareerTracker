@@ -1,0 +1,402 @@
+
+<div class="detail-form">
+      <form [formGroup]="alumniForm">
+<div class="header">
+  <div class="header-main">
+
+</div>
+<div class="buttons">
+        <button class="far fa-trash-alt" style="border: none; background: transparent; color: white; font-size: 1.2em;" (click)="deleteRecord('alumni',currentAlumnus?.alumni.alumnus_id)"></button>
+        <button class="far fa-save" style="border: none; background: transparent; color: white; font-size: 1.2em;" (click)="submitAlumniGeneralData()"></button>
+        <button class="far fa-window-close" style="border: none; background: transparent; color: white; font-size: 1.2em;" (click)="closeWindow()"></button>
+        
+        <div id="record-status" [style.display]="recordStatus == null ? 'none' : 'block'">{{recordStatus}}</div>
+      </div>
+</div>
+
+<div class="main">
+  <div class="flex-container">
+  <div class="left">
+  <div class="label-input-group">
+  <label for="last_name">
+    Last Name:
+  </label>
+  <div class="input-error-message-group">
+
+    <input type="text" [formControl]="formControls.last_name" name="last_name" id="last_name" [class.input-error]="validationErrors?.last_name != null">
+    <div class="error-message">{{validationErrors?.last_name}}</div>
+    </div>
+  </div>
+</div>
+<div class="right">
+<div class="label-input-group">
+<label for="first_name">
+    First Name:
+  </label>
+  <div class="input-error-message-group">
+
+    <input type="text" [formControl]="formControls.first_name" name="first_name" id="first_name" [class.input-error]="validationErrors?.first_name != null">
+    <div class="error-message">{{validationErrors?.first_name}}</div>
+  </div>
+</div>
+</div>
+</div>
+    <div class="section-name">
+        <div class="left">Mailing Address</div>
+        <div class="right">Telephone Number/Email</div>
+      </div>
+      <div class="flex-container">
+        <div class="left">
+            <div class="label-input-group">
+               <label for="mailing_address_line_1">Street Address:</label>
+               <div class="input-error-message-group">
+                 <input type="text" [formControl]="formControls.mailing_address_line_1" name="mailing_address_line_1" id="mailing_address_line_1" style="width: 25ch;" maxlength="32" [class.input-error]="validationErrors?.mailing_address_line_1 != null"><br />
+                 <div class="error-message">{{validationErrors?.mailing_address_line_1}}</div>
+                </div>
+              </div>
+              <div class="label-input-group">
+               <label></label>
+               <div class="input-error-message-group">
+                 <input type="text" [formControl]="formControls.mailing_address_line_2" name="mailing_address_line_2" id="mailing_address_line_2" style="width: 25ch;" maxlength="32" [class.input-error]="validationErrors?.mailing_address_line_2 != null"><br />
+                 <div class="error-message">{{validationErrors?.mailing_address_line_2}}</div>
+                </div>
+              </div>
+              <div class="label-input-group">
+                <label for="mailing_address_city">City:</label>
+                <div class="input-error-message-group">
+                  <input type="text" [formControl]="formControls.mailing_address_city" name="mailing_address_city" id="mailing_address_city" style="width: 20ch;" [class.input-error]="validationErrors?.mailing_address_city != null"><br />
+                  <div class="error-message">{{validationErrors?.mailing_address_city}}</div>
+                </div>
+              </div>
+              <div class="label-input-group">
+                <label for="mailing_address_state">State:</label>
+                <div class="input-error-message-group">
+                  
+                  <input type="text" [formControl]="formControls.mailing_address_state" name="mailing_address_state" id="mailing_address_state" style="width: 5ch;" maxlength="2" [class.input-error]="validationErrors?.mailing_address_state != null"><br />
+                  <div class="error-message">{{validationErrors?.mailing_address_state}}</div>
+                </div>
+              </div>
+              <div class="label-input-group">
+                <label for="mailing_address_zipcode">Zip Code:</label>
+                <div class="input-error-message-group">
+                  
+                  <input type="text" [formControl]="formControls.mailing_address_zipcode" name="mailing_address_zipcode" id="mailing_address_zipcode" style="width: 14ch;" maxlength="10" (input)="processZipCode($event)" [class.input-error]="validationErrors?.mailing_address_zipcode != null"><br />
+                  <div class="error-message">{{validationErrors?.mailing_address_zipcode}}</div>
+                </div>
+              </div>
+ 
+
+                
+                
+                
+                
+                
+            </div>
+
+
+            <div class="right">
+              <div class="label-input-group">
+                <label for="phone_number">Telephone Number:</label>
+                <div class="input-error-message-group">
+                <input type="text" [formControl]="formControls.phone_number" name="phone_number" id="phone_number" style="width: 14ch;" maxlength="14" (input)="processPhone($event)" [class.input-error]="validationErrors?.phone_number != null">
+                <div class="error-message">{{validationErrors?.phone_number}}</div>
+                </div>
+              </div>
+              <div class="label-input-group">
+                <label for="email_address">E-mail Address:</label>
+                <div class="input-error-message-group">
+                <input type="text" [formControl]="formControls.email_address" name="email_address" id="email_address" style="width: 30ch;" maxlength="50" [class.input-error]="validationErrors?.email_address != null">
+                <div class="error-message">{{validationErrors?.email_address}}</div>
+              </div></div>
+
+                      
+                          
+                  
+  
+  
+  
+              </div>
+  
+  
+          </div>            
+
+        
+
+
+
+<div class="audit-data">
+  <div class="left" style="display: flex;">
+  <div style="font-weight: bold;">Added By:<br />Added Date/Time:</div>
+  <div style="margin-left: 5px;">{{currentAlumnus?.alumni?.added_by}}<br />{{currentAlumnus?.alumni?.added_datetime | date:'L/d/yyyy h:mm a'}}</div>
+</div>
+<div class="right" style="display: flex;">
+  <div style="font-weight: bold;">Last Updated By:<br />Last Updated Date/Time:</div>
+  <div style="margin-left: 5px;">{{currentAlumnus?.alumni?.updated_by}}<br />{{currentAlumnus?.alumni?.updated_datetime | date:'L/d/yyyy h:mm a'}}</div>
+</div>
+</div>
+<div class="tab-control" [style.display]="addMode ? 'none' : 'inline-block'">
+    <div class="selections">
+      <div class="navigation-buttons">
+      <button class="shadow-none no-select" [class.selected]="currentDetailTab == 'alumni_degrees'" (click)="changeDetailTab('alumni_degrees')">Degrees</button>
+      <button class="shadow-none no-select" (click)="changeDetailTab('alumni_employments')" [class.selected]="currentDetailTab == 'alumni_employments'">Employments</button>
+      <button class="shadow-none no-select" [class.selected]="currentDetailTab == 'alumni_graduate_schools'" (click)="changeDetailTab('alumni_graduate_schools')">Graduate Schools</button>
+      <button class="shadow-none no-select" [class.selected]="currentDetailTab == 'comments'" (click)="changeDetailTab('comments')">Comments</button>
+    </div>
+    <div>
+    <button class="fas fa-plus-circle" style="border: none; background: transparent; color: white; font-size: 1em; margin-right: 5px;" (click)="addnewDetailRecord()"></button>
+  </div>
+  </div>
+  <div class="content-area">
+      <div id="degrees" [style.display]="currentDetailTab == 'alumni_degrees' ? 'inline-block' : 'none'">
+
+
+
+          <table>
+                
+    
+              <tr>
+                <th>Diploma Description</th>
+                <th>Graduation Term Code</th>
+                <th>Added By<br />Date/Time</th>
+                <th>Last Updated By<br />Date/Time</th>
+                <th style="text-align: center;">Actions</th>
+              </tr>
+            
+          <tr *ngFor="let degree of currentAlumnus?.alumni_degrees">
+            <td>{{degree['diploma_description']}}</td>
+            <td>{{degree['graduation_term_code']}}</td>
+            <td>{{degree['added_by']}}<br />{{degree['added_datetime'] | date:'L/d/yyyy h:mm a'}}</td>
+            <td>{{degree['updated_by']}}<br />{{degree['updated_datetime'] | date:'L/d/yyyy h:mm a' }}</td>
+            <td style="text-align: center;">
+              <button class="far fa-trash-alt" style="border: none; background: transparent; color: black; font-size: 1.2em;" (click)="deleteRecord('alumni_degrees',degree['degree_id'])"></button>
+              <button class="fas fa-edit" style="border: none; background: transparent; color: black; font-size: 1.2em" (click)="displaySubDetail('alumni_degrees',degree['degree_id'])"></button>
+              
+            
+            </td>
+
+
+          </tr>
+
+
+
+          </table>
+
+
+
+
+
+
+
+
+
+      </div>
+      <div id="employments" [style.display]="currentDetailTab == 'alumni_employments' ? 'inline-block' : 'none'">
+        <table>
+          <tr><th>Employer Name</th>
+            <th>Location</th>
+          <th>Role Title</th>
+          <th>Active<br />Employment</th>
+          <th>Added By<br />Date/Time</th>
+          <th>Last Updated By<br />Date/Time</th>
+          <th style="text-align: center;">Actions</th>
+          </tr>
+          <tr *ngFor="let employment of currentAlumnus?.alumni_employments">
+            <td>{{employment['employer_name']}}</td>
+            <td>{{employment['city']}} , {{employment['state']}}</td>
+            <td>{{employment['job_title']}}</td>
+            <td>{{employment['active'] == 1 ? 'Y' : 'N'}}</td>
+            <td>{{employment['added_by']}}<br />{{employment['added_datetime'] | date:'L/d/yyyy h:mm a'}}</td>
+            <td>{{employment['updated_by']}}<br />{{employment['updated_datetime'] | date:'L/d/yyyy h:mm a' }}</td>
+            <td style="text-align: center;">
+              <button class="far fa-trash-alt" style="border: none; background: transparent; color: black; font-size: 1.2em;" (click)="deleteRecord('alumni_employments',employment['employment_id'])"></button>
+              <button class="fas fa-edit" style="border: none; background: transparent; color: black; font-size: 1.2em" (click)="displaySubDetail('alumni_employments',employment['employment_id'])"></button>
+            </td>
+          </tr>
+        </table>
+        
+      </div>
+
+      <div id="graduate-schools" [style.display]="currentDetailTab == 'alumni_graduate_schools' ? 'inline-block' : 'none'">
+         
+        <table>
+          <tr><th>School Name</th>
+            <th>Location</th>
+          <th>Added By<br />Date/Time</th>
+          <th>Last Updated By<br />Date/Time</th>
+          <th style="text-align: center;">Actions</th>
+          </tr>
+          <tr *ngFor="let graduateSchool of currentAlumnus?.alumni_graduate_schools">
+            <td>{{graduateSchool['school_name']}}</td>
+            <td>{{graduateSchool['city']}} , {{graduateSchool['state']}}</td>
+            <td>{{graduateSchool['added_by']}}<br />{{graduateSchool['added_datetime'] | date:'L/d/yyyy h:mm a'}}</td>
+            <td>{{graduateSchool['updated_by']}}<br />{{graduateSchool['updated_datetime'] | date:'L/d/yyyy h:mm a' }}</td>
+            <td style="text-align: center;">
+              <button class="far fa-trash-alt" style="border: none; background: transparent; color: black; font-size: 1.2em;" (click)="deleteRecord('alumni_graduate_schools',graduateSchool['alumni_graduate_school_id'])"></button>
+              <button class="fas fa-edit" style="border: none; background: transparent; color: black; font-size: 1.2em" (click)="displaySubDetail('alumni_graduate_schools',graduateSchool['alumni_graduate_school_id'])"></button>
+            </td>
+          </tr>
+        </table>
+
+    </div>
+
+    <div id="comments" [style.display]="currentDetailTab == 'comments' ? 'inline-block' : 'none'">
+          
+      <table>
+        <tr><th>Comment</th>
+
+        <th>Added By<br />Date/Time</th>
+        <th>Last Updated By<br />Date/Time</th>
+          <th style="text-align: center;">Actions</th>
+        </tr>
+        <tr *ngFor="let comment of currentAlumnus?.comments">
+          <td><div class="cell-content">{{comment['comment']}}</div></td>
+          <td>{{comment['added_by']}}<br />{{comment['added_datetime'] | date:'L/d/yyyy h:mm a'}}</td>
+          
+          <td>{{comment['updated_by']}}<br />{{comment['updated_datetime'] | date:'L/d/yyyy h:mm a'}}</td>
+          <td style="text-align: center;">
+            <button class="far fa-trash-alt" style="border: none; background: transparent; color: black; font-size: 1.2em;" (click)="deleteRecord('comments',comment['comment_id'])"></button>
+            <button class="fas fa-edit" style="border: none; background: transparent; color: black; font-size: 1.2em" (click)="displaySubDetail('comments',comment['comment_id'])"></button>
+         
+
+          </td>
+        </tr>
+      </table>
+
+  </div>
+
+
+    </div>
+
+  </div>
+
+
+</div>
+</form>
+<div class="inactive-detail-back" [style.display]="detailForms.detailVisible ? 'flex' : 'none'">
+<div class="detail-box">
+  <div class="header">
+    <div class="header-main">
+          </div>
+          <div class="buttons">
+            <button class="far fa-save" style="border: none; background: transparent; color: white; font-size: 1.2em;" (click)="submitAlumniChildData()"></button>
+            <button class="far fa-window-close" style="border: none; background: transparent; color: white; font-size: 1.2em;" (click)="closeSubDetail()"></button>
+         
+            <div [style.display]="detailForms.recordStatus == null ? 'none' : 'block'">{{detailForms.recordStatus}}</div>
+          </div>
+          
+        </div>
+        <div class="main">
+          <div class="detail_alumni_degrees" [style.display]="detailForms.currentForm == 'alumni_degrees' ? 'block' : 'none'">
+    <div class="flex-container">
+      
+        <div class="left">
+                <div class="label-input-group">
+
+                  <label for="diploma_description">Diploma Description:</label>
+                  <div class="input-error-message-group">
+                  <input type="text" [class.input-error]="detailForms.validationErrors?.diploma_description" [formControl]="detailForms.alumni_degrees.formGroup.controls['diploma_description']" name="diploma_description" id="diploma_description" style="width: 35ch;" maxlength="100" [class.input-error]="detailForms.validationErrors?.diploma_description != null"><br />
+                  <div class="error-message">{{detailForms.validationErrors?.diploma_description}}</div>
+                  
+                </div>
+                </div>
+                <div class="label-input-group">
+
+               <label for="graduation_term_code">Graduation Term Code:</label>
+               <div class="input-error-message-group">
+               <input type="text" [class.input-error]="detailForms.validationErrors?.graduation_term_code" [formControl]="detailForms.alumni_degrees.formGroup.controls['graduation_term_code']" name="graduation_term_code" id="graduation_term_code" style="width: 10ch;" maxlength="5" [class.input-error]="detailForms.validationErrors?.graduation_term_code != null"><br />
+               <div class="error-message">{{detailForms.validationErrors?.graduation_term_code}}</div>
+                
+              </div>
+</div>          
+</div>
+</div>
+</div>
+<div class="detail_alumni_employments" [style.display]="detailForms.currentForm == 'alumni_employments' ? 'block' : 'none'">
+  <div class="flex-container">
+    
+      <div class="left">
+              <div class="label-input-group">
+
+                <label for="employer_id">Employer:</label>
+                <div class="input-error-message-group">
+                <select [formControl]="detailForms.alumni_employments.formGroup.controls['employer_id']" [class.input-error]="detailForms.validationErrors?.employer_id" name="employer_id" id="employer_id" style="width: 35ch;">
+                  <option value=""></option>
+                  <option *ngFor="let optionValue of employerList" value={{optionValue.value}}>{{optionValue.text}}</option>
+                </select>
+                <div class="error-message">{{detailForms.validationErrors?.employer_id}}</div>
+
+              </div>
+              </div>
+              <div class="label-input-group">
+                <label for="job_title">Role Title</label>
+                <div class="input-error-message-group">
+             <input type="text" [formControl]="detailForms.alumni_employments.formGroup.controls['job_title']" [class.input-error]="detailForms.validationErrors?.job_title" name="job_title" id="job_title" style="width: 35ch;" maxlength="45" [class.input-error]="detailForms.validationErrors?.job_title != null"><br />
+             <div class="error-message">{{detailForms.validationErrors?.job_title}}</div>
+</div>
+</div>
+<div class="label-input-group">
+  <label for="active">Active Employment:</label>
+<input type="checkbox" [formControl]="detailForms.alumni_employments.formGroup.controls['active']" name="active" id="active">
+</div>          
+</div>
+</div>
+</div>
+
+<div class="detail_alumni_graduate_schools" [style.display]="detailForms.currentForm == 'alumni_graduate_schools' ? 'block' : 'none'">
+  <div class="flex-container">
+    
+      <div class="left">
+              <div class="label-input-group">
+
+                <label for="graduate_school_id">Graduate School:</label>
+                
+                <div class="input-error-message-group">
+                <select [formControl]="detailForms.alumni_graduate_schools.formGroup.controls['graduate_school_id']" [class.input-error]="detailForms.validationErrors?.graduate_school_id" id="graduate_school_id" name="graduate_school_id" style="width: 35ch;">
+                  <option value=""></option>
+                  <option *ngFor="let optionValue of graduateSchoolList" value={{optionValue.value}}>{{optionValue.text}}</option>
+                </select>
+                <div class="error-message">{{detailForms.validationErrors?.graduate_school_id}}</div>
+              </div></div>
+       
+</div>
+</div>
+</div>
+
+<div class="detail_comments" [style.display]="detailForms.currentForm == 'comments' ? 'block' : 'none'">
+  <div class="flex-container">
+    
+      <div class="left">
+              <div class="label-input-group">
+                  
+                <div class="input-error-message-group" style="width: 100%">
+                <label for="comment">Comment:</label>
+                <textarea [formControl]="detailForms.comments.formGroup.controls['comment']" name="comment" id="comment" style="width: 100%;height:200px;" maxlength="1000" [class.input-error]="detailForms.validationErrors?.comment != null"></textarea>
+                  <br />
+                
+                  <div class="error-message">{{detailForms.validationErrors?.comment}}</div>
+              </div></div>
+       
+</div>
+</div>
+</div>
+
+
+</div>
+</div>
+
+
+</div>
+<div class="inactive-detail-back" [style.display]="deleteConfirmationVisible == true ? 'flex' : 'none'">
+<div class="delete-confirmation">
+  <div style="display: block;">
+<div style="margin-bottom: 5px;">Are you sure you wish<br />to delete this record?</div>
+<div style="text-align: center;">
+  <button class="btn-dark shadow-none" style="background-color: rgb(154,0,0);" (click)="finalizeDelete()">Yes</button>
+  <button class="btn-dark shadow-none" (click)="cancelDelete()">No</button>
+</div>
+  </div>
+</div>
+
+
+
+</div>

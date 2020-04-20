@@ -1,0 +1,141 @@
+<div class="detail-form" (click)="$event.stopPropagation()">
+
+    <div class="header">
+      <div>
+      <div class="student-name">
+        {{ currentEmployer?.employer?.employer_name }}
+
+      </div>
+     Employer ID:  {{ currentEmployer?.employer?.employer_id}}
+    </div>
+      <div class="buttons">
+        <button class="far fa-edit" style="border: none; background: transparent; color: white; font-size: 1.2em;" (click)="this.invokeEdit.emit()"></button>
+        <button class="far fa-window-close" style="border: none; background: transparent; color: white; font-size: 1.2em;" (click)="this.close.emit()"></button>
+      </div>
+    </div>
+    <div id="main">
+      <div class="section-name">
+        <div class="left">Mailing Address</div>
+        <div class="right">Contact/Telephone Number/Email</div>
+      </div>
+      <div class="flex-container">
+        <div class="left">
+           {{ currentEmployer?.employer?.mailing_address_line_1}}<br />
+          <div *ngIf="currentEmployer?.employer?.address_line_2 != null">
+            {{currentEmployer?.employer?.address_line_2}}<br /></div>
+          {{ currentEmployer?.employer?.address_city != null ? currentEmployer?.employer?.address_city + ', ' : '' }}
+          {{currentEmployer?.employer?.address_state != null ? currentEmployer?.employer?.address_state  + ' ' : ''}}
+          {{currentEmployer?.employer?.address_zipcode}}
+        </div>
+        <div class="right">
+          <div *ngIf="currentEmployer?.employer?.contact_name != null">
+            {{ currentEmployer?.employer?.contact_name}}<br />
+            </div>
+           
+          {{currentEmployer?.employer?.phone_number}}
+          <br />{{currentEmployer?.employer?.email_address}}
+        </div>
+      </div>
+      <div class="audit-data">
+        <div class="left" style="display: flex;">
+        <div style="font-weight: bold;">Added By:<br />Added Date/Time:</div>
+        <div>{{currentEmployer?.employer?.added_by}}<br />{{currentEmployer?.employer?.added_datetime | date:'L/d/yyyy h:mm a'}}</div>
+      </div>
+      <div class="right" style="display: flex;">
+        <div style="font-weight: bold;">Last Updated By:<br />Last Updated Date/Time:</div>
+        <div>{{currentEmployer?.employer?.updated_by}}<br />{{currentEmployer?.employer?.updated_datetime | date:'L/d/yyyy h:mm a'}}</div>
+      </div>
+      </div>
+
+
+      <div class="tab-control">
+        <div class="selections">
+        <div class="navigation-buttons">
+          <button class="shadow-none no-select selected">Comments</button>
+        </div>
+    </div>
+
+        <div class="content-area">
+
+        <div id="comments" [style.display]="currentDetailTab == 'comments' ? 'inline-block' : 'none'">
+              
+          <table>
+            <tr><th>Comment</th>
+
+            
+          
+        <th>Added By<br />Date/Time</th>
+        <th>Last Updated By<br />Date/Time</th>
+        <th>Actions</th>
+            </tr>
+            <tr *ngFor="let comment of currentEmployer?.comments">
+              <td><div class="cell-content">{{comment['comment']}}</div></td>
+              <td>{{comment['added_by']}}<br />{{comment['added_datetime'] | date:'L/d/yyyy h:mm a'}}</td>
+              <td>{{comment['updated_by']}}<br />{{comment['updated_datetime'] | date:'L/d/yyyy h:mm a'}}</td>
+              <td><button class="btn-dark shadow-none" (click)="toggleViewAllactive(comment)">View</button></td>
+         
+            </tr>
+          </table>
+
+      </div>
+
+
+        </div>
+
+      </div>
+
+
+
+
+
+
+    </div>
+
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     
+  <div class="detail-form-back" [style.display]="viewAllActive ? 'flex' : 'none'">
+    <div class="detail-box">
+      <div class="header">
+        <div class="header-main">
+              </div>
+              <div class="buttons">
+                
+                <button class="btn-light shadow-none" (click)="toggleViewAllactive(null)">Close</button>
+              
+              </div>
+              
+            </div>
+            <div class="main">
+              {{ currentCommentDetail?.comment }}
+
+              <div class="audit-data">
+                <div class="left" style="display: flex;">
+                <div style="font-weight: bold;">Added By:<br />Added Date/Time:</div>
+                <div>{{currentCommentDetail?.added_by}}<br />{{currentCommentDetail?.added_datetime | date:'L/d/yyyy h:mm a'}}</div>
+              </div>
+              <div class="right" style="display: flex;">
+                <div style="font-weight: bold;">Last Updated By:<br />Last Updated Date/Time:</div>
+                <div>{{currentCommentDetail?.updated_by}}<br />{{currentCommentDetail?.updated_datetime | date:'L/d/yyyy h:mm a'}}</div>
+              </div>
+              </div>
+            </div>
+    </div>
+  </div>
