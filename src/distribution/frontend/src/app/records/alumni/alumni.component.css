@@ -1,0 +1,276 @@
+
+
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+
+
+
+.add-button {
+  margin-right: 20px;
+  margin-bottom: 7px;
+  display: flex;
+  justify-content: flex-end;
+  align-content: flex-start;
+  
+}
+
+
+
+button:focus {
+  outline:none !important;
+  
+}
+
+button {
+  font-weight: bold;
+  outline: none !important;
+}
+
+.records-list {
+    margin-left: 20px;
+    margin-right: 20px;
+
+}
+
+.records-list .right-align {
+  text-align: right;
+  width: 170px;
+  padding-right: 70px;
+}
+
+.records-list button {
+  margin-right: 5px;
+}
+
+.records-list td { 
+  padding-top: 5px;
+  padding-bottom: 5px;
+  vertical-align: middle;
+}
+
+.no-select {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+}
+
+
+
+
+
+
+.detail-form-back {
+  position: fixed;
+  top: 0%;
+  left: 0%;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0,0,0, 0.7);
+  z-index: 3;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  
+  
+}
+
+
+
+.detail-form,.edit-form {
+  border-radius: 30px;  
+    background-color: white;
+    width: 55%;
+    display:  inline-block;
+    border: solid 2px;
+    max-height: 85%;
+    
+  }
+
+  
+
+
+
+
+.align-right {
+  text-align: right;
+
+}
+
+.app-page-item-selected {
+  background-color: rgb(154,0,0) !important;
+  border-color: rgb(154,0,0) !important;
+}
+
+.app-page-item {
+  color: rgb(154,0,0);
+}
+
+
+
+.paging-links {
+  margin-right: 30px;
+  outline: none !important;
+  border-color: rgb(154,0,0) !important;
+
+}
+
+.paging-links li {
+  outline: none !important;
+  border-color: rgb(154,0,0) !important;
+
+}
+
+.paging-links li a {
+  color: black;
+  outline: none !important;
+  box-shadow: none;
+}
+
+.paging-links-active {
+  color: white !important;
+  background-color: rgb(154,0,0) !important;
+  border-color: rgb(154,0,0) !important;
+
+}
+
+#search-box {
+  
+  background-color: #343a40;
+  width: 35%;
+  border-radius: 5px;
+}
+
+
+
+
+#search-box #header {
+  padding-left: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-right: 5px;
+  background-color:  rgb(154,0,0);
+  color: white;
+  font-weight: bold;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+}
+
+#search-box #body {
+
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-right: 10px;
+  border: none;
+  background-color: white;
+  
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+
+}
+
+#search-box #body table {
+    table-layout: fixed;
+    width: 100%;
+}
+
+#search-box td {
+  padding-left: 10px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+
+}
+
+#search-box tr {
+  vertical-align: top;
+}
+
+#search-box #body table input {
+    width: 100%;
+}
+
+
+
+#search-box button {
+  outline: none !important;
+  font-weight: bold;
+
+
+}
+
+#search-box select {
+    width: 100%;
+}
+
+#search-box .disabled-select  {
+  background-color: rgba(0,0,0,0.1);
+  border: none;
+}
+
+#search-box #search-button {
+    margin-top: 10px;
+    text-align: center;
+}
+  .detail-box {
+  
+    width: 35%;
+    background-color: white;
+    border-radius: 30px;
+    border: solid 2px;
+  }
+    
+  .detail-box .main {
+    margin: 20px 20px 20px 20px;
+  }
+  
+  .detail-box input[type=text] {
+    margin-left: 0;
+  }
+
+  .error-box {
+
+    padding: 15px 15px 15px 15px;
+    border-color: solid rgb(114,0,0.1);
+    color: white;
+    max-width: 40%;
+    
+    
+  }
+
+.error-box .header .windowTitle {
+  font-weight: bold;
+}
+
+  .error-box .header {
+    background-color: rgb(154,0,0);
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 5px 5px 5px
+  }
+
+  .error-box .main {
+    background-color: white;
+    color: black;
+    padding: 15px 15px 15px 15px;
+  }
+  
+.error-box-back {
+  position: fixed;
+  top: 0%;
+  left: 0%;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0,0,0, 0.7);
+  z-index: 25;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  
+}
